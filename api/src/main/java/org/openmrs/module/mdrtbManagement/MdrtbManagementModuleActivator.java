@@ -22,7 +22,7 @@ import org.openmrs.module.ModuleActivator;
 /**
  * This class contains the logic that is run every time this module is either started or stopped.
  */
-public class MdrtbManagementAppModuleActivator implements ModuleActivator {
+public class MdrtbManagementModuleActivator implements ModuleActivator {
 	
 	protected Log log = LogFactory.getLog(getClass());
 		
@@ -30,42 +30,42 @@ public class MdrtbManagementAppModuleActivator implements ModuleActivator {
 	 * @see ModuleActivator#willRefreshContext()
 	 */
 	public void willRefreshContext() {
-		log.info("Refreshing Registration App Module Module");
+		log.info("Refreshing Mdrtb Management App Module Module");
 	}
 	
 	/**
 	 * @see ModuleActivator#contextRefreshed()
 	 */
 	public void contextRefreshed() {
-		log.info("Registration App Module Module refreshed");
+		log.info("Mdrtb Management App Module Module refreshed");
 	}
 	
 	/**
 	 * @see ModuleActivator#willStart()
 	 */
 	public void willStart() {
-		log.info("Starting Registration App Module Module");
+		log.info("Starting Mdrtb Management App Module Module");
 	}
 	
 	/**
 	 * @see ModuleActivator#started()
 	 */
 	public void started() {
-		log.info("Registration App Module Module started");
+		log.info("Mdrtb Management App Module Module started");
 	}
 	
 	/**
 	 * @see ModuleActivator#willStop()
 	 */
 	public void willStop() {
-		log.info("Stopping Registration App Module Module");
+		log.info("Stopping Mdrtb Management App Module Module");
 	}
 	
 	/**
 	 * @see ModuleActivator#stopped()
 	 */
 	public void stopped() {
-		log.info("Registration App Module Module stopped");
+		log.info("Mdrtb Management App Module Module stopped");
 	}
 		
 }
