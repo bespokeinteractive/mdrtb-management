@@ -7,7 +7,7 @@
 	<name>${project.parent.name}</name>
 	<version>${project.parent.version}</version>
 	<package>${project.parent.groupId}.${project.parent.artifactId}</package>
-	<author>bespoke</author>
+	<author>Dennys Henry</author>
 	<description>
 		${project.parent.description}
 	</description>
@@ -28,7 +28,7 @@
 	<!-- / Required Modules -->
 	
 	<!-- Module Activator -->
-	<activator>${project.parent.groupId}.${project.parent.artifactId}.RegistrationAppModuleActivator</activator>
+	<activator>${project.parent.groupId}.${project.parent.artifactId}.MdrtbManagementModuleActivator</activator>
 
 	<!-- Internationalization -->
 	<!-- All message codes should start with ${project.parent.artifactId}. -->
