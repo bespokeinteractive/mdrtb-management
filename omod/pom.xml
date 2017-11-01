@@ -3,7 +3,7 @@
 
 	<parent>
 		<groupId>org.openmrs.module</groupId>
-		<artifactId>mdrtb-management</artifactId>
+		<artifactId>mdrtbmanagement</artifactId>
 		<version>1.0</version>
 	</parent>
 

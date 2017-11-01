@@ -11,7 +11,7 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.module.mdrtbManagement;
+package org.openmrs.module.mdrtbmanagement;
 
 
 import org.apache.commons.logging.Log; 
