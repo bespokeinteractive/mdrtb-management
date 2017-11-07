@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.openmrs.module.mdrtbmanagement.model">
+	<class name="Charts" table="finance_charts" batch-size="500">
+		<id name="id" type="int" column="id" unsaved-value="0">
+				<generator class="native" />
+		</id>
+		<property name="name" column="name"  />
+		<many-to-one name="chartsGroup" class="org.openmrs.module.mdrtbmanagement.model.Charts" column="charts_group" cascade="none" lazy="false" />
+        <many-to-one name="voidedBy" class="org.openmrs.Person" column="voided_by" cascade="none"  />
+        <property name="voided" column="voided"  />
+        <property name="voidedOn" column="date_voided"  />
+        <property name="voidReason" column="void_reason"  />
+	</class>
+</hibernate-mapping>

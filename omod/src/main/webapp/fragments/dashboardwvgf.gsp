@@ -1,4 +1,3 @@
-<%
-    ui.decorateWith("appui", "standardEmrPage", [title: "Finance Dashboard"])
-%>
-
+<ul>
+	<li>1</li>
+</ul>

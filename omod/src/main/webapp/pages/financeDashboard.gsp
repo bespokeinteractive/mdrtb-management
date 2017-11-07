@@ -1,3 +1,8 @@
+<%
+    ui.decorateWith("appui", "standardEmrPage", [title: "Finance Dashboard"])
+%>
+
+
 <% if (view == "srs"){ %>
 	${ui.includeFragment("mdrtbmanagement", "dashboardsrs")}
 <% } else if (view == "wvgf") { %>
