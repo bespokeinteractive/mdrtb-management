@@ -1,7 +1,9 @@
 package org.openmrs.module.mdrtbmanagement.api;
 
+import org.openmrs.Location;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.openmrs.module.mdrtbmanagement.db.MdrtbFinanceServiceDAO;
+import org.openmrs.module.mdrtbmanagement.model.Budgets;
 import org.openmrs.module.mdrtbmanagement.model.Charts;
 
 import java.util.List;
@@ -43,5 +45,9 @@ public class MdrtbFinanceServiceImpl
 
     public List<Charts> getChildrenCharts(Charts chart){
         return dao.getChildrenCharts(chart);
+    }
+
+    public List<Budgets> getBudgets(List<Location> locations, Boolean drafts){
+        return dao.getBudgets(locations, drafts);
     }
 }

@@ -6,7 +6,9 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.openmrs.Location;
 import org.openmrs.api.db.DAOException;
+import org.openmrs.module.mdrtbmanagement.model.Budgets;
 import org.openmrs.module.mdrtbmanagement.model.Charts;
 
 import java.util.List;
@@ -45,6 +47,23 @@ public class HibernateMdrtbFinanceServiceDAO
         criteria.add(Restrictions.eq("voided", false));
         criteria.add(Restrictions.eq("chartsGroup", chart));
         criteria.add(Restrictions.isNotNull("chartsGroup"));
+
+        return criteria.list();
+    }
+
+    @Override
+    public List<Budgets> getBudgets(List<Location> locations, Boolean drafts){
+        Criteria criteria = getSession().createCriteria(Budgets.class);
+        if (drafts){
+            criteria.add(Restrictions.isNull("voided"));
+        }
+        else if(!drafts){
+            criteria.add(Restrictions.isNull("voided"));
+        }
+
+        if (locations != null){
+            criteria.add(Restrictions.in("location", locations));
+        }
 
         return criteria.list();
     }

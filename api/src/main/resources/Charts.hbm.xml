@@ -8,11 +8,11 @@
 		<id name="id" type="int" column="id" unsaved-value="0">
 				<generator class="native" />
 		</id>
-		<property name="name" column="name"  />
+		<property name="name" column="name" type="java.lang.String" />
 		<many-to-one name="chartsGroup" class="org.openmrs.module.mdrtbmanagement.model.Charts" column="charts_group" cascade="none" lazy="false" />
         <many-to-one name="voidedBy" class="org.openmrs.Person" column="voided_by" cascade="none"  />
-        <property name="voided" column="voided"  />
-        <property name="voidedOn" column="date_voided"  />
-        <property name="voidReason" column="void_reason"  />
+        <property name="voided" column="voided" type="java.lang.Boolean" />
+        <property name="voidedOn" column="date_voided" type="java.util.Date" />
+        <property name="voidReason" column="void_reason" type="java.lang.String" />
 	</class>
 </hibernate-mapping>

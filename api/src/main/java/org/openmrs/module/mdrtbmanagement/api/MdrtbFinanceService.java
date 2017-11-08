@@ -1,6 +1,8 @@
 package org.openmrs.module.mdrtbmanagement.api;
 
+import org.openmrs.Location;
 import org.openmrs.api.OpenmrsService;
+import org.openmrs.module.mdrtbmanagement.model.Budgets;
 import org.openmrs.module.mdrtbmanagement.model.Charts;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,4 +20,5 @@ public interface MdrtbFinanceService
     List<Charts> getParentCharts();
     List<Charts> getChildrenCharts(Charts chart);
 
+    List<Budgets> getBudgets(List<Location> locations, Boolean drafts);
 }

@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.openmrs.module.mdrtbmanagement.model">
+	<class name="Budgets" table="finance_budget" batch-size="500">
+		<id name="id" type="int" column="id" unsaved-value="0">
+				<generator class="native" />
+		</id>
+
+		<property name="dated" column="dated" type="java.util.Date"  />
+		<property name="period" column="period"  type="java.lang.String" />
+
+		<many-to-one name="location" class="org.openmrs.Location" column="location_id" cascade="none" lazy="false" />
+
+        <property name="amount" column="amount" type="java.lang.Double" />
+        <property name="description" column="description" type="java.lang.String" />
+
+        <property name="createdOn" column="created_on" type="java.util.Date" />
+        <many-to-one name="createdBy" class="org.openmrs.User" column="created_by" cascade="none" lazy="false" />
+
+        <property name="approvedOn" column="approved_on" type="java.util.Date" />
+        <many-to-one name="approvedBy" class="org.openmrs.User" column="approved_by" cascade="none" lazy="false" />
+
+		<many-to-one name="voidedBy" class="org.openmrs.Person" column="voided_by" cascade="none"  />
+        <property name="voided" column="voided" type="java.lang.Boolean" />
+        <property name="voidedOn" column="voided_on" type="java.util.Date" />
+        <property name="voidReason" column="void_reason" type="java.lang.String" />
+	</class>
+</hibernate-mapping>

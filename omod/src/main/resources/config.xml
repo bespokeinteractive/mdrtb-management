@@ -30,6 +30,12 @@
 	<!-- Module Activator -->
 	<activator>${project.parent.groupId}.${project.parent.artifactId}.MdrtbManagementModuleActivator</activator>
 
+	<!-- Maps hibernate file's, if present -->
+	<mappingFiles>
+		Budgets.hbm.xml
+		Charts.hbm.xml
+	</mappingFiles>
+
 	<!-- Internationalization -->
 	<!-- All message codes should start with ${project.parent.artifactId}. -->
 	<messages>
