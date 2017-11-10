@@ -1,10 +1,8 @@
 package org.openmrs.module.mdrtbmanagement.db;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.openmrs.Location;
 import org.openmrs.module.mdrtbmanagement.model.Budgets;
 import org.openmrs.module.mdrtbmanagement.model.Charts;
-
 import java.util.List;
 
 /**
@@ -16,5 +14,5 @@ public interface MdrtbFinanceServiceDAO {
     List<Charts> getChildrenCharts(Charts chart);
 
     List<Budgets> getBudgets(List<Location> locations, Boolean drafts);
-    List<Budgets> getFinalBudget(List<Location> locations, Boolean finals);
+    Budgets saveBudgets(Budgets budget);
 }

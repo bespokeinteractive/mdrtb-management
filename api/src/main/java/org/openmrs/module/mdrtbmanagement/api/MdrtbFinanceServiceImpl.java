@@ -50,7 +50,8 @@ public class MdrtbFinanceServiceImpl
     public List<Budgets> getBudgets(List<Location> locations, Boolean drafts){
         return dao.getBudgets(locations, drafts);
     }
-    public List<Budgets> getFinalBudgets(List<Location> locations, Boolean finals){
-       return dao.getFinalBudget(locations, finals);
+
+    public Budgets saveBudgets(Budgets budget){
+        return dao.saveBudgets(budget);
     }
 }

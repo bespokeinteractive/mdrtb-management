@@ -10,8 +10,6 @@ import org.openmrs.Location;
 import org.openmrs.api.db.DAOException;
 import org.openmrs.module.mdrtbmanagement.model.Budgets;
 import org.openmrs.module.mdrtbmanagement.model.Charts;
-
-import java.security.PublicKey;
 import java.util.List;
 
 /**
@@ -70,17 +68,11 @@ public class HibernateMdrtbFinanceServiceDAO
 
         return criteria.list();
     }
-    @Override
-    public List<Budgets> getFinalBudgets(List<Location> locations, Boolean finals){
-        Criteria criteria = getSession().createCriteria(Budgets.class);
-        if(finals){
-            criteria.add(Restrictions.isNotNull("approvedBy"));
-        }
-        if(locations !=null){
-            criteria.add(Restrictions.in("location",locations));
-        }
 
-        return criteria.list();
+    @Override
+    public Budgets saveBudgets(Budgets budget){
+        return (Budgets)getSession().merge(budget);
+
 
     }
 }
