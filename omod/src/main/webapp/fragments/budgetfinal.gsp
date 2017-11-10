@@ -1,5 +1,5 @@
 <script>
-    var finaltable;
+    var finalTable;
     var finalTableObject;
     var finalResultsData = [];
 
@@ -7,14 +7,14 @@
         draftTableObject.find('td.dataTables_empty').html('<span><img class="search-spinner" src="'+emr.resourceLink('uicommons', 'images/spinner.gif')+'" /></span>');
 
         var requestData = {
-            draft:	true
+            draft:	false
         }
 
         jq.getJSON('${ ui.actionLink("mdrtbmanagement", "financebudget", "listCurrentBudgets") }', requestData)
             .success(function (data) {
-                updateDraftBudgetResults(data);
+                updateFinalBudgetResults(data);
             }).error(function (xhr, status, err) {
-                updateDraftBudgetResults([]);
+                updateFinalBudgetResults([]);
             }
         );
     };

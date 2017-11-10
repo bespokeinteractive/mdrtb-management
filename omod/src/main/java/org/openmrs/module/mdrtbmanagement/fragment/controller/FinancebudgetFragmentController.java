@@ -6,6 +6,7 @@ import org.openmrs.module.mdrtbmanagement.api.MdrtbFinanceService;
 import org.openmrs.module.mdrtbmanagement.model.Budgets;
 import org.openmrs.ui.framework.SimpleObject;
 import org.openmrs.ui.framework.UiUtils;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,9 +17,12 @@ import java.util.List;
  * Created on 11/8/2017.
  */
 public class FinancebudgetFragmentController {
-    public List<SimpleObject> listCurrentBudgets(UiUtils ui){
+    public List<SimpleObject> listCurrentBudgets(@RequestParam(value = "draft") Boolean draft,
+                                                 UiUtils ui){
         List<Location> locations = new ArrayList<Location>();
-        List<Budgets> budgets = Context.getService(MdrtbFinanceService.class).getBudgets(null, true);
+        List<Budgets> budgets = Context.getService(MdrtbFinanceService.class).getBudgets(null, draft);
+
+        System.out.println("Test" + budgets.size());
 
         for (Location location: Context.getLocationService().getAllLocations()){
             locations.add(location);
@@ -29,19 +33,5 @@ public class FinancebudgetFragmentController {
         }
 
         return SimpleObject.fromCollection(Collections.EMPTY_LIST, ui);
-    }
-
-    public  List<SimpleObject> ListFinalBudgets(UiUtils ui){
-       List<Location> locations = new ArrayList<Location>();
-       List<Budgets> budgets = Context.getService(MdrtbFinanceService.class).getFinalBudgets(null,true);
-
-       for(Location location: Context.getLocationService().getAllLocations()){
-           locations.add(location);
-       }
-       if(budgets != null){
-         return SimpleObject.fromCollection(budgets,ui,"id","location.name","dated","period","amount");
-       }
-       return SimpleObject.fromCollection(Collections.EMPTY_LIST,ui);
-
     }
 }

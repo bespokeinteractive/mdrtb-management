@@ -56,6 +56,20 @@
 	#date-created label{
 		display: inline-block;
 	}
+	#budgetTable {
+		border-top: 2px solid #363463;
+		margin-top: 2px;
+		font-size: 14px;
+	}
+	#budgetTable tr th{
+		text-align: center;
+	}
+	#budgetTable tr td:nth-child(2),
+	#budgetTable tr td:nth-child(3),
+	#budgetTable tr td:nth-child(4),
+	#budgetTable tr td:nth-child(5){
+		text-align: right;
+	}
 </style>
 
 <div class="container">
@@ -134,6 +148,48 @@
 			<span class="clear both"></span>
 		</div>
 
+		<table id="budgetTable">
+			<thead>
+				<th style="text-align: left">CHART OF ACCOUNTS</th>
+				<th style="width:100px">SDA<br/>CODES</th>
+				<th style="width:100px">BAL<br/>B/F</th>
+				<th style="width:100px; text-align: center">QUARTER<br/>BUDGET</th>
+				<th style="width:80px">YEAR<br/>BUDGET</th>
+			</thead>
+
+			<tbody>
+				<% charts.eachWithIndex { chart, index -> %>
+					<% if (chart.hasChildren) { %>
+						<tr style="font-weight: bold">
+							<td colspan="2">${chart.name}</td>
+							<td>0.00</td>
+							<td>0.00</td>
+							<td>0.00</td>
+						</tr>
+						
+						<% chart.children.eachWithIndex { child, idx -> %>
+							<tr>
+								<td>&nbsp; &nbsp; ${child.name}</td>
+								<td style="text-align: center">${child.code}</td>
+								<td>0.00</td>
+								<td>0.00</td>
+								<td>0.00</td>
+							</tr>						
+						<% } %>
+						
+					<% } else { %>
+						<tr>
+							<td>${chart.name}</td>
+							<td>${chart.code}</td>
+							<td>0.00</td>
+							<td>0.00</td>
+							<td>0.00</td>
+						</tr>
+					<% } %>
+				<% } %>
+			</tbody>
+		</table>
         
     </div>
+	
 </div>

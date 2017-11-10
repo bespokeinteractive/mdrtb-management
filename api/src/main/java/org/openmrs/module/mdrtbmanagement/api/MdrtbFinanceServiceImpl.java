@@ -28,13 +28,21 @@ public class MdrtbFinanceServiceImpl
 
     public List<Charts> getCharts(){
         List<Charts> charts = getParentCharts();
-        for (Charts chart: charts){
+       /* for (Charts chart: charts){
             List<Charts> children = getChildrenCharts(chart);
             chart.setChildren(children);
             if (children != null){
                 chart.setHasChildren(true);
             }
-        }
+        }*/
+
+       for (int i=0; i<charts.size();i++){
+           List<Charts> children = getChildrenCharts(charts.get(i));
+           charts.get(i).setChildren(children);
+           if (children != null && children.size()>0){
+               charts.get(i).setHasChildren(true);
+           }
+       }
 
         return charts;
     }

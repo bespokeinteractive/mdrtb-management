@@ -72,7 +72,5 @@ public class HibernateMdrtbFinanceServiceDAO
     @Override
     public Budgets saveBudgets(Budgets budget){
         return (Budgets)getSession().merge(budget);
-
-
     }
 }

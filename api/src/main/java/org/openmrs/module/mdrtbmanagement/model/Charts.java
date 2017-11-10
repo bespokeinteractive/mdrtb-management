@@ -12,6 +12,7 @@ public class Charts {
     private static final long serialVersionUID = 1L;
 
     private int id;
+    private String code;
     private String name;
     protected Charts chartsGroup;
     private boolean voided;
@@ -38,6 +39,14 @@ public class Charts {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public Charts getChartsGroup() {

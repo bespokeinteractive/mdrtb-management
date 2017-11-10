@@ -8,6 +8,7 @@
 		<id name="id" type="int" column="id" unsaved-value="0">
 				<generator class="native" />
 		</id>
+		<property name="code" column="sda_codes" type="java.lang.String" />
 		<property name="name" column="name" type="java.lang.String" />
 		<many-to-one name="chartsGroup" class="org.openmrs.module.mdrtbmanagement.model.Charts" column="charts_group" cascade="none" lazy="false" />
         <many-to-one name="voidedBy" class="org.openmrs.User" column="voided_by" cascade="none"  />

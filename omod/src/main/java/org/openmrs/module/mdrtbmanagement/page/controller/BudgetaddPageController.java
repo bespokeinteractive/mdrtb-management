@@ -37,7 +37,7 @@ public class BudgetaddPageController {
         years.add(year-3);
         years.add(year-3);
 
-        List<Charts> charts = Context.getService(MdrtbFinanceService.class).getParentCharts();
+        List<Charts> charts = Context.getService(MdrtbFinanceService.class).getCharts();
 
         model.addAttribute("years", years);
         model.addAttribute("year", year);
