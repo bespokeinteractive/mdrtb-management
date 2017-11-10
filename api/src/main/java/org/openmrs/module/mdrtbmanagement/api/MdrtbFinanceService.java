@@ -21,4 +21,5 @@ public interface MdrtbFinanceService
     List<Charts> getChildrenCharts(Charts chart);
 
     List<Budgets> getBudgets(List<Location> locations, Boolean drafts);
+    List<Budgets> getFinalBudgets(List<Location> locations, Boolean finals);
 }

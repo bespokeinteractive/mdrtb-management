@@ -30,4 +30,18 @@ public class FinancebudgetFragmentController {
 
         return SimpleObject.fromCollection(Collections.EMPTY_LIST, ui);
     }
+
+    public  List<SimpleObject> ListFinalBudgets(UiUtils ui){
+       List<Location> locations = new ArrayList<Location>();
+       List<Budgets> budgets = Context.getService(MdrtbFinanceService.class).getFinalBudgets(null,true);
+
+       for(Location location: Context.getLocationService().getAllLocations()){
+           locations.add(location);
+       }
+       if(budgets != null){
+         return SimpleObject.fromCollection(budgets,ui,"id","location.name","dated","period","amount");
+       }
+       return SimpleObject.fromCollection(Collections.EMPTY_LIST,ui);
+
+    }
 }

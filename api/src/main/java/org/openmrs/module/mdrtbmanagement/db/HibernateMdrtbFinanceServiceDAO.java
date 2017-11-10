@@ -11,6 +11,7 @@ import org.openmrs.api.db.DAOException;
 import org.openmrs.module.mdrtbmanagement.model.Budgets;
 import org.openmrs.module.mdrtbmanagement.model.Charts;
 
+import java.security.PublicKey;
 import java.util.List;
 
 /**
@@ -55,7 +56,7 @@ public class HibernateMdrtbFinanceServiceDAO
     public List<Budgets> getBudgets(List<Location> locations, Boolean drafts){
         Criteria criteria = getSession().createCriteria(Budgets.class);
         if (drafts){
-            criteria.add(Restrictions.isNull("voided"));
+            criteria.add(Restrictions.isNull("approvedOn"));
         }
         else if(!drafts){
             criteria.add(Restrictions.isNull("voided"));
@@ -66,5 +67,18 @@ public class HibernateMdrtbFinanceServiceDAO
         }
 
         return criteria.list();
+    }
+    @Override
+    public List<Budgets> getFinalBudgets(List<Location> locations, Boolean finals){
+        Criteria criteria = getSession().createCriteria(Budgets.class);
+        if(finals){
+            criteria.add(Restrictions.isNotNull("approvedBy"));
+        }
+        if(locations !=null){
+            criteria.add(Restrictions.in("location",locations));
+        }
+
+        return criteria.list();
+
     }
 }
