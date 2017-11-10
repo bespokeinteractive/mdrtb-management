@@ -81,8 +81,6 @@
 	}
 </style>
 
-
-
 <div class="clear"></div>
 
 <div class="container">

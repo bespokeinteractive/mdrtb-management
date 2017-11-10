@@ -55,11 +55,13 @@ public class HibernateMdrtbFinanceServiceDAO
     @Override
     public List<Budgets> getBudgets(List<Location> locations, Boolean drafts){
         Criteria criteria = getSession().createCriteria(Budgets.class);
+        criteria.add(Restrictions.eq("voided", false));
+
         if (drafts){
             criteria.add(Restrictions.isNull("approvedOn"));
         }
         else if(!drafts){
-            criteria.add(Restrictions.isNull("voided"));
+            criteria.add(Restrictions.isNotNull("approvedOn"));
         }
 
         if (locations != null){
