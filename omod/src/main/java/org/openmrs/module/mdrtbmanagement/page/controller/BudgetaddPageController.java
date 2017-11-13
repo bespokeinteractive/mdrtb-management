@@ -5,7 +5,7 @@ import org.openmrs.api.context.Context;
 import org.openmrs.module.appui.UiSessionContext;
 import org.openmrs.module.mdrtb.service.MdrtbService;
 import org.openmrs.module.mdrtbmanagement.api.MdrtbFinanceService;
-import org.openmrs.module.mdrtbmanagement.model.Charts;
+import org.openmrs.module.mdrtbmanagement.Charts;
 import org.openmrs.ui.framework.page.PageModel;
 
 import java.util.*;
@@ -16,7 +16,12 @@ import java.util.*;
  */
 public class BudgetaddPageController {
     public String get(PageModel model,
-                      UiSessionContext sessionContext){
+                      UiSessionContext session){
+        if (!session.isAuthenticated()){
+            //return "redirect:" + uiUtils.pageLink("mdrtbmanagement", "financedashboard") + "?view=srs";
+            return "redirect: index.htm";
+        }
+
         List<Integer> years = new ArrayList<Integer>();
         Calendar cal = Calendar.getInstance();
         Integer year = cal.get(Calendar.YEAR);
@@ -43,7 +48,7 @@ public class BudgetaddPageController {
         model.addAttribute("year", year);
         model.addAttribute("qtrs", qtrs);
         model.addAttribute("charts", charts);
-        model.addAttribute("location", sessionContext.getSessionLocation());
+        model.addAttribute("location", session.getSessionLocation());
         model.addAttribute("locations", locations);
 
         return null;

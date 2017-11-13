@@ -1,4 +1,4 @@
-package org.openmrs.module.mdrtbmanagement.model;
+package org.openmrs.module.mdrtbmanagement;
 
 import org.openmrs.User;
 import java.util.Date;

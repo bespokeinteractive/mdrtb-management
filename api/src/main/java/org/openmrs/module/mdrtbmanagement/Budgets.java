@@ -1,7 +1,8 @@
-package org.openmrs.module.mdrtbmanagement.model;
+package org.openmrs.module.mdrtbmanagement;
 
 import org.openmrs.Location;
 import org.openmrs.User;
+import org.openmrs.api.context.Context;
 
 import java.util.Date;
 
@@ -26,6 +27,12 @@ public class Budgets {
     private Date voidedOn;
     private User voidedBy;
     private String voidReason;
+
+    public Budgets(){
+        this.voided = false;
+        this.createdOn = new Date();
+        this.createdBy = Context.getAuthenticatedUser();
+    }
 
     public int getId() {
         return id;

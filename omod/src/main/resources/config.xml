@@ -33,6 +33,7 @@
 	<!-- Maps hibernate file's, if present -->
 	<mappingFiles>
 		Budgets.hbm.xml
+		BudgetsItems.hbm.xml
 		Charts.hbm.xml
 	</mappingFiles>
 

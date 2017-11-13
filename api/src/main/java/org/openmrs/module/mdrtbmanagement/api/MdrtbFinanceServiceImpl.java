@@ -2,9 +2,10 @@ package org.openmrs.module.mdrtbmanagement.api;
 
 import org.openmrs.Location;
 import org.openmrs.api.impl.BaseOpenmrsService;
+import org.openmrs.module.mdrtbmanagement.BudgetsItems;
 import org.openmrs.module.mdrtbmanagement.db.MdrtbFinanceServiceDAO;
-import org.openmrs.module.mdrtbmanagement.model.Budgets;
-import org.openmrs.module.mdrtbmanagement.model.Charts;
+import org.openmrs.module.mdrtbmanagement.Budgets;
+import org.openmrs.module.mdrtbmanagement.Charts;
 
 import java.util.List;
 
@@ -26,15 +27,12 @@ public class MdrtbFinanceServiceImpl
         this.dao = dao;
     }
 
+    public Charts getChart(Integer item){
+        return dao.getChart(item);
+    }
+
     public List<Charts> getCharts(){
         List<Charts> charts = getParentCharts();
-       /* for (Charts chart: charts){
-            List<Charts> children = getChildrenCharts(chart);
-            chart.setChildren(children);
-            if (children != null){
-                chart.setHasChildren(true);
-            }
-        }*/
 
        for (int i=0; i<charts.size();i++){
            List<Charts> children = getChildrenCharts(charts.get(i));
@@ -61,5 +59,9 @@ public class MdrtbFinanceServiceImpl
 
     public Budgets saveBudgets(Budgets budget){
         return dao.saveBudgets(budget);
+    }
+
+    public BudgetsItems saveBudgetItems(BudgetsItems bi){
+        return dao.saveBudgetItems(bi);
     }
 }

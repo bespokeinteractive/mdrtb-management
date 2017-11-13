@@ -8,14 +8,16 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.openmrs.Location;
 import org.openmrs.api.db.DAOException;
-import org.openmrs.module.mdrtbmanagement.model.Budgets;
-import org.openmrs.module.mdrtbmanagement.model.Charts;
+import org.openmrs.module.mdrtbmanagement.Budgets;
+import org.openmrs.module.mdrtbmanagement.BudgetsItems;
+import org.openmrs.module.mdrtbmanagement.Charts;
 import java.util.List;
 
 /**
  * Created by Dennis Henry
  * Created on 11/6/2017.
  */
+
 public class HibernateMdrtbFinanceServiceDAO
         implements MdrtbFinanceServiceDAO {
     protected final Log log = LogFactory.getLog(getClass());
@@ -29,6 +31,14 @@ public class HibernateMdrtbFinanceServiceDAO
     }
     private Session getSession() {
         return sessionFactory.getCurrentSession();
+    }
+
+    @Override
+    public Charts getChart(Integer item){
+        Criteria criteria = getSession().createCriteria(Charts.class);
+        criteria.add(Restrictions.eq("id", item));
+
+        return  (Charts)criteria.uniqueResult();
     }
 
     @Override
@@ -72,5 +82,10 @@ public class HibernateMdrtbFinanceServiceDAO
     @Override
     public Budgets saveBudgets(Budgets budget){
         return (Budgets)getSession().merge(budget);
+    }
+
+    @Override
+    public BudgetsItems saveBudgetItems(BudgetsItems bi){
+        return (BudgetsItems)getSession().merge(bi);
     }
 }

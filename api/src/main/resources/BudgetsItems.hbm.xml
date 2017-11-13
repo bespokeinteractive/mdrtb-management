@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.openmrs.module.mdrtbmanagement">
+	<class name="org.openmrs.module.mdrtbmanagement.BudgetsItems" table="finance_budget_items" batch-size="500">
+		<id name="id" type="int" column="id" unsaved-value="0">
+				<generator class="native" />
+		</id>
+
+        <many-to-one name="budget" class="org.openmrs.module.mdrtbmanagement.Budgets" column="budget_id" cascade="none" lazy="false" />
+        <many-to-one name="item" class="org.openmrs.module.mdrtbmanagement.Charts" column="chart_id" cascade="none" lazy="false" />
+
+        <property name="budgetValue" column="draft_value"  type="float" />
+        <property name="budgetComment" column="draft_comment" type="java.lang.String" />
+
+        <property name="approvedValue" column="approved_value"  type="float" />
+        <property name="approvedComment" column="approved_comment" type="java.lang.String" />
+	</class>
+</hibernate-mapping>

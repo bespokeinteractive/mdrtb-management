@@ -1,9 +1,108 @@
-<% ui.decorateWith("appui", "standardEmrPage", [title: "Add Budget"]) %>
+<% 
+	ui.decorateWith("appui", "standardEmrPage", [title: "Add Budget"])
+	ui.includeJavascript("mdrtbdashboard", "moment.js")
+%>
 
 <script>
 	jq(function () {
+		jq('.textable').on("change", "input", function() {
+			var val = jq(this).val();
+			var sum = 0;
+			var tot = 0;
+			var parent = "";
+			
+			jq(this).val(val.toString().formatToAccounting());
+			
+			jq(".textable input").each(function(){
+				val = jq(this).val();
+				
+				if (!isNaN(parseFloat(val)) && isFinite(val) && val > 0) {
+					sum += +val;
+				}
+				else {
+					val = 0;
+				}
+				
+				//Groups
+				if (jq(this).hasClass('child')){
+					if (parent == ''){
+						parent = jq(this).data('uuid');
+						tot = +val;
+					}
+					else if(parent == jq(this).data('uuid')){
+						tot += +val;
+					}
+					else {
+						jq(".parent_"+parent).text(tot.toString().formatToAccounting());
+						
+						tot = +val;
+						parent = jq(this).data('uuid');
+					}
+				}
+				else {
+					jq(".parent_"+parent).text(tot.toString().formatToAccounting());
+					
+					tot = 0;
+					parent = '';
+				}
+			});
+			
+			jq(".parent_"+parent).text(tot.toString().formatToAccounting());
+			jq("#totals").val(sum.toString().formatToAccounting());
+		});
 		
+		var confirmDialog = emr.setupConfirmationDialog({
+            dialogOpts: {
+                overlayClose: false,
+                close: true
+            },
+            selector: '#confirm-dialog',
+            actions: {
+                confirm: function () {
+                    var dataString = jq('form').serialize();
+
+                    jq.ajax({
+                        type: "POST",
+                        url: '${ui.actionLink("mdrtbmanagement", "financebudget", "addNewBudget")}',
+                        data: dataString,
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.status == "success") {
+                                jq().toastmessage('showSuccessToast', data.message);
+                                window.location.href = "financebudget.page";
+                            }
+                            else {
+                                jq().toastmessage('showErrorToast', 'x:' + data.message);
+                            }
+                        },
+                        error: function (data) {
+                            jq().toastmessage('showErrorToast', "Post Failed. " + data.statusText);
+                        }
+                    });
+
+
+                    confirmDialog.close();
+                },
+                cancel: function () {
+                    confirmDialog.close();
+                }
+            }
+        });
 		
+		jq('#cancelButton').click(function(){
+			window.location.href = "budgetadd.page?reset=true";
+		});
+		
+		jq('#addBudget').click(function(){
+			if (parseFloat(jq('#totals').val()) <= 0){
+				jq().toastmessage('showErrorToast', 'Invalid Total Amount for the specified Budget');
+				return false;
+			}
+			
+			jq('.dialog-content .confirmation').html("Confirm posting new Budget for <b>" + jq('#facility option:selected').text() + " Facility</b> worth <b>&dollar;" + jq('#totals').val()+"</b> ?");
+			
+			confirmDialog.show();
+		});
 		
 		jq("#qtr").val(${qtrs});
 	});
@@ -49,7 +148,7 @@
 	}
 	textarea{
 		resize: none;
-		height: 100px;
+		height: 120px;
 		margin-top: 2px;
 		width: 400px;
 	}
@@ -69,6 +168,30 @@
 	#budgetTable tr td:nth-child(4),
 	#budgetTable tr td:nth-child(5){
 		text-align: right;
+	}
+	.textable{
+		padding:0;
+	}
+	#totals,
+	.textable input {
+		background-color: transparent;
+		margin: 0px;
+		border: none;
+		width: 100px;
+		height: auto;
+		text-align: right;
+	}
+	#totals {
+		font-weight: bold;
+	}
+	input.child{
+		padding-right: 20px;
+	}
+	.button.confirm{
+		margin-right:0px;
+	}
+	.dialog-content .confirmation{
+		margin-bottom: 20px;
 	}
 </style>
 
@@ -92,12 +215,12 @@
 
             <li>
                 <i class="icon-chevron-right link"></i>
-                Add Budget${qtrs}
+                Add Budget
             </li>
         </ul>
     </div>
 
-    <div class="patient-header new-patient-header">
+    <form class="patient-header new-patient-header">
         <div class="demographics">
             <h1 class="name" style="border-bottom: 1px solid #ddd;">
                 <span><i class="icon-paste small"></i>ADD BUDGET &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span>
@@ -113,36 +236,35 @@
 				${ui.includeFragment("uicommons", "field/datetimepicker", [formFieldName: 'budget.date', id: 'date-created', label: 'Date:', useTime: false, defaultToday: true])}
 			</div>
 			
-			<div style="width: 63%;">
-				<label>Facility</label>
-				<select id="facility" style="width: 400px;">
-					<option value="">&nbsp;</option>
-					<% locations.eachWithIndex { loc, index -> %>
-						<option value="${loc.id}" ${loc==location?'selected':''} '>${loc.name}</option>
-					<% } %>
-				</select>
+			<div style="width: 63%; float: right">
+				<label style="display: inline-block">Notes</label>
+				<textarea name="budget.description" style="min-width: 0;display: inline-block;margin-top: 5px;"></textarea>
 			</div>
+			
 			
 			<div>
 				<label>Quarter</label>
-				<select id="qtr" style="width:70px">
+				<select name="budget.quarter" id="qtr" style="width:70px">
 					<option value="1">01</option>
 					<option value="2">02</option>
 					<option value="3">03</option>
 					<option value="4">04</option>
 				</select>
 				
-				<select id="yrs" style="width:157px">
-					<option value="">&nbsp;</option>
+				<select name="budget.year" id="yrs" style="width:157px">
 					<% years.eachWithIndex { yr, index -> %>
 						<option value="${yr}" ${yr==year?'selected':''}  '>${yr}</option>
 					<% } %>
 				</select>
 			</div>
 			
-			<div style="width: 63%;">
-				<label>Notes</label>
-				<textarea></textarea>
+			<div>
+				<label>Facility</label>
+				<select id="facility" name="budget.facility">
+					<% locations.eachWithIndex { loc, index -> %>
+						<option value="${loc.id}" ${loc==location?'selected':''} '>${loc.name}</option>
+					<% } %>
+				</select>
 			</div>
 			
 			<span class="clear both"></span>
@@ -163,16 +285,16 @@
 						<tr style="font-weight: bold">
 							<td colspan="2">${chart.name}</td>
 							<td>0.00</td>
-							<td>0.00</td>
+							<td class="parent_${chart.id}">0.00</td>
 							<td>0.00</td>
 						</tr>
 						
 						<% chart.children.eachWithIndex { child, idx -> %>
 							<tr>
-								<td>&nbsp; &nbsp; ${child.name}</td>
+								<td>&nbsp; &mdash; ${child.name}</td>
 								<td style="text-align: center">${child.code}</td>
 								<td>0.00</td>
-								<td>0.00</td>
+								<td class="textable"><input type="text" class="child" data-uuid="${chart.id}" name="item.${child.id}"/></td>
 								<td>0.00</td>
 							</tr>						
 						<% } %>
@@ -182,14 +304,49 @@
 							<td>${chart.name}</td>
 							<td>${chart.code}</td>
 							<td>0.00</td>
-							<td>0.00</td>
+							<td class="textable"><input type="text" name="item.${chart.id}"/></td>
 							<td>0.00</td>
 						</tr>
 					<% } %>
 				<% } %>
+				
+				<tr style="font-weight: bold; font-size: 1.2em">
+					<td colspan="2">TOTALS</td>
+					<td>0.00</td>
+					<td style="padding:0"><input id="totals" type="text" name="budget.amount" value="0.00" readonly="" /></td>
+					<td>0.00</td>
+				</tr>
 			</tbody>
 		</table>
+		
+		<div style="margin: 5px 0 10px;">
+			<span class="button confirm right" id="addBudget">
+                <i class="icon-save small"></i>
+                Save
+            </span>
+			
+			<span class="button cancel" id="cancelButton">
+                <i class="icon-remove small"></i>			
+				Cancel
+			</span>
+		</div>
         
+    </form>
+</div>
+
+<div id="confirm-dialog" class="dialog" style="display:none;">
+    <div class="dialog-header">
+        <i class="icon-folder-open"></i>
+
+        <h3>CONFIRM POSTING</h3>
     </div>
-	
+
+    <div class="dialog-content">
+        <div class="confirmation">
+			Confirm
+		</div>
+
+        <label class="button confirm right">Confirm</label>
+        <label class="button cancel">Cancel</label>
+    </div>
 </div>
