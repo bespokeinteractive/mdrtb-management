@@ -18,6 +18,7 @@ public class Budgets {
     private String period;
     private Location location;
     private Double amount;
+    private Double approved;
     private String description;
     private Date createdOn;
     private User createdBy;
@@ -72,6 +73,14 @@ public class Budgets {
 
     public void setAmount(Double amount) {
         this.amount = amount;
+    }
+
+    public Double getApproved() {
+        return approved;
+    }
+
+    public void setApproved(Double approved) {
+        this.approved = approved;
     }
 
     public String getDescription() {
