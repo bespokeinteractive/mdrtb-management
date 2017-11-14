@@ -24,9 +24,9 @@
         var dataRows = [];
         _.each(finalResultsData, function(result){
             var facility = '<a href="budgetedit.page?id=' + result.id + '">' + result.location.name + '</a>';
-            var icons = '<a href="budgetedit.page?id=' + result.id + '">Edit</a> | <a href="budgetview.page?id=' + result.id + '">View</a>';
+            var icons = '<a href="budgetview.page?id=' + result.id + '"><i class="icon-copy small"> </i>View</a>';
 
-            dataRows.push([0, result.dated, result.period, facility, result.amount.toString().formatToAccounting(), icons]);
+            dataRows.push([0, result.dated, result.period, facility, result.approvedOn, result.approved.toString().formatToAccounting(), icons]);
         });
 
         finalTable.api().clear();
@@ -104,6 +104,7 @@
     <th style="width:100px">DATE</th>
     <th style="width:100px">QUARTER</th>
     <th>FACILITY</th>
+    <th style="width:110px">APPROVED ON</th>
     <th style="width:100px; text-align: right">AMOUNT</th>
     <th style="width:80px">ACTIONS</th>
     </thead>

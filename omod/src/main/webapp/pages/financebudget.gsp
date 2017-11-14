@@ -79,6 +79,13 @@
 	#draftList td:nth-child(5){
 		text-align: right;
 	}
+	#finalList td:nth-child(6) {
+		text-align: right;
+	}
+	#draftList td:nth-child(6),
+	#finalList td:nth-child(7) {
+		text-align: center;
+	}
 </style>
 
 <div class="clear"></div>

@@ -7,7 +7,6 @@ import org.openmrs.module.mdrtbmanagement.BudgetsItems;
 import org.openmrs.module.mdrtbmanagement.Charts;
 import org.openmrs.module.mdrtbmanagement.api.MdrtbFinanceService;
 import org.openmrs.module.mdrtbmanagement.Budgets;
-import org.openmrs.module.mdrtbmanagement.util.BudgetItemsModel;
 import org.openmrs.module.mdrtbmanagement.util.BudgetResultWrapper;
 import org.openmrs.ui.framework.SimpleObject;
 import org.openmrs.ui.framework.UiUtils;
@@ -35,7 +34,7 @@ public class FinancebudgetFragmentController {
         }
 
         if (budgets!=null){
-            return SimpleObject.fromCollection(budgets, ui, "id", "location.name", "dated", "period", "amount");
+            return SimpleObject.fromCollection(budgets, ui, "id", "location.name", "dated", "period", "amount", "approved", "approvedOn");
         }
 
         return SimpleObject.fromCollection(Collections.EMPTY_LIST, ui);
@@ -121,8 +120,6 @@ public class FinancebudgetFragmentController {
         }
 
         this.financeService.saveBudgets(budget);
-
-
         return SimpleObject.create("status", "success", "message", "Facility Budget has been updated successfully");
     }
 }
