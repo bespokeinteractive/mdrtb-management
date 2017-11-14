@@ -11,7 +11,7 @@
 			var tot = 0;
 			var parent = "";
 			
-			jq(this).val(val.toString().formatToAccounting());
+			jq(this).val(val.toString().formatToAccounting()!='NaN'?val.toString().formatToAccounting():'');
 			
 			jq(".textable input").each(function(){
 				val = jq(this).val();
@@ -72,11 +72,11 @@
                                 window.location.href = "financebudget.page";
                             }
                             else {
-                                jq().toastmessage('showErrorToast', 'x:' + data.message);
+                                jq().toastmessage('showErrorToast', 'Post failed. ' + data.message);
                             }
                         },
                         error: function (data) {
-                            jq().toastmessage('showErrorToast', "Post Failed. " + data.statusText);
+                            jq().toastmessage('showErrorToast', "Post failed. " + data.statusText);
                         }
                     });
 

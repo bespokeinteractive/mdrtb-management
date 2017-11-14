@@ -1,1 +1,0 @@
-<% ui.decorateWith("appui", "standardEmrPage", [title: "Add Budget"]) %>

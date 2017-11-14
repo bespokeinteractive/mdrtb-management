@@ -7,12 +7,21 @@ import java.util.Date;
  * Created on 11/13/2017.
  */
 public class BudgetResultWrapper {
+    Integer id;
     Date date;
     Integer facility;
     Integer quarter;
     Integer year;
     Double amount;
     String description;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Date getDate() {
         return date;

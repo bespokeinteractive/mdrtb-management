@@ -80,12 +80,51 @@ public class HibernateMdrtbFinanceServiceDAO
     }
 
     @Override
+    public Budgets getBudget(Integer id){
+        Criteria criteria = getSession().createCriteria(Budgets.class);
+        criteria.add(Restrictions.eq("id", id));
+
+        return  (Budgets)criteria.uniqueResult();
+    }
+
+    @Override
+    public Budgets getBudget(String period, Location location){
+        Criteria criteria = getSession().createCriteria(Budgets.class);
+        criteria.add(Restrictions.eq("period", period));
+        criteria.add(Restrictions.eq("location", location));
+
+        return  (Budgets)criteria.uniqueResult();
+    }
+
+    @Override
     public Budgets saveBudgets(Budgets budget){
         return (Budgets)getSession().merge(budget);
     }
 
     @Override
+    public List<BudgetsItems> getBudgetItems(Budgets budget){
+        Criteria criteria = getSession().createCriteria(BudgetsItems.class);
+        criteria.add(Restrictions.eq("budget", budget));
+
+        return criteria.list();
+    }
+
+    @Override
+    public BudgetsItems getBudgetItem(Budgets budget, Charts item){
+        Criteria criteria = getSession().createCriteria(BudgetsItems.class);
+        criteria.add(Restrictions.eq("budget", budget));
+        criteria.add(Restrictions.eq("item", item));
+
+        return (BudgetsItems)criteria.uniqueResult();
+    }
+
+    @Override
     public BudgetsItems saveBudgetItems(BudgetsItems bi){
         return (BudgetsItems)getSession().merge(bi);
+    }
+
+    @Override
+    public void deleteBudgetItems(BudgetsItems bi){
+        getSession().delete(bi);
     }
 }

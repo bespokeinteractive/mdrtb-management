@@ -23,6 +23,7 @@ public class Charts {
     /*Not Persistence in the DATABASE*/
     private Boolean hasChildren;
     private List<Charts> children;
+    private float value;
 
     /*Getters and Setters*/
     public int getId() {
@@ -103,5 +104,13 @@ public class Charts {
 
     public void setHasChildren(Boolean hasChildren) {
         this.hasChildren = hasChildren;
+    }
+
+    public float getValue() {
+        return value;
+    }
+
+    public void setValue(float value) {
+        this.value = value;
     }
 }

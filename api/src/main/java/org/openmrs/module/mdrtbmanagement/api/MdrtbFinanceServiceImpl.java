@@ -40,6 +40,9 @@ public class MdrtbFinanceServiceImpl
            if (children != null && children.size()>0){
                charts.get(i).setHasChildren(true);
            }
+           else {
+               charts.get(i).setHasChildren(false);
+           }
        }
 
         return charts;
@@ -57,11 +60,31 @@ public class MdrtbFinanceServiceImpl
         return dao.getBudgets(locations, drafts);
     }
 
+    public Budgets getBudget(Integer id){
+        return dao.getBudget(id);
+    }
+
+    public Budgets getBudget(String period, Location location){
+        return dao.getBudget(period, location);
+    }
+
     public Budgets saveBudgets(Budgets budget){
         return dao.saveBudgets(budget);
     }
 
+    public List<BudgetsItems> getBudgetItems(Budgets budget){
+        return dao.getBudgetItems(budget);
+    }
+
+    public BudgetsItems getBudgetItem(Budgets budget, Charts item){
+        return dao.getBudgetItem(budget, item);
+    }
+
     public BudgetsItems saveBudgetItems(BudgetsItems bi){
         return dao.saveBudgetItems(bi);
+    }
+
+    public void deleteBudgetItems(BudgetsItems bi){
+        dao.deleteBudgetItems(bi);
     }
 }

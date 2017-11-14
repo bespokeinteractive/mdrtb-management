@@ -17,6 +17,12 @@ public interface MdrtbFinanceServiceDAO {
     List<Charts> getChildrenCharts(Charts chart);
 
     List<Budgets> getBudgets(List<Location> locations, Boolean drafts);
+    Budgets getBudget(Integer id);
+    Budgets getBudget(String period, Location location);
     Budgets saveBudgets(Budgets budget);
+
+    List<BudgetsItems> getBudgetItems(Budgets budget);
+    BudgetsItems getBudgetItem(Budgets budget, Charts item);
     BudgetsItems saveBudgetItems(BudgetsItems bi);
+    void deleteBudgetItems(BudgetsItems bi);
 }

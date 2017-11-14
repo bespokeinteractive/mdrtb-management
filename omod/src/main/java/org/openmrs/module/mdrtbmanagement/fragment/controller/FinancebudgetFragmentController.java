@@ -4,6 +4,7 @@ import org.apache.commons.lang.StringUtils;
 import org.openmrs.Location;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.mdrtbmanagement.BudgetsItems;
+import org.openmrs.module.mdrtbmanagement.Charts;
 import org.openmrs.module.mdrtbmanagement.api.MdrtbFinanceService;
 import org.openmrs.module.mdrtbmanagement.Budgets;
 import org.openmrs.module.mdrtbmanagement.util.BudgetItemsModel;
@@ -44,12 +45,20 @@ public class FinancebudgetFragmentController {
                                      HttpServletRequest request)
             throws SecurityException, IllegalArgumentException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         Location location = Context.getLocationService().getLocation(wrapper.getFacility());
+        String period = "0"+wrapper.getQuarter() + "-" + wrapper.getYear();
 
         //Save Items
-        Budgets budget = new Budgets();
+        Budgets budget = financeService.getBudget(period, location);
+        if (budget == null){
+            budget = new Budgets();
+        }
+        else {
+            return SimpleObject.create("status", "failed", "message", "Facility Budget for that period already exsists");
+        }
+
         budget.setDated(wrapper.getDate());
         budget.setLocation(location);
-        budget.setPeriod("0"+wrapper.getQuarter() + "-" + wrapper.getYear());
+        budget.setPeriod(period);
         budget.setAmount(wrapper.getAmount());
         budget.setDescription(wrapper.getDescription());
 
@@ -70,5 +79,46 @@ public class FinancebudgetFragmentController {
         }
 
         return SimpleObject.create("status", "success", "message", "Facility Budget has been added successfully");
+    }
+
+    public SimpleObject updateBudget(@BindParams("budget") BudgetResultWrapper wrapper,
+                                     HttpServletRequest request){
+        Location location = Context.getLocationService().getLocation(wrapper.getFacility());
+        Budgets budget = financeService.getBudget(wrapper.getId());
+        budget.setDated(wrapper.getDate());
+        budget.setLocation(location);
+        budget.setPeriod("0"+wrapper.getQuarter() + "-" + wrapper.getYear());
+        budget.setAmount(wrapper.getAmount());
+        budget.setDescription(wrapper.getDescription());
+
+        List<BudgetsItems> model = new ArrayList<BudgetsItems>();
+
+        for (Map.Entry<String, String[]> params : ((Map<String, String[]>) request.getParameterMap()).entrySet()) {
+            if (StringUtils.contains(params.getKey(), "item.")) {
+                Charts item = financeService.getChart(Integer.parseInt(params.getKey().substring("item.".length())));
+                BudgetsItems bi = financeService.getBudgetItem(budget, item);
+                String value = params.getValue()[0];
+
+                if (StringUtils.isBlank(value) || value.equals("NaN") || Float.parseFloat(value) == 0){
+                    if (bi != null){
+                        this.financeService.deleteBudgetItems(bi);
+                    }
+                }
+                else {
+                    if (bi == null){
+                        bi = new BudgetsItems(budget);
+                    }
+                    bi.setItem(item);
+                    bi.setBudgetValue(Float.parseFloat(value));
+                    this.financeService.saveBudgetItems(bi);
+                }
+
+            }
+        }
+
+        this.financeService.saveBudgets(budget);
+
+
+        return SimpleObject.create("status", "success", "message", "Facility Budget has been updated successfully");
     }
 }
