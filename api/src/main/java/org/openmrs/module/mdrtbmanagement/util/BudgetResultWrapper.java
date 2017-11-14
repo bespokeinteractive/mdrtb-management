@@ -12,7 +12,7 @@ public class BudgetResultWrapper {
     Integer facility;
     Integer quarter;
     Integer year;
-    Double amount;
+    String amount;
     String description;
 
     public Integer getId() {
@@ -55,11 +55,11 @@ public class BudgetResultWrapper {
         this.year = year;
     }
 
-    public Double getAmount() {
+    public String getAmount() {
         return amount;
     }
 
-    public void setAmount(Double amount) {
+    public void setAmount(String amount) {
         this.amount = amount;
     }
 

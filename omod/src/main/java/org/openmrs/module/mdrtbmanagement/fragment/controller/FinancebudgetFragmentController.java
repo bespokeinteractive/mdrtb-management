@@ -58,14 +58,14 @@ public class FinancebudgetFragmentController {
         budget.setDated(wrapper.getDate());
         budget.setLocation(location);
         budget.setPeriod(period);
-        budget.setAmount(wrapper.getAmount());
+        budget.setAmount(new Double(wrapper.getAmount().replace(",", "")));
         budget.setDescription(wrapper.getDescription());
 
         budget = financeService.saveBudgets(budget);
 
         for (Map.Entry<String, String[]> params : ((Map<String, String[]>) request.getParameterMap()).entrySet()) {
             if (StringUtils.contains(params.getKey(), "item.")) {
-                String value = params.getValue()[0];
+                String value = params.getValue()[0].replace(",", "");
                 if (StringUtils.isBlank(value) || value.equals("NaN")){
                    continue;
                 }
@@ -91,7 +91,7 @@ public class FinancebudgetFragmentController {
         budget.setDated(wrapper.getDate());
         budget.setLocation(location);
         budget.setPeriod("0"+wrapper.getQuarter() + "-" + wrapper.getYear());
-        budget.setAmount(wrapper.getAmount());
+        budget.setAmount(new Double(wrapper.getAmount().replace(",", "")));
         budget.setDescription(wrapper.getDescription());
 
         List<BudgetsItems> model = new ArrayList<BudgetsItems>();
@@ -100,7 +100,7 @@ public class FinancebudgetFragmentController {
             if (StringUtils.contains(params.getKey(), "item.")) {
                 Charts item = financeService.getChart(Integer.parseInt(params.getKey().substring("item.".length())));
                 BudgetsItems bi = financeService.getBudgetItem(budget, item);
-                String value = params.getValue()[0];
+                String value = params.getValue()[0].replace(",", "");
 
                 if (StringUtils.isBlank(value) || value.equals("NaN") || Float.parseFloat(value) == 0){
                     if (bi != null){
@@ -115,7 +115,6 @@ public class FinancebudgetFragmentController {
                     bi.setBudgetValue(Float.parseFloat(value));
                     this.financeService.saveBudgetItems(bi);
                 }
-
             }
         }
 

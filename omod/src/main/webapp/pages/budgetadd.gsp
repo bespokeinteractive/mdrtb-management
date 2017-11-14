@@ -14,7 +14,7 @@
 			jq(this).val(val.toString().formatToAccounting()!='NaN'?val.toString().formatToAccounting():'');
 			
 			jq(".textable input").each(function(){
-				val = jq(this).val();
+				val = jq(this).val().replace(',','').replace(' ','');;
 				
 				if (!isNaN(parseFloat(val)) && isFinite(val) && val > 0) {
 					sum += +val;
@@ -192,6 +192,10 @@
 	}
 	.dialog-content .confirmation{
 		margin-bottom: 20px;
+	}
+	#modal-overlay {
+		background: #000 none repeat scroll 0 0;
+		opacity: 0.3 !important;
 	}
 </style>
 
