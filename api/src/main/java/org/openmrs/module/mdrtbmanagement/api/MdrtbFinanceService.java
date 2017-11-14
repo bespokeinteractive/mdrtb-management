@@ -5,6 +5,7 @@ import org.openmrs.api.OpenmrsService;
 import org.openmrs.module.mdrtbmanagement.Budgets;
 import org.openmrs.module.mdrtbmanagement.BudgetsItems;
 import org.openmrs.module.mdrtbmanagement.Charts;
+import org.openmrs.module.mdrtbmanagement.Disbursements;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -31,4 +32,6 @@ public interface MdrtbFinanceService
     BudgetsItems getBudgetItem(Budgets budget, Charts item);
     BudgetsItems saveBudgetItems(BudgetsItems bi);
     void deleteBudgetItems(BudgetsItems bi);
+
+    List<Disbursements> getDisbursements(List<Location> locations, Boolean approved);
 }

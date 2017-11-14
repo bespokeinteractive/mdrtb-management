@@ -4,6 +4,8 @@ import org.openmrs.Location;
 import org.openmrs.module.mdrtbmanagement.Budgets;
 import org.openmrs.module.mdrtbmanagement.BudgetsItems;
 import org.openmrs.module.mdrtbmanagement.Charts;
+import org.openmrs.module.mdrtbmanagement.Disbursements;
+
 import java.util.List;
 
 /**
@@ -25,4 +27,6 @@ public interface MdrtbFinanceServiceDAO {
     BudgetsItems getBudgetItem(Budgets budget, Charts item);
     BudgetsItems saveBudgetItems(BudgetsItems bi);
     void deleteBudgetItems(BudgetsItems bi);
+
+    List<Disbursements> getDisbursements(List<Location> locations, Boolean approved);
 }

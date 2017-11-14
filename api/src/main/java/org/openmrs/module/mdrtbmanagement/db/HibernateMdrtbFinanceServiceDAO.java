@@ -11,6 +11,8 @@ import org.openmrs.api.db.DAOException;
 import org.openmrs.module.mdrtbmanagement.Budgets;
 import org.openmrs.module.mdrtbmanagement.BudgetsItems;
 import org.openmrs.module.mdrtbmanagement.Charts;
+import org.openmrs.module.mdrtbmanagement.Disbursements;
+
 import java.util.List;
 
 /**
@@ -126,5 +128,24 @@ public class HibernateMdrtbFinanceServiceDAO
     @Override
     public void deleteBudgetItems(BudgetsItems bi){
         getSession().delete(bi);
+    }
+
+    @Override
+    public List<Disbursements> getDisbursements(List<Location> locations, Boolean approved){
+        Criteria criteria = getSession().createCriteria(Disbursements.class);
+        criteria.add(Restrictions.eq("voided", false));
+
+        if (approved){
+            criteria.add(Restrictions.isNull("approvedOn"));
+        }
+        else if(!approved){
+            criteria.add(Restrictions.isNotNull("approvedOn"));
+        }
+
+        if (locations != null){
+            criteria.add(Restrictions.in("location", locations));
+        }
+
+        return criteria.list();
     }
 }

@@ -3,6 +3,7 @@ package org.openmrs.module.mdrtbmanagement.api;
 import org.openmrs.Location;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.openmrs.module.mdrtbmanagement.BudgetsItems;
+import org.openmrs.module.mdrtbmanagement.Disbursements;
 import org.openmrs.module.mdrtbmanagement.db.MdrtbFinanceServiceDAO;
 import org.openmrs.module.mdrtbmanagement.Budgets;
 import org.openmrs.module.mdrtbmanagement.Charts;
@@ -86,5 +87,9 @@ public class MdrtbFinanceServiceImpl
 
     public void deleteBudgetItems(BudgetsItems bi){
         dao.deleteBudgetItems(bi);
+    }
+
+    public List<Disbursements> getDisbursements(List<Location> locations, Boolean approved){
+        return dao.getDisbursements(locations, approved);
     }
 }
