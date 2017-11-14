@@ -85,6 +85,10 @@ public class FinancebudgetFragmentController {
                                      HttpServletRequest request){
         Location location = Context.getLocationService().getLocation(wrapper.getFacility());
         Budgets budget = financeService.getBudget(wrapper.getId());
+        if (budget.getApprovedOn() != null){
+            return SimpleObject.create("status", "failed", "message", "Facility Budget already approved. You can't edit an approved budget");
+        }
+
         budget.setDated(wrapper.getDate());
         budget.setLocation(location);
         budget.setPeriod("0"+wrapper.getQuarter() + "-" + wrapper.getYear());
