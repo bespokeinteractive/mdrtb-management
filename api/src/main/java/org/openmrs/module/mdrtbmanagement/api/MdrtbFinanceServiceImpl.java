@@ -92,4 +92,12 @@ public class MdrtbFinanceServiceImpl
     public List<Disbursements> getDisbursements(List<Location> locations, Boolean approved){
         return dao.getDisbursements(locations, approved);
     }
+
+    public Disbursements getDisbursement(Integer id){
+        return dao.getDisbursement(id);
+    }
+
+    public Disbursements saveDisbursement(Disbursements disbursement){
+        return dao.saveDisbursement(disbursement);
+    }
 }

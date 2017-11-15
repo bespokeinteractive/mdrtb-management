@@ -7,14 +7,14 @@
         requestTableObject.find('td.dataTables_empty').html('<span><img class="search-spinner" src="'+emr.resourceLink('uicommons', 'images/spinner.gif')+'" /></span>');
 		
 		var requestData = {
-			draft:	true
+			approved: false
 		}
 		
-		jq.getJSON('${ ui.actionLink("mdrtbmanagement", "financebudget", "listCurrentBudgets") }', requestData)
+		jq.getJSON('${ ui.actionLink("mdrtbmanagement", "cashdisbursement", "listCashDisbursements") }', requestData)
 			.success(function (data) {
                 updateCashDisbursementResults(data);
 			}).error(function (xhr, status, err) {
-            updateCashDisbursementResults([]);
+				updateCashDisbursementResults([]);
 			}
 		);
 	};
@@ -23,10 +23,10 @@
         requestResultsData = results || [];
 		var dataRows = [];
 		_.each(requestResultsData, function(result){
-			var facility = '<a href="budgetedit.page?id=' + result.id + '">' + result.location.name + '</a>';
-			var icons = '<a href="budgetedit.page?id=' + result.id + '">Edit</a> | <a href="budgetview.page?id=' + result.id + '">View</a>';
+			var agency = '<a href="disbursementedit.page?id=' + result.id + '">' + result.agency.name + '</a>';
+			var icons = '<a href="disbursementedit.page?id=' + result.id + '">Edit</a> | <a href="disbursementview.page?id=' + result.id + '">View</a>';
 			
-			dataRows.push([0, result.dated, result.period, facility, result.amount.toString().formatToAccounting(), icons]);
+			dataRows.push([0, result.date, result.period, agency, result.amount.toString().formatToAccounting(), result.estimate.toString().formatToAccounting(), icons]);
 		});
 
         requestTable.api().clear();
@@ -39,7 +39,7 @@
 	};
 
     jq(function () {
-        requestTableObject = jq("#disbursementrequestlist");
+        requestTableObject = jq("#requestList");
 
         requestTable = requestTableObject.dataTable({
 			autoWidth: false,
@@ -98,14 +98,14 @@
     </div>
 </div>
 
-<table id="disbursementrequestlist">
+<table id="requestList">
     <thead>
 		<th style="width:1px">#</th>
 		<th style="width:100px">DATE</th>
 		<th style="width:100px">QUARTER</th>
 		<th>SUB-RECIPIENT</th>
-	    <th style="text-align: right; width: 80px;">ESTIMATE</th>
-		<th style="width:125px; text-align: right">ACTUAL <br/> AMOUNT</th>
+		<th style="width:100px;">REQUESTED</th>
+	    <th style="width:100px;">ADJ ESTIMATE</th>
 		<th style="width:80px">ACTIONS</th>
     </thead>
 

@@ -135,11 +135,11 @@ public class HibernateMdrtbFinanceServiceDAO
         Criteria criteria = getSession().createCriteria(Disbursements.class);
         criteria.add(Restrictions.eq("voided", false));
 
-        if (approved){
-            criteria.add(Restrictions.isNull("approvedOn"));
-        }
-        else if(!approved){
+        if (approved != null && approved){
             criteria.add(Restrictions.isNotNull("approvedOn"));
+        }
+        else if(approved != null && !approved){
+            criteria.add(Restrictions.isNull("approvedOn"));
         }
 
         if (locations != null){
@@ -147,5 +147,18 @@ public class HibernateMdrtbFinanceServiceDAO
         }
 
         return criteria.list();
+    }
+
+    @Override
+    public Disbursements getDisbursement(Integer id){
+        Criteria criteria = getSession().createCriteria(Disbursements.class);
+        criteria.add(Restrictions.eq("id", id));
+
+        return (Disbursements)criteria.uniqueResult();
+    }
+
+    @Override
+    public Disbursements saveDisbursement(Disbursements disbursement){
+        return (Disbursements)getSession().merge(disbursement);
     }
 }

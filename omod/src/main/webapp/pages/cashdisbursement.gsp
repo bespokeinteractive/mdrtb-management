@@ -1,5 +1,5 @@
 <%
-    ui.decorateWith("appui", "standardEmrPage", [title: "Budget"])
+    ui.decorateWith("appui", "standardEmrPage", [title: "Cash Disbursements"])
 	ui.includeCss("uicommons", "datatables/dataTables_jui.css")
 	ui.includeJavascript("mdrtbregistration", "jq.dataTables.min.js")
 	ui.includeJavascript("mdrtbdashboard", "moment.js")
@@ -29,7 +29,10 @@
 		jq('#adder').click(function(){
 			window.location.href = "budgetadd.page";
 		});
-	
+		
+		if ('${tab}' == 'approved'){
+			jq('#tabs').tabs('select', 1);
+		}
 	});
 </script>
 
@@ -72,19 +75,58 @@
 		height: 37px;
 		padding-left: 5px;
 	}
-	#draftList, #finalList {
+	#requestList, #approvedList {
 		font-size: 14px;
 		
 	}
-	#draftList td:nth-child(5){
+	#requestList td:nth-child(5),
+	#requestList td:nth-child(6),
+	#approvedList td:nth-child(6) {
 		text-align: right;
 	}
-	#finalList td:nth-child(6) {
-		text-align: right;
-	}
-	#draftList td:nth-child(6),
-	#finalList td:nth-child(7) {
+	#requestList td:last-child,
+	#approvedList td:last-child {
 		text-align: center;
+	}
+	td i.icon.small{
+		font-size: 0.9em;
+	}
+	td a {
+		color: #007fff!important;
+		text-decoration: none;
+		cursor: pointer;
+	}
+	.dialog .dialog-content li {
+		margin-bottom: 0;
+	}
+	.dialog-content ul li label{
+		display: inline-block;
+		width: 120px;
+	}
+	.dialog-content ul li input[type=text],
+	.dialog-content ul li select,
+	.dialog-content ul li textarea {
+		border: 1px solid #ddd;
+		display: inline-block;
+		height: 40px;
+		margin: 1px 0;
+		min-width: 20%;
+		padding: 5px 0 5px 10px;
+		width: 58%;
+	}
+	.dialog-content ul li textarea{
+		height: 100px;
+		resize: none;
+	}
+	.dialog select option {
+		font-size: 1em;
+	}
+	.dialog ul {
+		margin-bottom: 20px;
+	}
+	#modal-overlay {
+		background: #000 none repeat scroll 0 0;
+		opacity: 0.3 !important;
 	}
 </style>
 
@@ -113,7 +155,7 @@
     <div class="patient-header new-patient-header">
         <div class="demographics">
             <h1 class="name" style="border-bottom: 1px solid #ddd;">
-                <span>SRs CASH DISBURSEMENT &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span>
+                <span>CASH DISBURSEMENT &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span>
             </h1>
         </div>
 
@@ -123,13 +165,13 @@
 
         <div id="tabs" style="margin-top: 20px!important;">
             <ul id="inline-tabs">
-                <li><a href="#cashrequests">Disbursement Requests</a></li>
-                <li><a href="#final">Disbursement Approved</a></li>
+                <li><a href="#cashrequests">Requests</a></li>
+                <li><a href="#final">Approved</a></li>
 
                 <li id="adder" class="ui-state-default">
                     <a class="button task" style="color:#fff;">
                         <i class="icon-plus"></i>
-                        Add Request
+                        Request Funds
                     </a>		
                 </li>
             </ul>

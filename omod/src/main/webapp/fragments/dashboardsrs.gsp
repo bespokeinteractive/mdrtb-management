@@ -12,7 +12,7 @@
 
 		</li>
 		<li class="yellow" span class="title">Cash Disbursement</span>
-			<a href="#" class="icon-beaker"></a>
+			<a href="cashdisbursement.page" class="icon-beaker"></a>
 
 		</li>
 		<li class="purple" span class="title">Ledger</span>

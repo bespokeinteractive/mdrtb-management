@@ -14,9 +14,9 @@
 
 		<many-to-one name="agency" class="org.openmrs.module.mdrtb.model.LocationCentresAgencies" column="agency" cascade="none" lazy="false" />
 
-        <property name="amount" column="amount" type="java.lang.Float" />
-        <property name="estimate" column="estimate" type="java.lang.Float" />
-        <property name="approved" column="approved" type="java.lang.Float" />
+        <property name="amount" column="amount" type="java.lang.Double" />
+        <property name="estimate" column="estimate" type="java.lang.Double" />
+        <property name="approved" column="approved" type="java.lang.Double" />
 
         <property name="description" column="description" type="java.lang.String" />
 

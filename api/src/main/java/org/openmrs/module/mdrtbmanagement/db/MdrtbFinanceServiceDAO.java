@@ -29,4 +29,6 @@ public interface MdrtbFinanceServiceDAO {
     void deleteBudgetItems(BudgetsItems bi);
 
     List<Disbursements> getDisbursements(List<Location> locations, Boolean approved);
+    Disbursements getDisbursement(Integer id);
+    Disbursements saveDisbursement(Disbursements disbursement);
 }

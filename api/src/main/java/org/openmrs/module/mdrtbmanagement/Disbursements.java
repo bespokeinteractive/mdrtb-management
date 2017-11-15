@@ -15,9 +15,9 @@ public class Disbursements {
     private Date date;
     private String period;
     private LocationCentresAgencies agency;
-    private float amount;
-    private float estimate;
-    private float approved;
+    private Double amount;
+    private Double estimate;
+    private Double approved;
     private String description;
     private Date createdOn;
     private User createdBy;
@@ -69,27 +69,27 @@ public class Disbursements {
         this.agency = agency;
     }
 
-    public float getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(float amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 
-    public float getEstimate() {
+    public Double getEstimate() {
         return estimate;
     }
 
-    public void setEstimate(float estimate) {
+    public void setEstimate(Double estimate) {
         this.estimate = estimate;
     }
 
-    public float getApproved() {
+    public Double getApproved() {
         return approved;
     }
 
-    public void setApproved(float approved) {
+    public void setApproved(Double approved) {
         this.approved = approved;
     }
 
