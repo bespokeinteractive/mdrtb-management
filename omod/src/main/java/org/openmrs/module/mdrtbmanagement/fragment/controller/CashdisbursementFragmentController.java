@@ -1,18 +1,23 @@
 package org.openmrs.module.mdrtbmanagement.fragment.controller;
 
+import org.apache.commons.lang.StringUtils;
 import org.openmrs.Location;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.appui.UiSessionContext;
+import org.openmrs.module.mdrtbmanagement.Budgets;
+import org.openmrs.module.mdrtbmanagement.BudgetsItems;
 import org.openmrs.module.mdrtbmanagement.Disbursements;
 import org.openmrs.module.mdrtbmanagement.api.MdrtbFinanceService;
+import org.openmrs.module.mdrtbmanagement.util.BudgetResultWrapper;
+import org.openmrs.module.mdrtbmanagement.util.RequestDisbursementWrapper;
 import org.openmrs.ui.framework.SimpleObject;
 import org.openmrs.ui.framework.UiUtils;
+import org.openmrs.ui.framework.annotation.BindParams;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
 
 /**
  * Created by Dennys Henry
@@ -53,4 +58,28 @@ public class CashdisbursementFragmentController {
 
         return SimpleObject.create("status", "success", "message", "Patient successfully voided");
     }
+    public SimpleObject addNewDisbursementRequest(@BindParams("disbursement") RequestDisbursementWrapper wrapper,
+                                     HttpServletRequest request)
+            throws SecurityException, IllegalArgumentException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+        Location location = Context.getLocationService().getLocation(wrapper.getFacility());
+        String period = "0"+wrapper.getQuarter() + "-" + wrapper.getYear();
+
+        Disbursements disbursements = financeService.getDisbursement(period, null);
+        if (disbursements == null){
+            disbursements = new Disbursements();
+        }
+        else {
+            return SimpleObject.create("status", "failed", "message", "Facility Budget for that period already exsists");
+        }
+
+
+
+
+
+        disbursements = financeService.saveDisbursement(disbursements);
+
+        return SimpleObject.create("status", "success", "message", "Facility Budget has been added successfully");
+    }
+
+
 }

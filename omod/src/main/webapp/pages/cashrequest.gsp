@@ -12,17 +12,24 @@ ui.includeJavascript("mdrtbdashboard", "moment.js")
         selector: '#confirm-dialog',
         actions: {
             confirm: function () {
-                var dataString = jq('form').serialize();
+                var dataString = {
+                    qtr: 	  jq('#qtr').val(),
+                    year:	  jq('#yrs').val(),
+                    agency:	  jq('#agency').val(),
+                    estimate: jq('#estimateAmnt').val(),
+                    total:    jq('#totalAmnt').val(),
+
+                }
 
                 jq.ajax({
                     type: "POST",
-                    url: '${ui.actionLink("mdrtbmanagement", "financebudget", "addNewBudget")}',
+                    url: '${ui.actionLink("mdrtbmanagement", "cashdisbursement", "addNewDisbursementRequest")}',
                     data: dataString,
                     dataType: "json",
                     success: function (data) {
                         if (data.status == "success") {
                             jq().toastmessage('showSuccessToast', data.message);
-                            window.location.href = "financebudget.page";
+                            window.location.href = "cashdisbursement.page?tab=approved";
                         }
                         else {
                             jq().toastmessage('showErrorToast', 'Post failed. ' + data.message);
@@ -33,13 +40,20 @@ ui.includeJavascript("mdrtbdashboard", "moment.js")
                     }
                 });
 
-
                 confirmDialog.close();
             },
             cancel: function () {
                 confirmDialog.close();
             }
         }
+    });
+    jq('#cancelButton').click(function(){
+        window.location.href = "budgetadd.page?reset=true";
+    });
+
+    jq('#addRequest').click(function(){
+        confirmDialog.show();
+
     });
 </script>
 <div class="example">
@@ -86,20 +100,20 @@ ui.includeJavascript("mdrtbdashboard", "moment.js")
 
 		<div style="width: 63%; float: right">
 			<label style="display: inline-block">Notes</label>
-			<textarea name="budget.description" style="min-width: 0;display: inline-block;margin-top: 5px;"></textarea>
+			<textarea name="disbursements.description" style="min-width: 0;display: inline-block;margin-top: 5px;"></textarea>
 		</div>
 
 
 		<div>
 			<label>Quarter</label>
-			<select name="budget.quarter" id="qtr" style="width:70px">
+			<select name="disbursements.quarter" id="qtr" style="width:70px">
 				<option value="1">01</option>
 				<option value="2">02</option>
 				<option value="3">03</option>
 				<option value="4">04</option>
 			</select>
 
-			<select name="budget.year" id="yrs" style="width:157px">
+			<select name="disbursements.year" id="yrs" style="width:157px">
                 <% years.eachWithIndex { yr, index -> %>
                 <option value="${yr}" ${yr==year?'selected':''}  '>${yr}</option>
                 <% } %>
@@ -108,7 +122,7 @@ ui.includeJavascript("mdrtbdashboard", "moment.js")
 
 		<div>
 			<label>SRs</label>
-			<select id="facility" name="budget.facility">
+			<select id="agency" name="disbursements.facility">
                 <% locations.eachWithIndex { loc, index -> %>
                 <option value="${loc.id}" ${loc==location?'selected':''} '>${loc.name}</option>
                 <% } %>
@@ -116,12 +130,12 @@ ui.includeJavascript("mdrtbdashboard", "moment.js")
 		</div>
         <div>
             <label>Qtr Estimate</label>
-            <input type="text" id="estimateAmnt" name="budget.estimate">
+            <input type="text" id="estimateAmnt" name="disbursements.estimate">
 
         </div>
         <div>
             <label>Total Amount</label>
-            <input type="text" id="totalAmnt" name="budget.totalAmnt">
+            <input type="text" id="totalAmnt" name="disbursements.totalAmnt">
 
         </div>
 
@@ -129,7 +143,7 @@ ui.includeJavascript("mdrtbdashboard", "moment.js")
 	</div>
 
 	<div style="margin: 5px 0 10px;">
-		<span class="button confirm right" id="addBudget">
+		<span class="button confirm right" id="addRequest">
 			<i class="icon-save small"></i>
 			Save
 		</span>
@@ -140,8 +154,24 @@ ui.includeJavascript("mdrtbdashboard", "moment.js")
 		</span>
 	</div>
 
-</form>
+</form> </div>
 
+<div id="confirm-dialog" class="dialog" style="display:none;">
+    <div class="dialog-header">
+        <i class="icon-folder-open"></i>
+
+        <h3>CONFIRM POSTING</h3>
+    </div>
+
+    <div class="dialog-content">
+        <div class="confirmation">
+            Confirm
+        </div>
+
+        <label class="button confirm right">Confirm</label>
+        <label class="button cancel">Cancel</label>
+    </div>
+</div>
 
 
 <style>

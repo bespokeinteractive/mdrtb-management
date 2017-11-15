@@ -73,6 +73,7 @@ public class FinancebudgetFragmentController {
                 BudgetsItems bi = new BudgetsItems(budget);
                 bi.setItem(financeService.getChart(Integer.parseInt(params.getKey().substring("item.".length()))));
                 bi.setBudgetValue(Float.parseFloat(value));
+
                 this.financeService.saveBudgetItems(bi);
             }
         }

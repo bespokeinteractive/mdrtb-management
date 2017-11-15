@@ -1,6 +1,7 @@
 package org.openmrs.module.mdrtbmanagement.db;
 
 import org.openmrs.Location;
+import org.openmrs.module.mdrtb.model.LocationCentresAgencies;
 import org.openmrs.module.mdrtbmanagement.Budgets;
 import org.openmrs.module.mdrtbmanagement.BudgetsItems;
 import org.openmrs.module.mdrtbmanagement.Charts;
@@ -24,11 +25,13 @@ public interface MdrtbFinanceServiceDAO {
     Budgets saveBudgets(Budgets budget);
 
     List<BudgetsItems> getBudgetItems(Budgets budget);
+
     BudgetsItems getBudgetItem(Budgets budget, Charts item);
     BudgetsItems saveBudgetItems(BudgetsItems bi);
     void deleteBudgetItems(BudgetsItems bi);
 
     List<Disbursements> getDisbursements(List<Location> locations, Boolean approved);
     Disbursements getDisbursement(Integer id);
+    Disbursements getDisbursement(String period, LocationCentresAgencies agency);
     Disbursements saveDisbursement(Disbursements disbursement);
 }

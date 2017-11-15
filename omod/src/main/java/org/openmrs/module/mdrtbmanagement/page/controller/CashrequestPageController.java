@@ -38,7 +38,7 @@ public class CashrequestPageController {
         years.add(year - 1);
         years.add(year - 2);
         years.add(year - 3);
-        years.add(year - 3);
+
 
         List<Charts> charts = Context.getService(MdrtbFinanceService.class).getCharts();
 

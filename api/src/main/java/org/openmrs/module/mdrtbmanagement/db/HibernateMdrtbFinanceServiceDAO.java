@@ -8,6 +8,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.openmrs.Location;
 import org.openmrs.api.db.DAOException;
+import org.openmrs.module.mdrtb.model.LocationCentres;
+import org.openmrs.module.mdrtb.model.LocationCentresAgencies;
 import org.openmrs.module.mdrtbmanagement.Budgets;
 import org.openmrs.module.mdrtbmanagement.BudgetsItems;
 import org.openmrs.module.mdrtbmanagement.Charts;
@@ -96,6 +98,15 @@ public class HibernateMdrtbFinanceServiceDAO
         criteria.add(Restrictions.eq("location", location));
 
         return  (Budgets)criteria.uniqueResult();
+    }
+
+    @Override
+    public Disbursements getDisbursement(String period, LocationCentresAgencies agency){
+        Criteria criteria = getSession().createCriteria(Disbursements.class);
+        criteria.add(Restrictions.eq("period", period));
+        criteria.add(Restrictions.eq("agency", agency));
+
+        return  (Disbursements) criteria.uniqueResult();
     }
 
     @Override

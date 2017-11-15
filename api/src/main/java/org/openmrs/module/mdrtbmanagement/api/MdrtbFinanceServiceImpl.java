@@ -2,6 +2,7 @@ package org.openmrs.module.mdrtbmanagement.api;
 
 import org.openmrs.Location;
 import org.openmrs.api.impl.BaseOpenmrsService;
+import org.openmrs.module.mdrtb.model.LocationCentresAgencies;
 import org.openmrs.module.mdrtbmanagement.BudgetsItems;
 import org.openmrs.module.mdrtbmanagement.Disbursements;
 import org.openmrs.module.mdrtbmanagement.db.MdrtbFinanceServiceDAO;
@@ -67,6 +68,10 @@ public class MdrtbFinanceServiceImpl
 
     public Budgets getBudget(String period, Location location){
         return dao.getBudget(period, location);
+    }
+
+    public Disbursements getDisbursement(String period, LocationCentresAgencies agency){
+        return dao.getDisbursement(period, agency);
     }
 
     public Budgets saveBudgets(Budgets budget){
