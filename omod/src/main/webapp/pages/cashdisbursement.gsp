@@ -27,7 +27,7 @@
 		jq("#tabs").tabs();
 		
 		jq('#adder').click(function(){
-			window.location.href = "budgetadd.page";
+			window.location.href = "cashrequest.page";
 		});
 		
 		if ('${tab}' == 'approved'){
