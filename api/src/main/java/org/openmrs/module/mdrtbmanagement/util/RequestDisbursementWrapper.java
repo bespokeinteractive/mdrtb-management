@@ -3,27 +3,18 @@ package org.openmrs.module.mdrtbmanagement.util;
 import java.util.Date;
 
 /**
- * Created by davie on 11/15/2017.
+ * Created by Davie Mukungi
+ * Created on 11/15/2017.
  */
 public class RequestDisbursementWrapper {
     Integer id;
     Date date;
-    Integer facility;
+    Integer agency;
     Integer quarter;
     Integer year;
     String amount;
+    String estimate;
     String description;
-    String quarterEstimate;
-
-    public String getQuarterEstimate() {
-        return quarterEstimate;
-    }
-
-    public void setQuarterEstimate(String quarterEstimate) {
-        this.quarterEstimate = quarterEstimate;
-    }
-
-
 
     public Integer getId() {
         return id;
@@ -41,12 +32,12 @@ public class RequestDisbursementWrapper {
         this.date = date;
     }
 
-    public Integer getFacility() {
-        return facility;
+    public Integer getAgency() {
+        return agency;
     }
 
-    public void setFacility(Integer facility) {
-        this.facility = facility;
+    public void setAgency(Integer agency) {
+        this.agency = agency;
     }
 
     public Integer getQuarter() {
@@ -71,6 +62,14 @@ public class RequestDisbursementWrapper {
 
     public void setAmount(String amount) {
         this.amount = amount;
+    }
+
+    public String getEstimate() {
+        return estimate;
+    }
+
+    public void setEstimate(String estimate) {
+        this.estimate = estimate;
     }
 
     public String getDescription() {

@@ -39,7 +39,9 @@
 		Budgets.hbm.xml
 		BudgetsItems.hbm.xml
 		Charts.hbm.xml
+		Ledgers.hbm.xml
         Disbursements.hbm.xml
+		DisbursementsDetails.hbm.xml
 	</mappingFiles>
 
 	<!-- Internationalization -->

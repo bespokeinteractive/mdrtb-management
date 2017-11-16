@@ -3,10 +3,7 @@ package org.openmrs.module.mdrtbmanagement.api;
 import org.openmrs.Location;
 import org.openmrs.api.OpenmrsService;
 import org.openmrs.module.mdrtb.model.LocationCentresAgencies;
-import org.openmrs.module.mdrtbmanagement.Budgets;
-import org.openmrs.module.mdrtbmanagement.BudgetsItems;
-import org.openmrs.module.mdrtbmanagement.Charts;
-import org.openmrs.module.mdrtbmanagement.Disbursements;
+import org.openmrs.module.mdrtbmanagement.*;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -38,5 +35,8 @@ public interface MdrtbFinanceService
     List<Disbursements> getDisbursements(List<Location> locations, Boolean approved);
     Disbursements getDisbursement(Integer id);
     Disbursements saveDisbursement(Disbursements disbursement);
+
+    List<DisbursementsDetails> getDisbursementsDetails(Disbursements disbursement);
+    DisbursementsDetails saveDisbursementsDetails(DisbursementsDetails details);
 
 }

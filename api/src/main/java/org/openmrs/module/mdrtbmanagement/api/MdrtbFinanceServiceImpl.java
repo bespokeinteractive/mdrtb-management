@@ -3,11 +3,8 @@ package org.openmrs.module.mdrtbmanagement.api;
 import org.openmrs.Location;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.openmrs.module.mdrtb.model.LocationCentresAgencies;
-import org.openmrs.module.mdrtbmanagement.BudgetsItems;
-import org.openmrs.module.mdrtbmanagement.Disbursements;
+import org.openmrs.module.mdrtbmanagement.*;
 import org.openmrs.module.mdrtbmanagement.db.MdrtbFinanceServiceDAO;
-import org.openmrs.module.mdrtbmanagement.Budgets;
-import org.openmrs.module.mdrtbmanagement.Charts;
 
 import java.util.List;
 
@@ -104,5 +101,13 @@ public class MdrtbFinanceServiceImpl
 
     public Disbursements saveDisbursement(Disbursements disbursement){
         return dao.saveDisbursement(disbursement);
+    }
+
+    public List<DisbursementsDetails> getDisbursementsDetails(Disbursements disbursement){
+        return dao.getDisbursementsDetails(disbursement);
+    }
+
+    public DisbursementsDetails saveDisbursementsDetails(DisbursementsDetails details){
+        return dao.saveDisbursementsDetails(details);
     }
 }
