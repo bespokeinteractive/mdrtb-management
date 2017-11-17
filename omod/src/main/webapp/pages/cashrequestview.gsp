@@ -3,6 +3,55 @@
 	ui.includeJavascript("mdrtbdashboard", "moment.js")
 %>
 
+<script>
+	jq(function () {
+		jq('.confirm-receipt').click(function(){
+			confirmDialog.show();		
+		});
+	
+		var confirmDialog = emr.setupConfirmationDialog({
+            dialogOpts: {
+                overlayClose: false,
+                close: true
+            },
+            selector: '#confirm-dialog',
+            actions: {
+                confirm: function () {
+                    var dataString = {
+						id: 	${disbursement.id},
+						date:	jq('#disDate-field').val(),
+						note:	jq('#disConfirm').val()
+					}
+
+                    jq.ajax({
+                        type: "POST",
+                        url: '${ui.actionLink("mdrtbmanagement", "cashdisbursement", "confirmDisbursement")}',
+                        data: dataString,
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.status == "success") {
+                                jq().toastmessage('showSuccessToast', data.message);
+                                window.location.href = "cashdisbursement.page?tab=approved";
+                            }
+                            else {
+                                jq().toastmessage('showErrorToast', 'Post failed. ' + data.message);
+                            }
+                        },
+                        error: function (data) {
+                            jq().toastmessage('showErrorToast', "Post failed. " + data.statusText);
+                        }
+                    });
+
+                    confirmDialog.close();
+                },
+                cancel: function () {
+                    confirmDialog.close();
+                }
+            }
+        });
+	});
+</script>
+
 <style>
 	#breadcrumbs a, #breadcrumbs a:link, #breadcrumbs a:visited {
 		text-decoration: none;
@@ -15,7 +64,7 @@
 		border: 1px solid #d3d3d3;
 		border-top: 2px solid #363463;
 		height: auto;
-		margin: 15px 0 0 0;
+		margin: 5px 0 0 0;
 		padding-bottom: 5px;
 	}
 	.budget-box div{
@@ -25,8 +74,10 @@
 	.budget-box label{
 		display: inherit;
 		padding: 2px 10px;
-		margin: 10px 0 0 0;
-		width: 60px;
+		margin: 5px 0 0 0;
+		width: 80px;
+		font-size: 0.95em;
+		color: #555;
 
 	}
 	input, form input, select, form select, ul.select, form ul.select, textarea {
@@ -105,6 +156,49 @@
 		font-size: 14px;
 		margin-top: 5px;
 	}
+	.show-icon {
+		float: right;
+		font-family: "OpenSansBold";
+		font-size: 1.5em;
+		margin: 0 0 -5px 0;
+	}
+	a {
+		color: #007fff!important;
+		text-decoration: none;
+		cursor: pointer;
+	}
+	.dialog .dialog-content li {
+		margin-bottom: 0;
+	}
+	.dialog-content ul li label{
+		display: inline-block;
+		width: 120px;
+	}
+	.dialog-content ul li input[type=text],
+	.dialog-content ul li select,
+	.dialog-content ul li textarea {
+		border: 1px solid #ddd;
+		display: inline-block;
+		height: 40px;
+		margin: 1px 0;
+		min-width: 20%;
+		padding: 5px 0 5px 10px;
+		width: 58%;
+	}
+	.dialog-content ul li textarea{
+		height: 100px;
+		resize: none;
+	}
+	.dialog select option {
+		font-size: 1em;
+	}
+	.dialog ul {
+		margin-bottom: 20px;
+	}
+	#modal-overlay {
+		background: #000 none repeat scroll 0 0;
+		opacity: 0.3 !important;
+	}
 </style>
 
 <div class="example">
@@ -126,7 +220,7 @@
 
         <li>
             <i class="icon-chevron-right link"></i>
-            View Request
+            Request
         </li>
     </ul>
 </div>
@@ -138,11 +232,29 @@
 		</h1>
 	</div>
 
-	<div id="show-icon">
-		&nbsp;
+	<div class="show-icon">
+		<i class="icon-globe small"></i>${disbursement.agency.name}&nbsp;
 	</div>
+	<div class="clear both"></div>
 
 	<div class="budget-box">
+		<div>
+			<label>Date :</label>${ui.formatDatePretty(disbursement.date) }<br/>
+			<label>Period :</label>${disbursement.period}<br/>
+		</div>
+		
+		<div style="width: 63%; float: right">
+			<label style="display: inline-block; height: 30px;">Notes :</label>${disbursement.description==''?'N/A':disbursement.description}			
+			<div style="width:100%; bottom:0; float:right; text-align:right; margin:0 15px -10px 0; font-size:0.9em;">
+				<% if (confirm ==1 && edit == 1) { %>
+					<a class="confirm-receipt">Confirm</a> | <a href="cashrequestedit.page?id=${disbursement.id}">Edit</a>
+				<% } else if (confirm == 1) { %>
+					<a class="confirm-receipt"><i class="icon-ok small"></i>Confirm</a>
+				<% } else if (edit == 1) { %>
+					<a href="cashrequestedit.page?id=${disbursement.id}"><i class="icon-pencil small"></i> Edit</a>
+				<% } %>
+			</div>
+		</div>
 		
 		
 		<span class="clear both"></span>
@@ -158,9 +270,75 @@
 		</thead>
 
 		<tbody>
+			<% details.eachWithIndex { dtl, index -> %>
+				<tr>
+					<td>${index+1}</td>
+					<td>${dtl.centre.location.name.toUpperCase()}</td>
+					<td>${dtl.centre.region.name.toUpperCase()}</td>
+					<td style="text-align:right;">${String.format("%1\$,.2f", dtl.amount)}</td>					
+					<td>${dtl.narration==''?'N/A':dtl.narration.toUpperCase()}</td>
+				</tr>
+			<% } %>
+			
 			<tr>
-				<td>1</td>
+				<td>&nbsp;</td>
+				<td colspan='2'><b>TOTALS</b></td>
+				<td style="text-align:right;"><b>${String.format("%1\$,.2f", disbursement.amount)}</b></td>
+				<td><b>N/A</b></td>
+			</tr>
+			
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan='2'>ADJUSTMENT ESTIMATE</td>
+				<td style="text-align:right;">${String.format("%1\$,.2f", disbursement.estimate)}</td>
+				<td>&nbsp;</td>
 			</tr>
 		</tbody>
 	</table>
+	
+	<div style="margin: 5px 0 10px;">
+		<span class="button task right" id="addBudget">
+			<i class="icon-print small"></i>
+			Print
+		</span>
+	</div>
+</div>
+
+<div id="confirm-dialog" class="dialog" style="display:none;">
+    <div class="dialog-header">
+        <i class="icon-folder-open"></i>
+
+        <h3>CONFIRM RECEIPT</h3>
+    </div>
+
+    <div class="dialog-content">
+		<ul>
+			<li>
+				<label for="addNames">AGENCY:</label>
+				<input type="text" id="disName" readonly="" value="${disbursement.agency.name}"/>
+			</li>
+
+			<li>
+				<label for="editNames">AMOUNT:</label>
+				<input type="text" id="disAmount" readonly="" value="${String.format("%1\$,.2f", disbursement.amount)}"/>
+			</li>
+
+			<li>
+				<label for="editNames">ADJUSTMENT:</label>
+				<input type="text" id="disAdjust" readonly="" value="${String.format("%1\$,.2f", disbursement.estimate)}"/>
+			</li>
+
+			<li>
+				${ui.includeFragment("uicommons", "field/datetimepicker", [formFieldName: 'confirm.date', id: 'disDate', label: 'DATE:', useTime: false, defaultToday: true])}
+			</li>
+			
+			<li>
+				<label for="editNames">CONFIRM:</label>
+				<textarea id="disConfirm" placeholder="Narration"></textarea>
+			</li>
+		</ul>
+
+        <label class="button confirm right">Confirm</label>
+        <label class="button cancel">Cancel</label>
+    </div>
 </div>
