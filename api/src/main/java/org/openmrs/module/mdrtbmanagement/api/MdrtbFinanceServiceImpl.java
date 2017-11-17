@@ -2,6 +2,7 @@ package org.openmrs.module.mdrtbmanagement.api;
 
 import org.openmrs.Location;
 import org.openmrs.api.impl.BaseOpenmrsService;
+import org.openmrs.module.mdrtb.model.LocationCentres;
 import org.openmrs.module.mdrtb.model.LocationCentresAgencies;
 import org.openmrs.module.mdrtbmanagement.*;
 import org.openmrs.module.mdrtbmanagement.db.MdrtbFinanceServiceDAO;
@@ -107,7 +108,26 @@ public class MdrtbFinanceServiceImpl
         return dao.getDisbursementsDetails(disbursement);
     }
 
+    public DisbursementsDetails getDisbursementsDetail(Integer id){
+        return dao.getDisbursementsDetail(id);
+    }
+
+    public DisbursementsDetails getDisbursementsDetail(Disbursements disbursement, LocationCentres centre){
+        return dao.getDisbursementsDetail(disbursement, centre);
+    }
+
     public DisbursementsDetails saveDisbursementsDetails(DisbursementsDetails details){
         return dao.saveDisbursementsDetails(details);
+    }
+
+    public void deleteDisbursementsDetail(DisbursementsDetails dd){
+        dao.deleteDisbursementsDetail(dd);
+    }
+
+    public void deleteDisbursementsDetails(Disbursements disbursement){
+        List <DisbursementsDetails> details = getDisbursementsDetails(disbursement);
+        for (DisbursementsDetails dd : details){
+            dao.deleteDisbursementsDetail(dd);
+        }
     }
 }

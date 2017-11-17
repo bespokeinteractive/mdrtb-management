@@ -23,16 +23,16 @@
         approvedResultsData = results || [];
 		var dataRows = [];
 		_.each(approvedResultsData, function(result){
-			var agency = '<a href="disbursementview.page?id=' + result.id + '">' + result.agency.name + '</a>';
+			var agency = '<a href="cashrequestview.page?id=' + result.id + '">' + result.agency.name + '</a>';
 			var icons = '';
 			var status = '';
 			
 			if(result.confirmedOn == null){
 				status = 'Approved';
-				icons = '<a class="confirm-receipt" data-idnt="'+ result.id +'">Confirm</a> | <a href="disbursementview.page?id=' + result.id + '">View</a>';
+				icons = '<a class="confirm-receipt" data-idnt="'+ result.id +'">Confirm</a> | <a href="cashrequestview.page?id=' + result.id + '">View</a>';
 			}else {
 				status = 'Received';
-				icons = '<a href="disbursementview.page?id=' + result.id + '"><i class="icon-file-alt small icon"> </i> View Transc</a>';
+				icons = '<a href="cashrequestview.page?id=' + result.id + '"><i class="icon-file-alt small icon"> </i> View Transc</a>';
 			}
 			
 			dataRows.push([0, result.date, result.period, agency, status, result.amount.toString().formatToAccounting(), result.estimate.toString().formatToAccounting(), icons]);

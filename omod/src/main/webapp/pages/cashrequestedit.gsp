@@ -1,5 +1,5 @@
 <%
-	ui.decorateWith("appui", "standardEmrPage", [title: "Add Request"])
+	ui.decorateWith("appui", "standardEmrPage", [title: "Edit Request"])
 	ui.includeJavascript("mdrtbdashboard", "moment.js")
 %>
 
@@ -7,23 +7,30 @@
 	jq(function () {
 		jq('#agency').change(function(){
 			var requestData = {
+				id:		${disbursement.id},
 				agency: jq(this).val()
 			}
 			
-			jq.getJSON('${ ui.actionLink("mdrtbmanagement", "cashdisbursement", "getSubRecipientCentres") }', requestData)
+			jq.getJSON('${ ui.actionLink("mdrtbmanagement", "cashdisbursement", "getSubRecipientValues") }', requestData)
 				.success(function (data) {
 					var rows = data || [];
 					var count = 1;
+					var total = 0;
 					jq('#locationList > tbody').empty();
 					
 					_.each(rows, function(data){
-						jq('#locationList > tbody').append("<tr><td>" + count + "</td><td>"+data.location.name.toUpperCase()+"</td><td>"+data.region.name.toUpperCase()+"</td><td class='textable'><input name='data."+data.id+"' value='0.00' /></td><td class='notable'><input name='note."+data.id+"' /></td></tr>")
+						var amounts = (data.amount?data.amount:0).toString().formatToAccounting();
+						var comment = data.comment?data.comment:'';
+						
+						total += data.amount?data.amount:0;
+						
+						jq('#locationList > tbody').append("<tr><td>" + count + "</td><td>"+data.location.name.toUpperCase()+"</td><td>"+data.region.name.toUpperCase()+"</td><td class='textable'><input name='data."+data.id+"' value='"+amounts+"' /></td><td class='notable'><input name='note."+data.id+"' value='"+comment+"' /></td></tr>")
 						count++;
 					});
 					
 					//Add Summaries
-					jq('#locationList > tbody').append("<tr><td>&nbsp;</td><td colspan='2'><b>TOTALS</b></td><td style='padding:0'><input id='totals' style='font-weight:bold;' name='disbursement.amount' readonly='' value='0.00' /></td><td><b>N/A</b></td></tr>");
-					jq('#locationList > tbody').append("<tr><td>&nbsp;</td><td colspan='2'>ADJUSTMENT ESTIMATE</td><td style='padding:0'><input id='estimate' name='disbursement.estimate' value='0.00' /></td><td class='notable'><input name='note.' /></td></tr>");
+					jq('#locationList > tbody').append("<tr><td>&nbsp;</td><td colspan='2'><b>TOTALS</b></td><td style='padding:0'><input id='totals' style='font-weight:bold;' name='disbursement.amount' readonly='' value='"+ total.toString().formatToAccounting() +"' /></td><td><b>N/A</b></td></tr>");
+					jq('#locationList > tbody').append("<tr><td>&nbsp;</td><td colspan='2'>ADJUSTMENT ESTIMATE</td><td style='padding:0'><input id='estimate' name='disbursement.estimate' value='"+${disbursement.estimate}.toString().formatToAccounting()+"' /></td><td class='notable'><input name='note.' /></td></tr>");
 				}).error(function (xhr, status, err) {
 					jq('#locationList > tbody').append("<tr><td>&nbsp;</td><td colspan='4'>NO DATA FOUND</td></tr>");
 					jq().toastmessage('showErrorToast', 'Error Loading Details. ' + err);
@@ -84,7 +91,7 @@
 					
 					jq.ajax({
 						type: "POST",
-						url: '${ui.actionLink("mdrtbmanagement", "cashdisbursement", "addNewDisbursementRequest")}',
+						url: '${ui.actionLink("mdrtbmanagement", "cashdisbursement", "updateFundsRequest")}',
 						data: dataString,
 						dataType: "json",
 						success: function (data) {
@@ -235,7 +242,7 @@
 
         <li>
             <i class="icon-chevron-right link"></i>
-            Add Request
+            Edit Request
         </li>
     </ul>
 </div>
@@ -243,7 +250,7 @@
 <form class="patient-header new-patient-header">
 	<div class="demographics">
 		<h1 class="name" style="border-bottom: 1px solid #ddd;">
-			<span><i class="icon-bookmark-empty small"></i>ADD REQUEST &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span>
+			<span><i class="icon-bookmark-empty small"></i>EDIT REQUEST &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span>
 		</h1>
 	</div>
 
@@ -253,12 +260,13 @@
 
 	<div class="budget-box">
 		<div>
-			${ui.includeFragment("uicommons", "field/datetimepicker", [formFieldName: 'disbursement.date', id: 'date-created', label: 'Date:', useTime: false, defaultToday: true])}
+			${ui.includeFragment("uicommons", "field/datetimepicker", [formFieldName: 'disbursement.date', id: 'date-created', label: 'Date:', useTime: false, defaultDate: disbursement.date])}
 		</div>
 
 		<div style="width: 63%; float: right">
 			<label style="display: inline-block">Notes</label>
-			<textarea name="disbursement.description" style="min-width: 0;display: inline-block;margin-top: 5px;"></textarea>
+			<textarea name="disbursement.description" style="min-width: 0;display: inline-block;margin-top: 5px;">${disbursement.description}</textarea>
+			<input type="hidden" name="disbursement.id" value="${disbursement.id}" />
 		</div>
 
 		<div>
@@ -281,7 +289,7 @@
 			<label>SRs</label>
 			<select id="agency" name="disbursement.agency">
                 <% agencies.eachWithIndex { loc, index -> %>
-                <option value="${loc.id}" ${loc==agency?'selected':''} '>${loc.name}</option>
+                <option value="${loc.id}" ${loc==disbursement.agency?'selected':''} '>${loc.name}</option>
                 <% } %>
 			</select>
 		</div>

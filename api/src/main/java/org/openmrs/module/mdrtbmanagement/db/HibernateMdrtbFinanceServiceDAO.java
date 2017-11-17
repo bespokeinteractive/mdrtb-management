@@ -179,7 +179,29 @@ public class HibernateMdrtbFinanceServiceDAO
     }
 
     @Override
+    public DisbursementsDetails getDisbursementsDetail(Integer id){
+        Criteria criteria = getSession().createCriteria(DisbursementsDetails.class);
+        criteria.add(Restrictions.eq("id", id));
+
+        return  (DisbursementsDetails) criteria.uniqueResult();
+    }
+
+    @Override
+    public DisbursementsDetails getDisbursementsDetail(Disbursements disbursement, LocationCentres centre){
+        Criteria criteria = getSession().createCriteria(DisbursementsDetails.class);
+        criteria.add(Restrictions.eq("disbursement", disbursement));
+        criteria.add(Restrictions.eq("centre", centre));
+
+        return  (DisbursementsDetails) criteria.uniqueResult();
+    }
+
+    @Override
     public DisbursementsDetails saveDisbursementsDetails(DisbursementsDetails details){
         return (DisbursementsDetails)getSession().merge(details);
+    }
+
+    @Override
+    public void deleteDisbursementsDetail(DisbursementsDetails dd){
+        getSession().delete(dd);
     }
 }

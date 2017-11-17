@@ -73,7 +73,37 @@ public class CashdisbursementFragmentController {
                 }
             });
 
-            return SimpleObject.fromCollection(centres, ui, "id", "serialNumber", "location.name", "region.name");
+            return SimpleObject.fromCollection(centres, ui, "id", "location.name", "region.name");
+        }
+
+        return SimpleObject.fromCollection(Collections.EMPTY_LIST, ui);
+    }
+
+    public List<SimpleObject> getSubRecipientValues(@RequestParam(value = "id") Integer id,
+                                                    @RequestParam(value = "agency") Integer agency_id,
+                                                    UiUtils ui){
+        Disbursements disbursement = financeService.getDisbursement(id);
+        List<DisbursementsDetails> details = financeService.getDisbursementsDetails(disbursement);
+        List<LocationCentres> centres = mdrtbService.getCentres(mdrtbService.getAgency(agency_id));
+        if (centres!=null){
+            Collections.sort(centres, new Comparator<LocationCentres>() {
+                @Override
+                public int compare(LocationCentres o1, LocationCentres o2) {
+                    return o1.getLocation().getName().compareToIgnoreCase(o2.getLocation().getName());
+                }
+            });
+
+            for (int i=0; i<centres.size(); i++){
+                for (DisbursementsDetails dtl : details){
+                    if (centres.get(i).equals(dtl.getCentre())){
+                        centres.get(i).setAmount(dtl.getAmount());
+                        centres.get(i).setComment(dtl.getNarration());
+                        break;
+                    }
+                }
+            }
+
+            return SimpleObject.fromCollection(centres, ui, "id", "amount", "comment", "location.name", "region.name");
         }
 
         return SimpleObject.fromCollection(Collections.EMPTY_LIST, ui);
@@ -129,5 +159,63 @@ public class CashdisbursementFragmentController {
         return SimpleObject.create("status", "success", "message", "Facility Budget has been added successfully");
     }
 
+    public SimpleObject updateFundsRequest(@BindParams("disbursement") RequestDisbursementWrapper wrapper,
+                                           HttpServletRequest request){
+        Disbursements disbursement = financeService.getDisbursement(wrapper.getId());
+        LocationCentresAgencies agency = mdrtbService.getAgency(wrapper.getAgency());
 
+
+        String period = "0"+wrapper.getQuarter() + "-" + wrapper.getYear();
+
+        disbursement.setPeriod(period);
+
+        disbursement.setDate(wrapper.getDate());
+
+        disbursement.setAmount(new Double(wrapper.getAmount().replace(",", "")));
+        disbursement.setEstimate(new Double(wrapper.getEstimate().replace(",", "")));
+        disbursement.setDescription(wrapper.getDescription());
+
+        if (!disbursement.getAgency().equals(agency)){
+            //Delete All the Current Facilities & Update New Agency
+            financeService.deleteDisbursementsDetails(disbursement);
+            disbursement.setAgency(agency);
+        }
+
+        //loop throough all id zero, delete else update/add
+        for (Map.Entry<String, String[]> params : ((Map<String, String[]>) request.getParameterMap()).entrySet()) {
+            if (StringUtils.contains(params.getKey(), "data.")) {
+                String value = params.getValue()[0].replace(",", "");
+                if (StringUtils.isBlank(value)){
+                    value = "0";
+                }
+
+                Integer key = Integer.parseInt(params.getKey().substring("item.".length()));
+                LocationCentres centre = mdrtbService.getCentre(key);
+                Double amount = new Double(value);
+
+                DisbursementsDetails details = financeService.getDisbursementsDetail(disbursement, centre);
+                if (details == null && amount == 0){
+                    continue;
+                }
+                else if (amount == 0){
+                    this.financeService.deleteDisbursementsDetail(details);
+                }
+                else{
+                    String note = request.getParameterValues("note." + key)[0];
+                    if (details == null){
+                        details = new DisbursementsDetails(disbursement);
+                        details.setCentre(centre);
+                    }
+
+                    details.setAmount(amount);
+                    details.setNarration(note);
+
+                    this.financeService.saveDisbursementsDetails(details);
+                }
+            }
+        }
+
+        this.financeService.saveDisbursement(disbursement);
+        return SimpleObject.create("status", "success", "message", "Facility Budget has been added successfully");
+    }
 }

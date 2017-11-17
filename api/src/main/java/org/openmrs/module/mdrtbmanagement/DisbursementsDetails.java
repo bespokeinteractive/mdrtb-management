@@ -2,10 +2,15 @@ package org.openmrs.module.mdrtbmanagement;
 
 import org.openmrs.module.mdrtb.model.LocationCentres;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 /**
  * Created by Dennis Henry
  * Created on 11/16/2017.
  */
+@Entity
+@Table(name = "finance_disbursement_details")
 public class DisbursementsDetails {
     private int id;
     private Disbursements disbursement;

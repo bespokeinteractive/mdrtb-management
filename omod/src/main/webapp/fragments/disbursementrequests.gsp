@@ -23,8 +23,8 @@
         requestResultsData = results || [];
 		var dataRows = [];
 		_.each(requestResultsData, function(result){
-			var agency = '<a href="disbursementedit.page?id=' + result.id + '">' + result.agency.name + '</a>';
-			var icons = '<a href="disbursementedit.page?id=' + result.id + '">Edit</a> | <a href="disbursementview.page?id=' + result.id + '">View</a>';
+			var agency = '<a href="cashrequestview.page?id=' + result.id + '">' + result.agency.name + '</a>';
+			var icons = '<a href="cashrequestedit.page?id=' + result.id + '">Edit</a> | <a href="cashrequestview.page?id=' + result.id + '">View</a>';
 			
 			dataRows.push([0, result.date, result.period, agency, result.amount.toString().formatToAccounting(), result.estimate.toString().formatToAccounting(), icons]);
 		});
