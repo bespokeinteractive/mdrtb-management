@@ -27,12 +27,11 @@ public class FinancebudgetFragmentController {
     public List<SimpleObject> listCurrentBudgets(@RequestParam(value = "draft") Boolean draft,
                                                  UiUtils ui){
         List<Location> locations = new ArrayList<Location>();
-        List<Budgets> budgets = Context.getService(MdrtbFinanceService.class).getBudgets(null, draft);
-
         for (Location location: Context.getLocationService().getAllLocations()){
             locations.add(location);
         }
 
+        List<Budgets> budgets = Context.getService(MdrtbFinanceService.class).getBudgets(locations, draft);
         if (budgets!=null){
             return SimpleObject.fromCollection(budgets, ui, "id", "location.name", "dated", "period", "amount", "approved", "approvedOn");
         }

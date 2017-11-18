@@ -7,6 +7,7 @@ import org.openmrs.module.mdrtb.model.LocationCentresAgencies;
 import org.openmrs.module.mdrtbmanagement.*;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -44,4 +45,9 @@ public interface MdrtbFinanceService
     void deleteDisbursementsDetail(DisbursementsDetails dd);
     void deleteDisbursementsDetails(Disbursements disbursement);
 
+    //Ledgers
+    List<Ledgers> getLedgers(List<Location> locations, String period, Date startdate, Date endDate, Charts item);
+
+    //Expenditure
+    Expenditure saveExpenditure(Expenditure expenditure);
 }

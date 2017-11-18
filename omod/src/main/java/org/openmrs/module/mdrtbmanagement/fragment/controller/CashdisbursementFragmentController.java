@@ -86,22 +86,24 @@ public class CashdisbursementFragmentController {
         List<DisbursementsDetails> details = financeService.getDisbursementsDetails(disbursement);
         List<LocationCentres> centres = mdrtbService.getCentres(mdrtbService.getAgency(agency_id));
         if (centres!=null){
+            Set<LocationCentres> centresSet = new HashSet<LocationCentres>();
+            for (DisbursementsDetails dtl : details) {
+                LocationCentres lc = dtl.getCentre();
+                lc.setAmount(dtl.getAmount());
+                lc.setComment(dtl.getNarration());
+                centresSet.add(lc);
+            }
+            for (LocationCentres locationCentres : centres) {
+                centresSet.add(locationCentres);
+            }
+
+            centres = new ArrayList<LocationCentres>(centresSet);
             Collections.sort(centres, new Comparator<LocationCentres>() {
                 @Override
                 public int compare(LocationCentres o1, LocationCentres o2) {
                     return o1.getLocation().getName().compareToIgnoreCase(o2.getLocation().getName());
                 }
             });
-
-            for (int i=0; i<centres.size(); i++){
-                for (DisbursementsDetails dtl : details){
-                    if (centres.get(i).equals(dtl.getCentre())){
-                        centres.get(i).setAmount(dtl.getAmount());
-                        centres.get(i).setComment(dtl.getNarration());
-                        break;
-                    }
-                }
-            }
 
             return SimpleObject.fromCollection(centres, ui, "id", "amount", "comment", "location.name", "region.name");
         }

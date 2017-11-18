@@ -184,7 +184,6 @@
 <div id="confirm-dialog" class="dialog" style="display:none;">
     <div class="dialog-header">
         <i class="icon-folder-open"></i>
-
         <h3>CONFIRM RECEIPT</h3>
     </div>
 

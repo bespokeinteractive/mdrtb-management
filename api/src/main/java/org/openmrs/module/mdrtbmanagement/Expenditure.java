@@ -2,30 +2,41 @@ package org.openmrs.module.mdrtbmanagement;
 
 import org.openmrs.Location;
 import org.openmrs.User;
+import org.openmrs.api.context.Context;
 
 import java.util.Date;
 
 /**
  * Created by Dennys Henry
- * Created on 11/16/2017.
+ * Created on 11/18/2017.
  */
-public class Ledgers {
-    private String id;
+public class Expenditure {
+    private int id;
     private Date date;
     private String period;
     private Location location;
-    private Integer order;
     private Charts item;
     private Double amount;
     private String description;
     private Date createdOn;
     private User createdBy;
+    private Boolean voided;
+    private Date voidedOn;
+    private User voidedBy;
+    private String voidReason;
 
-    public String getId() {
+    public Expenditure(){
+        this.voided = false;
+
+        this.createdOn = new Date();
+        this.createdBy = Context.getAuthenticatedUser();
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -51,14 +62,6 @@ public class Ledgers {
 
     public void setLocation(Location location) {
         this.location = location;
-    }
-
-    public Integer getOrder() {
-        return order;
-    }
-
-    public void setOrder(Integer order) {
-        this.order = order;
     }
 
     public Charts getItem() {
@@ -99,5 +102,37 @@ public class Ledgers {
 
     public void setCreatedBy(User createdBy) {
         this.createdBy = createdBy;
+    }
+
+    public Boolean getVoided() {
+        return voided;
+    }
+
+    public void setVoided(Boolean voided) {
+        this.voided = voided;
+    }
+
+    public Date getVoidedOn() {
+        return voidedOn;
+    }
+
+    public void setVoidedOn(Date voidedOn) {
+        this.voidedOn = voidedOn;
+    }
+
+    public User getVoidedBy() {
+        return voidedBy;
+    }
+
+    public void setVoidedBy(User voidedBy) {
+        this.voidedBy = voidedBy;
+    }
+
+    public String getVoidReason() {
+        return voidReason;
+    }
+
+    public void setVoidReason(String voidReason) {
+        this.voidReason = voidReason;
     }
 }

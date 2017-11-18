@@ -162,7 +162,7 @@
 		font-size: 1.5em;
 		margin: 0 0 -5px 0;
 	}
-	a {
+	.budget-box a {
 		color: #007fff!important;
 		text-decoration: none;
 		cursor: pointer;

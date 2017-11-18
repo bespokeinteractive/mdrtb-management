@@ -66,7 +66,7 @@
 		});
 		
 		 jq('#cancelButton').click(function(){
-			window.location.href = "cashrequest.page?reset=true";
+			window.location.href = "cashdisbursement.page";
 		});
 		
 		jq('#addRequest').click(function(){

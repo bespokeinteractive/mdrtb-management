@@ -40,7 +40,8 @@
 		BudgetsItems.hbm.xml
 		Charts.hbm.xml
 		Ledgers.hbm.xml
-        Disbursements.hbm.xml
+		Expenditure.hbm.xml
+		Disbursements.hbm.xml
 		DisbursementsDetails.hbm.xml
 	</mappingFiles>
 

@@ -16,7 +16,7 @@
 
 		</li>
 		<li class="purple" span class="title">Ledger</span>
-			<a href="#" class="icon-envelope"></a>
+			<a href="ledgers.page" class="icon-envelope"></a>
 
 		</li>
 		<li class="purple" span class="title">HRM</span>

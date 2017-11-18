@@ -15,7 +15,8 @@ public class Charts {
     private String code;
     private String name;
     protected Charts chartsGroup;
-    private boolean voided;
+    private Boolean listed;
+    private Boolean voided;
     private User voidedBy;
     private Date voidedOn;
     private String voidReason;
@@ -58,11 +59,19 @@ public class Charts {
         this.chartsGroup = chartsGroup;
     }
 
-    public boolean isVoided() {
+    public Boolean getListed() {
+        return listed;
+    }
+
+    public void setListed(Boolean listed) {
+        this.listed = listed;
+    }
+
+    public Boolean getVoided() {
         return voided;
     }
 
-    public void setVoided(boolean voided) {
+    public void setVoided(Boolean voided) {
         this.voided = voided;
     }
 

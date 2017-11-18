@@ -1,10 +1,13 @@
 package org.openmrs.module.mdrtbmanagement.db;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.openmrs.Location;
 import org.openmrs.api.db.DAOException;
@@ -12,6 +15,7 @@ import org.openmrs.module.mdrtb.model.LocationCentres;
 import org.openmrs.module.mdrtb.model.LocationCentresAgencies;
 import org.openmrs.module.mdrtbmanagement.*;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -45,6 +49,7 @@ public class HibernateMdrtbFinanceServiceDAO
     @Override
     public List<Charts> getParentCharts(){
         Criteria criteria = getSession().createCriteria(Charts.class);
+        criteria.add(Restrictions.eq("listed", true));
         criteria.add(Restrictions.eq("voided", false));
         criteria.add(Restrictions.isNull("chartsGroup"));
 
@@ -54,6 +59,7 @@ public class HibernateMdrtbFinanceServiceDAO
     @Override
     public List<Charts> getChildrenCharts(Charts chart){
         Criteria criteria = getSession().createCriteria(Charts.class);
+        criteria.add(Restrictions.eq("listed", true));
         criteria.add(Restrictions.eq("voided", false));
         criteria.add(Restrictions.eq("chartsGroup", chart));
         criteria.add(Restrictions.isNotNull("chartsGroup"));
@@ -203,5 +209,38 @@ public class HibernateMdrtbFinanceServiceDAO
     @Override
     public void deleteDisbursementsDetail(DisbursementsDetails dd){
         getSession().delete(dd);
+    }
+
+    @Override
+    public List<Ledgers> getLedgers(List<Location> locations, String period, Date startdate, Date enddate, Charts item){
+        Criteria criteria = getSession().createCriteria(Ledgers.class);
+        if (locations != null){
+            criteria.add(Restrictions.in("location", locations));
+        }
+        //Period (AnyPart {QTR/YEAR})
+        if (StringUtils.isNotBlank(period)){
+            criteria.add(Restrictions.like("period", period, MatchMode.ANYWHERE));
+        }
+        //Date Range
+        if (startdate != null && enddate != null){
+            criteria.add(Restrictions.between("date", startdate, enddate));
+        }
+        else if(startdate != null){
+            criteria.add(Restrictions.ge("date", startdate));
+        }
+        else if(enddate != null){
+            criteria.add(Restrictions.le("date", enddate));
+        }
+
+        criteria.addOrder(Order.asc("date"));
+        criteria.addOrder(Order.asc("order"));
+        criteria.setMaxResults(200);
+
+        return criteria.list();
+    }
+
+    @Override
+    public Expenditure saveExpenditure(Expenditure expenditure){
+        return (Expenditure)getSession().merge(expenditure);
     }
 }

@@ -5,6 +5,7 @@ import org.openmrs.module.mdrtb.model.LocationCentres;
 import org.openmrs.module.mdrtb.model.LocationCentresAgencies;
 import org.openmrs.module.mdrtbmanagement.*;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -38,4 +39,10 @@ public interface MdrtbFinanceServiceDAO {
     DisbursementsDetails getDisbursementsDetail(Disbursements disbursement, LocationCentres centre);
     DisbursementsDetails saveDisbursementsDetails(DisbursementsDetails details);
     void deleteDisbursementsDetail(DisbursementsDetails dd);
+
+    //Ledgers
+    List<Ledgers> getLedgers(List<Location> locations, String period, Date startdate, Date endDate, Charts item);
+
+    //Expenditure
+    Expenditure saveExpenditure(Expenditure expenditure);
 }

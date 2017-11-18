@@ -4,12 +4,13 @@
     "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
 
 <hibernate-mapping package="org.openmrs.module.mdrtbmanagement">
-	<class name="org.openmrs.module.mdrtbmanagement.Ledgers" table="finance_view_ledger" batch-size="500">
-		<id name="id" type="java.lang.String" column="id" unsaved-value="0"/>
+	<class name="org.openmrs.module.mdrtbmanagement.Expenditure" table="finance_expenditure" batch-size="500">
+		<id name="id" type="int" column="id" unsaved-value="0">
+				<generator class="native" />
+		</id>
 
 		<property name="date" column="date" type="java.util.Date"  />
 		<property name="period" column="period"  type="java.lang.String" />
-		<property name="order" column="order_field"  type="java.lang.Integer" />
 
 		<many-to-one name="location" class="org.openmrs.Location" column="location_id" cascade="none" lazy="false" />
 		<many-to-one name="item" class="org.openmrs.module.mdrtbmanagement.Charts" column="item" cascade="none" lazy="false" />
@@ -19,5 +20,10 @@
 
         <property name="createdOn" column="created_on" type="java.util.Date" />
         <many-to-one name="createdBy" class="org.openmrs.User" column="created_by" cascade="none" lazy="false" />
+
+		<many-to-one name="voidedBy" class="org.openmrs.User" column="voided_by" cascade="none"  />
+        <property name="voided" column="voided" type="java.lang.Boolean" />
+        <property name="voidedOn" column="voided_on" type="java.util.Date" />
+        <property name="voidReason" column="void_reason" type="java.lang.String" />
 	</class>
 </hibernate-mapping>
