@@ -243,4 +243,13 @@ public class HibernateMdrtbFinanceServiceDAO
     public Expenditure saveExpenditure(Expenditure expenditure){
         return (Expenditure)getSession().merge(expenditure);
     }
+
+    @Override
+    public List<LedgersSummary> getLedgersSummary(Location location, Integer year){
+        Criteria criteria = getSession().createCriteria(LedgersSummary.class);
+        criteria.add(Restrictions.eq("location", location));
+        criteria.add(Restrictions.eq("year", year));
+
+        return criteria.list();
+    }
 }

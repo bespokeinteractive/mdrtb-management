@@ -47,6 +47,7 @@ public interface MdrtbFinanceService
 
     //Ledgers
     List<Ledgers> getLedgers(List<Location> locations, String period, Date startdate, Date endDate, Charts item);
+    List<LedgersSummary> getLedgersSummary(Location location, Integer year);
 
     //Expenditure
     Expenditure saveExpenditure(Expenditure expenditure);

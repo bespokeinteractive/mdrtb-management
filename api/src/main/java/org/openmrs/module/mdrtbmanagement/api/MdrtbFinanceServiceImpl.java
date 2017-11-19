@@ -131,9 +131,13 @@ public class MdrtbFinanceServiceImpl
             dao.deleteDisbursementsDetail(dd);
         }
     }
-    //Charts
+    //Ledgers
     public List<Ledgers> getLedgers(List<Location> locations, String period, Date startdate, Date endDate, Charts item){
         return dao.getLedgers(locations, period, startdate, endDate, item);
+    }
+
+    public List<LedgersSummary> getLedgersSummary(Location location, Integer year){
+        return dao.getLedgersSummary(location, year);
     }
 
     //Expenditure

@@ -21,10 +21,12 @@ public class Charts {
     private Date voidedOn;
     private String voidReason;
 
-    /*Not Persistence in the DATABASE*/
+    /*Not Persistence Properties*/
     private Boolean hasChildren;
     private List<Charts> children;
     private float value;
+    private Double budget;
+    private Double expenditure;
 
     /*Getters and Setters*/
     public int getId() {
@@ -121,5 +123,21 @@ public class Charts {
 
     public void setValue(float value) {
         this.value = value;
+    }
+
+    public Double getBudget() {
+        return budget;
+    }
+
+    public void setBudget(Double budget) {
+        this.budget = budget;
+    }
+
+    public Double getExpenditure() {
+        return expenditure;
+    }
+
+    public void setExpenditure(Double expenditure) {
+        this.expenditure = expenditure;
     }
 }
