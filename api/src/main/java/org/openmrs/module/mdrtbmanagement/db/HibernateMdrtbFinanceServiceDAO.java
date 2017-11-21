@@ -252,4 +252,26 @@ public class HibernateMdrtbFinanceServiceDAO
 
         return criteria.list();
     }
+
+    @Override
+    public List<HumanResources> getStaffList(List<Location> locations) {
+        Criteria criteria = getSession().createCriteria(HumanResources.class);
+        criteria.add(Restrictions.eq("voided", false));
+        criteria.add(Restrictions.in("location", locations));
+
+        return criteria.list();
+    }
+
+    @Override
+    public HumanResources getStaff(Integer id) {
+        Criteria criteria = getSession().createCriteria(HumanResources.class);
+        criteria.add(Restrictions.eq("id", id));
+
+        return  (HumanResources) criteria.uniqueResult();
+    }
+
+    @Override
+    public HumanResources saveStaff(HumanResources staff) {
+        return (HumanResources)getSession().merge(staff);
+    }
 }

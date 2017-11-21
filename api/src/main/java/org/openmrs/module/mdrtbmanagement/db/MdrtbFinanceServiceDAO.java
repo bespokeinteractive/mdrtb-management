@@ -46,4 +46,10 @@ public interface MdrtbFinanceServiceDAO {
 
     //Expenditure
     Expenditure saveExpenditure(Expenditure expenditure);
+
+    //HR
+    List<HumanResources> getStaffList(List<Location> locations);
+    HumanResources getStaff(Integer id);
+    HumanResources saveStaff(HumanResources staff);
+
 }

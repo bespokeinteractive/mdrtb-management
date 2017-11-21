@@ -24,11 +24,12 @@ public class HumanresourcePageController {
             return "redirect: index.htm";
         }
 
-        List<Charts> charts = service.getCharts();
+        List<Charts> charts = service.getChildrenCharts(service.getChart(1));
         List<Location> locations = mdrtbService.getLocationsByUser();
 
         model.addAttribute("location", session.getSessionLocation());
         model.addAttribute("locations", locations);
+        model.addAttribute("charts", charts);
 
         return null;
     }

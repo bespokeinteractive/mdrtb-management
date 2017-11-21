@@ -1,6 +1,8 @@
 package org.openmrs.module.mdrtbmanagement;
 
+import org.openmrs.Location;
 import org.openmrs.User;
+import org.openmrs.api.context.Context;
 
 import java.util.Date;
 
@@ -13,6 +15,7 @@ public class HumanResources {
     private Date date;
     private String name;
     private Charts designation;
+    private Location location;
     private Double amount;
     private String description;
     private Date createdOn;
@@ -24,6 +27,13 @@ public class HumanResources {
     private Date voidedOn;
     private User voidedBy;
     private String voidReason;
+
+    public HumanResources(){
+        this.voided = false;
+
+        this.createdOn = new Date();
+        this.createdBy = Context.getAuthenticatedUser();
+    }
 
     public Integer getId() {
         return id;
@@ -55,6 +65,14 @@ public class HumanResources {
 
     public void setDesignation(Charts designation) {
         this.designation = designation;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     public Double getAmount() {

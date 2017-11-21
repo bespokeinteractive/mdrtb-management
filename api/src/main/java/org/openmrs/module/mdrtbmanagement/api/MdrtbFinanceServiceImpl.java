@@ -144,4 +144,19 @@ public class MdrtbFinanceServiceImpl
     public Expenditure saveExpenditure(Expenditure expenditure){
         return dao.saveExpenditure(expenditure);
     }
+
+    @Override
+    public List<HumanResources> getStaffList(List<Location> locations) {
+        return dao.getStaffList(locations);
+    }
+
+    @Override
+    public HumanResources getStaff(Integer id) {
+        return dao.getStaff(id);
+    }
+
+    @Override
+    public HumanResources saveStaff(HumanResources staff) {
+        return dao.saveStaff(staff);
+    }
 }
