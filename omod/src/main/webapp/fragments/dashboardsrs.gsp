@@ -6,6 +6,12 @@
 			reportDialog.show();
 		});
 		
+		jq('.income-statement').click(function(){
+			jq('#incomeIdnt').val(1);
+			jq('#incomeName').val('INCOME/EXPENDITURE STATEMENT');
+			incomeDialog.show();
+		});
+		
 		var reportDialog = emr.setupConfirmationDialog({
 			dialogOpts: {
 				overlayClose: false,
@@ -25,6 +31,29 @@
 				},
 				cancel: function() {
 					reportDialog.close();
+				}
+			}
+		});
+		
+		var incomeDialog = emr.setupConfirmationDialog({
+			dialogOpts: {
+				overlayClose: false,
+				close: true
+			},
+			selector: '#income-dialog',
+			actions: {
+				confirm: function() {
+					if (jq('#incomeFacility').val() == ''){
+						jq().toastmessage('showErrorToast', 'Invalid Facility. Kindly provide the correct value for the facility');
+						return false;
+					}
+					
+					if (jq('#incomeIdnt').val() == 1){
+						window.location.href = "ledgerstatement.page?facility="+jq('#incomeFacility').val()+"&yr="+jq('#incomeYear').val();
+					}
+				},
+				cancel: function() {
+					income.close();
 				}
 			}
 		});
@@ -53,7 +82,7 @@
 	a.icons img {
 		margin-bottom: 10px;
 	}
-	#report-dialog.dialog {
+	.dialog {
 		width: 500px;
 	}
 	.dialog .dialog-content li {
@@ -126,6 +155,11 @@
 		<span>SUBRECIPIENT SUMMARY</span>
 	</a>
 	
+	<a class="icons income-statement">
+		<img src="${ui.resourceLink('mdrtbmanagement', 'images/00-human-linked.png')}"><br/>
+		<span>INCOME STATEMENT</span>
+	</a>
+	
 	<a class="icons" href="ledgers.page">
 		<img src="${ui.resourceLink('mdrtbmanagement', 'images/00-profits.png')}"><br/>
 		<span>FINANCIAL LEDGER</span>
@@ -159,7 +193,7 @@
 				<label for="reportName">
 					Summary Page :
 				</label>
-				<input type="text" id="reportName" />
+				<input type="text" id="reportName" readonly="" />
 				<input type="hidden" id="reportIdnt" />
 			</li>
 			
@@ -188,6 +222,53 @@
 				</label>
 				
 				<select id="facility" class="required" name="report.outcome">
+					<option value="">&nbsp;</option>
+					<% locations.eachWithIndex { loc, index -> %>
+						<option value="${loc.id}" ${loc==location?'selected':''} '>${loc.name}</option>
+					<% } %>
+				</select>
+			</li>
+        </ul>
+
+        <label class="button confirm right">Confirm</label>
+        <label class="button cancel">Cancel</label>
+    </div>
+</div>
+
+<div id="income-dialog" class="dialog" style="display:none;">
+    <div class="dialog-header">
+        <i class="icon-folder-open"></i>
+        <h3>SUMMARY DIALOG</h3>
+    </div>
+
+    <div class="dialog-content">
+        <ul>
+			<li>
+				<label for="incomeName">
+					Summary Page :
+				</label>
+				<input type="text" id="incomeName" readonly="" />
+				<input type="hidden" id="incomeIdnt" />
+			</li>
+			
+			<li>
+				<label for="incomeYear">
+					Year :
+				</label>
+
+				<select id="incomeYear">
+					<% years.eachWithIndex { yr, index -> %>
+						<option value="${yr}" ${yr==year?'selected':''}  '>${yr}</option>
+					<% } %>
+				</select>
+			</li>
+			
+			<li>
+				<label for="incomeFacility">
+					Facility :
+				</label>
+				
+				<select id="incomeFacility" class="required">
 					<option value="">&nbsp;</option>
 					<% locations.eachWithIndex { loc, index -> %>
 						<option value="${loc.id}" ${loc==location?'selected':''} '>${loc.name}</option>

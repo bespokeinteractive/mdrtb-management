@@ -220,9 +220,9 @@
         <td><small>GROSS TOTAL</small></td>
         <td><small>&nbsp;</small></td>
         <td><small>${String.format("%1\$,.2f", (Double)budget)}</small></td>
-			<td><small>${String.format("%1\$,.2f", (Double)expenditure)}</small></td>
-			<td><small>${String.format("%1\$,.2f", (Double)variance)}</small></td>
-			<td><small>${String.format("%1\$,.2f", (Double)percentage)}%</small></td>
+		<td><small>${String.format("%1\$,.2f", (Double)expenditure)}</small></td>
+		<td><small>${String.format("%1\$,.2f", (Double)variance)}</small></td>
+		<td><small>${String.format("%1\$,.2f", (Double)percentage)}%</small></td>
 		<td><small>-</small></td>
 		<td><small>${String.format("%1\$,.2f", (Double)budgetYT)}</small></td>
 		<td><small>${String.format("%1\$,.2f", (Double)expenditureYT)}</small></td>
