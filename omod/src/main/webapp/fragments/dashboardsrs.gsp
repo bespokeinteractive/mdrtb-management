@@ -1,3 +1,38 @@
+<script>
+	jq(function () {
+		jq('.ledger-summary').click(function(){
+			jq('#reportIdnt').val(1);
+			jq('#reportName').val('SUBRECIPIENT SUMMARY');
+			reportDialog.show();
+		});
+		
+		var reportDialog = emr.setupConfirmationDialog({
+			dialogOpts: {
+				overlayClose: false,
+				close: true
+			},
+			selector: '#report-dialog',
+			actions: {
+				confirm: function() {
+					if (jq('#facility').val() == ''){
+						jq().toastmessage('showErrorToast', 'Invalid Facility. Kindly provide the correct value for the facility');
+						return false;
+					}
+					
+					if (jq('#reportIdnt').val() == 1){
+						window.location.href = "ledgersummary.page?facility="+jq('#facility').val()+"&qtr="+jq('#qtr').val()+"&yr="+jq('#yrs').val();
+					}
+				},
+				cancel: function() {
+					reportDialog.close();
+				}
+			}
+		});
+		
+		jq("#qtr").val(${qtrs});
+	});
+</script>
+
 <style>
 	a.icons {
 		border: 1px solid #53bfe2;
@@ -17,6 +52,38 @@
 	}
 	a.icons img {
 		margin-bottom: 10px;
+	}
+	#report-dialog.dialog {
+		width: 500px;
+	}
+	.dialog .dialog-content li {
+		margin-bottom: 0;
+	}
+	.dialog-content ul li label {
+		display: inline-block;
+		width: 150px;
+	}
+	.dialog-content ul li input[type="text"], .dialog-content ul li select, .dialog-content ul li textarea {
+		border: 1px solid #ddd;
+		display: inline-block;
+		height: 40px;
+		margin: 1px 0;
+		min-width: 20%;
+		padding: 5px 0 5px 10px;
+		width: 64%;
+	}
+	.dialog select option {
+		font-size: 1em;
+	}
+	.dialog ul {
+		margin-bottom: 20px;
+	}
+	.button.confirm {
+		margin-right: 6px;
+	}
+	#modal-overlay {
+		background: #000 none repeat scroll 0 0;
+		opacity: 0.4!important;
 	}
 </style>
 
@@ -54,6 +121,11 @@
 		<span>REQUEST FUNDS</span>
 	</a>
 	
+	<a class="icons ledger-summary">
+		<img src="${ui.resourceLink('mdrtbmanagement', 'images/00-stopwatch.png')}"><br/>
+		<span>SUBRECIPIENT SUMMARY</span>
+	</a>
+	
 	<a class="icons" href="ledgers.page">
 		<img src="${ui.resourceLink('mdrtbmanagement', 'images/00-profits.png')}"><br/>
 		<span>FINANCIAL LEDGER</span>
@@ -73,4 +145,58 @@
 		<img src="${ui.resourceLink('mdrtbmanagement', 'images/00-bars.png')}"><br/>
 		<span>VIEW<br/>REPORTS</span>
 	</a>
+</div>
+
+<div id="report-dialog" class="dialog" style="display:none;">
+    <div class="dialog-header">
+        <i class="icon-folder-open"></i>
+        <h3>SUMMARY DIALOG</h3>
+    </div>
+
+    <div class="dialog-content">
+        <ul>
+			<li>
+				<label for="reportName">
+					Summary Page :
+				</label>
+				<input type="text" id="reportName" />
+				<input type="hidden" id="reportIdnt" />
+			</li>
+			
+			<li>
+				<label for="">
+					Quarter :
+				</label>
+				
+				<select id="qtr" style="width:100px">
+					<option value="1">01</option>
+					<option value="2">02</option>
+					<option value="3">03</option>
+					<option value="4">04</option>
+				</select>
+
+				<select id="yrs" style="width:178px">
+					<% years.eachWithIndex { yr, index -> %>
+						<option value="${yr}" ${yr==year?'selected':''}  '>${yr}</option>
+					<% } %>
+				</select>
+			</li>
+			
+			<li>
+				<label for="facility">
+					Facility :
+				</label>
+				
+				<select id="facility" class="required" name="report.outcome">
+					<option value="">&nbsp;</option>
+					<% locations.eachWithIndex { loc, index -> %>
+						<option value="${loc.id}" ${loc==location?'selected':''} '>${loc.name}</option>
+					<% } %>
+				</select>
+			</li>
+        </ul>
+
+        <label class="button confirm right">Confirm</label>
+        <label class="button cancel">Cancel</label>
+    </div>
 </div>

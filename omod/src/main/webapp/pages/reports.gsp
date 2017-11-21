@@ -1,7 +1,3 @@
-<%
-
-%>
-
 <style>
 	#breadcrumbs a, #breadcrumbs a:link, #breadcrumbs a:visited {
 		text-decoration: none;
