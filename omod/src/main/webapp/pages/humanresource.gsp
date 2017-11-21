@@ -116,7 +116,102 @@
 		background: #000 none repeat scroll 0 0;
 		opacity: 0.3 !important;
 	}
+    .dialog {
+        width: 500px;
+    }
+    .dialog .dialog-content li {
+        margin-bottom: 0;
+    }
+    .dialog-content ul li label {
+        display: inline-block;
+        width: 150px;
+    }
+    .dialog-content ul li input[type="text"], .dialog-content ul li select, .dialog-content ul li textarea {
+        border: 1px solid #ddd;
+        display: inline-block;
+        height: 40px;
+        margin: 1px 0;
+        min-width: 20%;
+        padding: 5px 0 5px 10px;
+        width: 64%;
+    }
+    .dialog select option {
+        font-size: 1em;
+    }
+    .dialog ul {
+        margin-bottom: 20px;
+    }
+    .button.confirm {
+        margin-right: 6px;
+    }
+
+
+
 </style>
+
+<script>
+ jq(function () {
+     jq('#addStaff').click(function(){
+         jq('#incomeIdnt').val(1);
+
+         addStaffDialog.show();
+     });
+
+     jq('#editStaff').click(function () {
+        editStaffDialog.show();
+     })
+
+
+     var addStaffDialog = emr.setupConfirmationDialog({
+         dialogOpts: {
+             overlayClose: false,
+             close: true
+         },
+         selector: '#addStaff-dialog',
+         actions: {
+             confirm: function() {
+                 if (jq('#facility').val() == ''){
+                     jq().toastmessage('showErrorToast', 'Invalid Facility. Kindly provide the correct value for the facility');
+                     return false;
+                 }
+
+                 if (jq('#addStaffIdnt').val() == 1){
+                     window.location.href = "ledgerstatement.page?facility="+jq('#incomeFacility').val()+"&yr="+jq('#incomeYear').val();
+                 }
+             },
+             cancel: function() {
+                 addStaffDialog.close();
+             }
+         }
+     });
+
+     var editStaffDialog = emr.setupConfirmationDialog({
+         dialogOpts: {
+             overlayClose: false,
+             close: true
+         },
+         selector: '#editStaff-dialog',
+         actions: {
+             confirm: function() {
+                 if (jq('#facility').val() == ''){
+                     jq().toastmessage('showErrorToast', 'Invalid Facility. Kindly provide the correct value for the facility');
+                     return false;
+                 }
+
+                 if (jq('#editStaffIdnt').val() == 1){
+                     window.location.href = "ledgerstatement.page?facility="+jq('#incomeFacility').val()+"&yr="+jq('#incomeYear').val();
+                 }
+             },
+             cancel: function() {
+                 editStaffDialog.close();
+             }
+         }
+     });
+
+ })
+
+
+</script>
 
 <div class="example">
     <ul id="breadcrumbs">
@@ -145,7 +240,7 @@
 	</div>
 
 	<div id="show-icon">
-		<span class="button confirm right" id="addLedger">
+		<span class="button confirm right" id="addStaff">
 			<i class="icon-plus small"></i>
 		</span>
 		
@@ -165,7 +260,7 @@
 	<div class="budget-box">
 		
 	</div>
-	
+
 	<table id="ledgerTable">
 		<thead>
 			<th style="width:1px">#</th>
@@ -188,4 +283,84 @@
 			Print
 		</span>
 	</div>
+</div>
+
+<div id="addStaff-dialog" class="dialog" style="display:none;">
+    <div class="dialog-header">
+        <i class="icon-folder-open"></i>
+        <h3>ADD STAFF</h3>
+    </div>
+    <div class="dialog-content">
+        <ul>
+            <li>
+                <label for="name">NAME:</label>
+                <input type="text" id="name"/>
+            </li>
+            <li>
+                <label for="designation">
+                    DESIGNATION :
+                </label>
+
+                <select id="designation">
+
+                </select>
+            </li>
+            <li>
+                <label for="facility">
+                    FACILITY :
+                </label>
+                <select id="facility" class="required">
+                    <option value="">&nbsp;</option>
+                    <% locations.eachWithIndex { loc, index -> %>
+                    <option value="${loc.id}" ${loc==location?'selected':''} '>${loc.name}</option>
+                    <% } %>
+                </select>
+            </li>
+            <li>
+                <label for="amount">AMOUNT:</label>
+                <input type="text" id="amount"/>
+            </li></ul>
+        <label class="button confirm right">Confirm</label>
+        <label class="button cancel">Cancel</label>
+    </div>
+</div>
+
+<div id="editStaff-dialog" class="dialog" style="display:none;">
+    <div class="dialog-header">
+        <i class="icon-folder-open"></i>
+        <h3>EDIT STAFF</h3>
+    </div>
+    <div class="dialog-content">
+        <ul>
+            <li>
+                <label for="name">NAME:</label>
+                <input type="text" id="name"/>
+            </li>
+            <li>
+                <label for="designation">
+                    DESIGNATION :
+                </label>
+
+                <select id="designation">
+
+                </select>
+            </li>
+            <li>
+                <label for="facility">
+                    FACILITY :
+                </label>
+                <select id="facility" class="required">
+                    <option value="">&nbsp;</option>
+                    <% locations.eachWithIndex { loc, index -> %>
+                    <option value="${loc.id}" ${loc==location?'selected':''} '>${loc.name}</option>
+                    <% } %>
+                </select>
+            </li>
+            <li>
+                <label for="amount">AMOUNT:</label>
+                <input type="text" id="amount"/>
+            </li></ul>
+        <label class="button confirm right">Confirm</label>
+        <label class="button cancel">Cancel</label>
+    </div>
 </div>
