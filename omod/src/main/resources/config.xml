@@ -42,6 +42,7 @@
 		Ledgers.hbm.xml
 		LedgersSummary.hbm.xml
 		Expenditure.hbm.xml
+		HumanResources.hbm.xml
 		Disbursements.hbm.xml
 		DisbursementsDetails.hbm.xml
 	</mappingFiles>
