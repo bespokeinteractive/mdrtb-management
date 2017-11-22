@@ -11,6 +11,12 @@
 			jq('#incomeName').val('INCOME/EXPENDITURE STATEMENT');
 			incomeDialog.show();
 		});
+
+		jq('.ledgercashflow').click(function(){
+            jq('#reportIdnt').val(2);
+            jq('#reportName').val('CASHFLOW SUMMARY');
+            reportDialog.show();
+        });
 		
 		var reportDialog = emr.setupConfirmationDialog({
 			dialogOpts: {
@@ -28,6 +34,9 @@
 					if (jq('#reportIdnt').val() == 1){
 						window.location.href = "ledgersummary.page?facility="+jq('#facility').val()+"&qtr="+jq('#qtr').val()+"&yr="+jq('#yrs').val();
 					}
+					else if (jq('#reportIdnt').val() == 2){
+                        window.location.href = "ledgerscashflow.page?facility="+jq('#facility').val()+"&qtr="+jq('#qtr').val()+"&yr="+jq('#yrs').val();
+                    }
 				},
 				cancel: function() {
 					reportDialog.close();
@@ -53,7 +62,7 @@
 					}
 				},
 				cancel: function() {
-					income.close();
+					incomeDialog.close();
 				}
 			}
 		});
@@ -179,6 +188,11 @@
 		<img src="${ui.resourceLink('mdrtbmanagement', 'images/00-bars.png')}"><br/>
 		<span>VIEW<br/>REPORTS</span>
 	</a>
+    <a class="icons  ledgercashflow">
+        <img src="${ui.resourceLink('mdrtbmanagement', 'images/00-exchange.png')}"><br/>
+        <span>VIEW<br/>CASH FLOW</span>
+    </a>
+
 </div>
 
 <div id="report-dialog" class="dialog" style="display:none;">

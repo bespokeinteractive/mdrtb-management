@@ -1,292 +1,8 @@
 <%
     ui.decorateWith("appui", "standardEmrPage", [title: "SRs Financial Report"])
 %>
-<ul id="breadcrumbs">
-    <li>
-        <a href="${ui.pageLink('referenceapplication', 'home')}">
-            <i class="icon-home small"></i></a>
-    </li>
-
-    <li>
-    <i class="icon-chevron-right link"></i>
-    <a href="financedashboard.page?view=srs">Finance</a>
-</li>
-    <li>
-        <i class="icon-chevron-right link"></i>
-        Sub-Recipient Report
-    </li>
-</ul>
-</div>
 
 
-<p class="reportTitle" style="text-align: center;">SUB-RECIPIENT FINANCIAL REPORT - GFATM SOMALIA</p>
-
-<table id="tb1">
-    <tr>
-        <td>
-            <div>
-
-                SUB-RECIPIENT:<span class="underline" style="width: 170px"><small>&nbsp; </small></span>
-            </div>
-        </td>
-
-        <td>
-            <div>
-                REPORTING PERIOD:<span class="underline" style="width: 285px">&nbsp; <small><sup></sup> </small></span>
-            </div>
-
-            <div style="margin: 10px 0">
-                SUBMISSION NUMBER: <span class="underline" style="width: 240px">&nbsp; <small></small></span>
-            </div>
-        </td>
-    </tr>
-</table>
-<small><p class="reportTitle"><br/>Section A: OPENING CASH BALANCE FOR THE PERIOD </p></small>
-<table id="tb1">
-    <tr>
-        <th><small>Category</small></th>
-        <th><small>Amount</small></th>
-
-    </tr>
-    <tr>
-        <td><small>OPENING CASH BALANCE FOR THE PERIOD &nbsp;&nbsp;&nbsp;&nbsp;</small></td>
-        <td><small>0</small></td>
-
-    </tr>
-
-
-</table>
-
-<small><p class="reportTitle"><br/>SECTION B: CASH IN-FLOW</p></small>
-<table id="tb1">
-    <tr>
-        <th><small>Category</small></th>
-        <th><small>Amount</small></th>
-
-    </tr>
-    <tr>
-        <td><small> Disbursement Received from PR during the reporting period</small></td>
-        <td><small>0</small></td>
-
-    </tr>
-    <tr>
-        <td><small> Bank Interest Earned</small></td>
-        <td><small>0</small></td>
-
-    </tr>
-    <tr>
-        <td><small> Project Income</small></td>
-        <td><small>0</small></td>
-
-    </tr>
-    <tr>
-        <td><small> Disallowed Costs Added Back to the Program</small></td>
-        <td><small>0</small></td>
-
-    </tr>
-    <tr>
-        <td><small> Other Revenues/Receipts/Loan(ICR 5% overcharged)</small></td>
-        <td><small>0</small></td>
-
-    </tr>
-    <tr>
-        <td><small> Total Cash In-Flow &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</small></td>
-        <td><small>0</small></td>
-
-    </tr>
-
-</table>
-<small><p class="reportTitle"><br/>SECTION C:</p></small>
-<table id="tb1">
-    <tr>
-        <th><small>Category</small></th>
-        <th><small>Amount</small></th>
-
-    </tr>
-    <tr>
-        <td><small> TOTAL CASH AVAILABLE AT SR &nbsp;&nbsp;&nbsp;&nbsp;</small></td>
-        <td><small>0</small></td>
-
-    </tr>
-
-</table>
-</table>
-<small><p class="reportTitle"><br/>SECTION D: EXPENDITUTRE PAID BY SR</p></small>
-<table id="tb1">
-    <tr>
-        <th><small>Category</small></th>
-        <th><small>Amount</small></th>
-
-    </tr>
-    <tr>
-        <td><small>Human Resource</small></td>
-        <td><small>0</small></td>
-
-    </tr>
-    <tr>
-
-        <td> <small>Technical Assistance</small></td>
-        <td></td>
-    </tr>
-    <tr>
-
-        <td><small>Health Products and Health Equipments</small> </td>
-        <td> </td>
-    </tr>
-    <tr>
-
-        <td><small>Medicines and Pharmaceutical Products</small></td>
-        <td></td>
-    </tr>
-    <tr>
-
-        <td><small>Procurement and Supply Management</small></td>
-        <td></td>
-    </tr>
-    <tr>
-
-        <td> <small>Communication Materials</small></td>
-        <td></td>
-    </tr>
-    <tr>
-
-        <td><small>Monitoring and Evaluation</small></td>
-        <td></td>
-    </tr>
-
-    <tr>
-
-        <td> <small>Living Support to Clients/Target Population</small> </td>
-        <td></td>
-    </tr>
-
-    <tr>
-
-        <td><small>Planning and Administration </small></td>
-        <td></td>
-    </tr>
-
-    <tr>
-
-        <td><small>Overheads</small></td>
-        <td></td>
-    </tr>
-    <tr>
-
-        <td><small>Monitoring and Evaluation</small> </td>
-        <td></td>
-    </tr>
-    <tr>
-        <td><small>Overheads-Indirect Cost Recovery (ICR)</small></td>
-        <td><small>0</small></td>
-
-    </tr>
-    <tr>
-        <td><small>Others</small></td>
-        <td><small>0</small></td>
-
-    </tr>
-</table>
-
-<small><p class="reportTitle"><br/>SECTION E: OTHER OUT-FLOW</p></small>
-
-<table id="tb1">
-    <tr>
-        <th><small>Category</small></th>
-        <th><small>Amount</small></th>
-
-    </tr>
-    <tr>
-        <td><small> Expenditures Pertained to Phase I</small></td>
-        <td><small>0</small></td>
-
-    </tr>
-    <tr>
-        <td><small>   Committed Cost (Phase 1)</small></td>
-        <td><small>0</small></td>
-
-    </tr>
-    <tr>
-        <td><small> New Committed Cost (Phase 1)</small></td>
-        <td><small>0</small></td>
-
-    </tr>
-
-</table>
-<small>
-    <p class="reportTitle"><br/>SECTION F:</p> </small>
-<table id="tb1">
-    <tr>
-        <th><small>Category</small></th>
-        <th><small>Amount</small></th>
-
-    </tr>
-    <tr>
-        <td><small> ENDING CASH BALANCE FOR THE PERIOD &nbsp;&nbsp;&nbsp;&nbsp;</small></td>
-        <td><small>0</small></td>
-
-    </tr>
-</table>
-
-<small><p class="reportTitle"><br/>SECTION G: EXPENDITURES PAID BY PR ON BEHALF OF SR (if any)</p></small>
-<table id="tb1">
-    <tr>
-        <th><small>Category</small></th>
-        <th><small>Amount</small></th>
-
-    </tr>
-    <tr>
-        <td><small> Health Products and Health Equipments</small></td>
-        <td><small>0</small></td>
-
-    </tr>
-    <tr>
-        <td><small> Medicines and Pharmaceutical Products</small></td>
-        <td><small>0</small></td>
-
-    </tr>
-    <tr>
-        <td><small>Procurement and Supply Management (CIF only)</small></td>
-        <td><small>0</small></td>
-
-    </tr>
-    <tr>
-        <td><small>Procurement and Supply Management (Others)</small></td>
-        <td><small>0</small></td>
-
-    </tr>
-    <tr>
-        <td><small>TOTAL EXPENDITURES PAID BY PR ON BEHALF OF SR</small></td>
-        <td><small>0</small></td>
-
-    </tr>
-</table>
- <small><p class="reportTitle"><br/>SECTION H</p><small>
-<table id="tb1">
-    <tr>
-        <th><small>Category</small></th>
-        <th><small>Amount</small></th>
-
-    </tr>
-    <tr>
-        <td><small>TOTAL EXPENDITURES FOR THE REPORTING PERIOD</small></td>
-        <td><small>0</small></td>
-
-    </tr>
-
-
-</table>
-</table>
-<p class="reportTitle"><br/></p>
-<table id="tb4">
-</table>
-
-     <style>
-     table th, table td {
-         text-align: left;
-         white-space: nowrap;
-     }
-     </style>
 <style>
 #breadcrumbs a, #breadcrumbs a:link, #breadcrumbs a:visited {
     text-decoration: none;
@@ -423,4 +139,256 @@ span.underline{
     display: inline-block;
     min-width: 100px;
 }
+#itemList th{
+    text-align: left;
+}
+#itemList td{
+    text-align: center;
+}
+#itemList td:first-child{
+    text-align: left;
+}
+#itemList{
+    font-size: 14px;
+    margin-top: 2px;
+}
 </style>
+<ul id="breadcrumbs">
+    <li>
+        <a href="${ui.pageLink('referenceapplication', 'home')}">
+            <i class="icon-home small"></i></a>
+    </li>
+
+    <li>
+    <i class="icon-chevron-right link"></i>
+    <a href="financedashboard.page?view=srs">Finance</a>
+</li>
+    <li>
+        <i class="icon-chevron-right link"></i>
+        Sub-Recipient Report
+    </li>
+</ul>
+</div>
+
+<div class="patient-header new-patient-header" style="margin-bottom: 1px;">
+    <div class="demographics">
+        <h1 class="name" style="border-bottom: 1px solid #ddd;">
+            <span><i class="icon-file-alt small"></i>SUB-RECIPIENT FINANCIAL REPORT - GFATM SOMALIA &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span>
+        </h1>
+    </div>
+</div>
+
+
+
+<table>
+    <tr>
+        <td style="font-weight: bold; font-size: 0.9em; text-align: right; width: 209px;">
+            NAME OF SR:<br/>
+            REPORTING PERIOD : <br/>
+            SUBMISSION NUMBER :<br/>
+
+        </td>
+
+        <td>
+            <span class="underline" style="width: 400px"><small>&nbsp; ${centre.location.name.toUpperCase()}</small></span><br/>
+            <span class="underline" style="width: 400px"><small>&nbsp; ${start} to ${ended}</small></span><br/>
+            <span class="underline" style="width: 400px"><small>&nbsp; N/A</small></span><br/>
+
+
+        </td>
+    </tr>
+</table>
+<small><p class="reportTitle"><br/>Section A: OPENING CASH BALANCE FOR THE PERIOD </p></small>
+<table id="itemList">
+    <tr>
+        <th><small>Category</small></th>
+        <th><small>Amount</small></th>
+
+    </tr>
+    <tr>
+        <td><small>OPENING CASH BALANCE FOR THE PERIOD &nbsp;&nbsp;&nbsp;&nbsp;</small></td>
+        <td><small>0.00</small></td>
+
+    </tr>
+
+
+</table>
+
+<small><p class="reportTitle"><br/>SECTION B: CASH IN-FLOW</p></small>
+<table id="itemList">
+    <tr>
+        <th><small>Category</small></th>
+        <th><small>Amount</small></th>
+
+    </tr>
+    <tr>
+        <td><small> Disbursement Received from PR during the reporting period</small></td>
+        <td><small>0.00</small></td>
+
+    </tr>
+    <tr>
+        <td><small> Bank Interest Earned</small></td>
+        <td><small>0.00</small></td>
+
+    </tr>
+    <tr>
+        <td><small> Project Income</small></td>
+        <td><small>0.00</small></td>
+
+    </tr>
+    <tr>
+        <td><small> Disallowed Costs Added Back to the Program</small></td>
+        <td><small>0.00</small></td>
+
+    </tr>
+    <tr>
+        <td><small> Other Revenues/Receipts/Loan(ICR 5% overcharged)</small></td>
+        <td><small>0.00</small></td>
+
+    </tr>
+    <tr>
+        <td style="font-weight: bold"><small> Total Cash In-Flow</small></td>
+        <td><small>0.00</small></td>
+
+    </tr>
+
+</table>
+
+<small><p class="reportTitle"><br/>SECTION C:</p></small>
+<table id="itemList">
+    <tr>
+        <th style="margin-left: 0px;"><small>Category</small></th>
+        <th><small>Amount</small></th>
+
+    </tr>
+    <tr>
+        <td><small> TOTAL CASH AVAILABLE AT SR &nbsp;&nbsp;&nbsp;&nbsp;</small></td>
+        <td><small>0.00</small></td>
+
+    </tr>
+
+</table>
+
+<small><p class="reportTitle"><br/>SECTION D: EXPENDITUTRE PAID BY SR</p></small>
+
+<table id="itemList">
+    <tr>
+        <th><small>Category</small></th>
+        <th><small>Amount</small></th>
+
+
+    </tr>
+    <% charts.eachWithIndex { chart, idx -> %>
+    <tr>
+    <td><small>${chart.name}</small></td>
+    <td><small>${String.format("%1\$,.2f", (Double)chart.expenditure)}</small></td>
+    </tr>
+    <% } %>
+    <tr>
+    <td style="font-weight: bold" colspan="2"><small>Other out-flow</small></td>
+        </tr>
+    <tr>
+        <td><small>- Expenditures Pertained to Phase I</small></td>
+        <td><small>0.00</small></td>
+    </tr>
+
+    <tr>
+        <td><small>- Committed Cost (Phase 1): Annex</small></td>
+        <td><small>0.00</small></td>
+    </tr>
+
+    <tr>
+        <td><small>- New Committed Cost (Phase 1): Annex</small></td>
+        <td><small>0.00</small></td>
+    </tr>
+    <tr>
+        <td><small>- Others:</small></td>
+        <td><small>0.00</small></td>
+
+    </tr>
+    <tr>
+        <td style="font-weight: bold"><small>Total Expenditure Paid By SR:</small></td>
+        <td><small>${String.format("%1\$,.2f", (Double)expenditureTT)}</small></td>
+    </tr>
+
+</table>
+
+<small><p class="reportTitle"><br/>SECTION E</p></small>
+
+<table id="itemList">
+    <tr>
+        <th><small>Category</small></th>
+        <th><small>Amount</small></th>
+    </tr>
+    <tr>
+        <td><small>ENDING CASH BALANCE FOR THE PERIOD</small></td>
+        <td><small>0.00</small></td>
+    </tr>
+</table>
+
+<small><p class="reportTitle"><br/>SECTION F</p></small>
+
+<table id="itemList">
+    <tr>
+        <th><small>EXPENDITURES PAID BY PR ON BEHALF OF SR (if any)</small></th>
+        <th><small>Amount</small></th>
+    </tr>
+    <tr>
+        <td><small>Health Products and Health Equipments</small></td>
+        <td><small>0.00</small></td>
+    </tr>
+    <tr>
+        <td><small>Medicines and Pharmaceutical Products</small></td>
+        <td><small></small></td>
+    </tr>
+    <tr>
+        <td><small>Procurement and Supply Management  (CIF only)</small></td>
+        <td><small>0.00</small></td>
+    </tr>
+    <tr>
+        <td><small>Procurement and Supply Management  (Others)</small></td>
+        <td><small>0.00</small></td>
+    </tr>
+    <tr>
+        <td style="font-weight: bold"><small>TOTAL EXPENDITURES PAID BY PR ON BEHALF OF SR</small></td>
+        <td><small>0.00</small></td>
+    </tr>
+
+</table>
+<small><p class="reportTitle"><br/>SECTION G</p></small>
+
+<table id = itemList>
+    <tr>
+        <th><small>Category</small></th>
+        <th><small>Amount</small></th>
+    </tr>
+    <tr>
+        <td><small>TOTAL EXPENDITURES FOR THE REPORTING PERIOD</small></td>
+        <td><small>0.00</small></td>
+    </tr>
+    <tr>
+        <td colspan="2">&nbsp;</td>
+    </tr>
+</table>
+<table style="margin: 5px 0 15px 0">
+    <tr>
+        <td>
+            <div style="font-weight:bold; margin-bottom:5px; padding-left:10px"><small>FINANCE / GRANT CONTACT PERSON:</small></div>
+            <small>NAME:      .........................................................................................................................</small><br/>
+            <small>TITLE:     ........................................................................................................................... </small> <br/>
+            <small>SIGNATURE:  .................................................................................................................<br/></small>
+            <small>DATE:  .............................................................................................................................<br/><br/></small>
+
+        </td>
+        <td>
+            <div style="font-weight:bold; margin-bottom:5px; padding-left:10px"><small>AUTHORIZED / ENDORSED BY:</small></div>
+            <small>NAME:      .........................................................................................................................</small><br/>
+            <small>TITLE:     ........................................................................................................................... </small> <br/>
+            <small>SIGNATURE:  .................................................................................................................<br/></small>
+            <small>DATE  .............................................................................................................................<br/><br/></small>
+
+        </td>
+    </tr>
+
+</table>
+
