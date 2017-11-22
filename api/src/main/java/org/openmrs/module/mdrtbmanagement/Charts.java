@@ -25,6 +25,7 @@ public class Charts {
     private Boolean hasChildren;
     private List<Charts> children;
     private float value;
+    private String comment;
 
     private Double percentage = 0.0;
     private Double variance = 0.0;
@@ -140,6 +141,14 @@ public class Charts {
 
     public void setValue(float value) {
         this.value = value;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public Double getBudgetQ1() {

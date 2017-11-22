@@ -238,7 +238,7 @@
                 jq('#name').val(data.name.toUpperCase());
                 jq('#date-field').val(data.date);
                 jq('#date-display').val(data.disp).change();
-				jq('#designation').val(data.designation.id);
+				jq('#designation').val(data.designation);
 				jq('#facility').val(data.location);
 				jq('#amount').val(data.amount.toString().formatToAccounting());
 				jq('#description').val(data.notes);
