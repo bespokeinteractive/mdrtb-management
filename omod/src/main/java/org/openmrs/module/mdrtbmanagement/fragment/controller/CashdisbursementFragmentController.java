@@ -116,11 +116,7 @@ public class CashdisbursementFragmentController {
         LocationCentresAgencies agency = mdrtbService.getAgency(wrapper.getAgency());
         String period = "0"+wrapper.getQuarter() + "-" + wrapper.getYear();
 
-        Disbursements disbursement = financeService.getDisbursement(period, agency);
-        if (disbursement != null){
-            return SimpleObject.create("status", "failed", "message", "Facility Budget for that period already exsists");
-        }
-        disbursement = new Disbursements();
+        Disbursements disbursement = new Disbursements();
         disbursement.setPeriod(period);
         disbursement.setAgency(agency);
         disbursement.setDate(wrapper.getDate());

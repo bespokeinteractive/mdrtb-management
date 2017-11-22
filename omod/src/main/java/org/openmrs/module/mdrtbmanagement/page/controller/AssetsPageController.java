@@ -4,6 +4,7 @@ import org.openmrs.Location;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.appui.UiSessionContext;
 import org.openmrs.module.mdrtb.service.MdrtbService;
+import org.openmrs.module.mdrtbmanagement.Assets;
 import org.openmrs.module.mdrtbmanagement.Charts;
 import org.openmrs.module.mdrtbmanagement.api.MdrtbFinanceService;
 import org.openmrs.ui.framework.page.PageModel;
@@ -15,7 +16,6 @@ import java.util.List;
  * Created on 11/21/2017.
  */
 public class AssetsPageController {
-    MdrtbService mdrtbService = Context.getService(MdrtbService.class);
     MdrtbFinanceService service = Context.getService(MdrtbFinanceService.class);
 
     public String get(UiSessionContext session,
@@ -24,9 +24,10 @@ public class AssetsPageController {
             return "redirect: index.htm";
         }
 
-        List<Location> locations = mdrtbService.getLocationsByUser();
-        List<Charts> charts = service.getCharts();
+        List<Location> locations = Context.getService(MdrtbService.class).getLocationsByUser();
+        List<Assets> assets = service.getAssets(locations);
 
+        model.addAttribute("assets", assets);
         model.addAttribute("location", session.getSessionLocation());
         model.addAttribute("locations", locations);
 

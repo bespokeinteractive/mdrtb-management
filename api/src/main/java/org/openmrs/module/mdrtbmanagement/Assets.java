@@ -1,5 +1,6 @@
 package org.openmrs.module.mdrtbmanagement;
 
+import org.openmrs.Location;
 import org.openmrs.User;
 import org.openmrs.api.context.Context;
 
@@ -15,6 +16,7 @@ public class Assets {
     private String serial;
     private String description;
     private String assignedTo;
+    private Location location;
     private Date acquiredOn;
     private Double acquiredCost;
     private Double acquiredCostLocal;
@@ -73,6 +75,14 @@ public class Assets {
 
     public void setAssignedTo(String assignedTo) {
         this.assignedTo = assignedTo;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     public Date getAcquiredOn() {

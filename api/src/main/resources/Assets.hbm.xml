@@ -13,11 +13,12 @@
 		<property name="serial" column="serial"  type="java.lang.String" />
 		<property name="description" column="description"  type="java.lang.String" />
 		<property name="assignedTo" column="assigned_to"  type="java.lang.String" />
-		
+		<many-to-one name="location" class="org.openmrs.Location" column="location_id" cascade="none" lazy="false" />
+
 		<property name="acquiredOn" column="acquired_on"  type="java.util.Date" />
 		<property name="acquiredCost" column="acquired_cost"  type="java.lang.Double" />
 		<property name="acquiredCostLocal" column="acquired_cost_local"  type="java.lang.Double" />
-		
+
 		<property name="retiredOn" column="retired_on"  type="java.util.Date" />
 		<many-to-one name="retiredBy" class="org.openmrs.User" column="retired_by" cascade="none" lazy="false" />
 		<property name="retiredProceeds" column="retired_proceeds"  type="java.lang.Double" />
