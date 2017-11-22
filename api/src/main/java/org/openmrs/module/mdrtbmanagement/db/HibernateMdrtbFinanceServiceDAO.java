@@ -254,10 +254,17 @@ public class HibernateMdrtbFinanceServiceDAO
     }
 
     @Override
-    public List<HumanResources> getStaffList(List<Location> locations) {
+    public List<HumanResources> getStaffList(List<Location> locations, Boolean includeTransferred) {
         Criteria criteria = getSession().createCriteria(HumanResources.class);
         criteria.add(Restrictions.eq("voided", false));
         criteria.add(Restrictions.in("location", locations));
+
+        if (includeTransferred){
+            criteria.add(Restrictions.isNotNull("transferredOn"));
+        }
+        else {
+            criteria.add(Restrictions.isNull("transferredOn"));
+        }
 
         return criteria.list();
     }

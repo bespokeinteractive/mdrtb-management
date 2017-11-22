@@ -36,7 +36,7 @@ public class HumanResourcesFragmentController {
             locations.add(location);
         }
 
-        List<HumanResources> staffList = service.getStaffList(locations);
+        List<HumanResources> staffList = service.getStaffList(locations, false);
         if (staffList != null){
             return SimpleObject.fromCollection(staffList, ui, "id", "date", "name", "location.name", "designation.name", "designation.code", "amount", "description");
         }
@@ -48,7 +48,7 @@ public class HumanResourcesFragmentController {
         HumanResources staff = service.getStaff(id);
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         DateFormat ff = new SimpleDateFormat("dd MMM yyyy");
-        return SimpleObject.create("name", staff.getName(), "date", df.format(staff.getDate()), "disp", ff.format(staff.getDate()), "designation", staff.getDesignation().getId(), "location", staff.getLocation().getId(), "amount", staff.getAmount(), "notes", staff.getDescription());
+        return SimpleObject.create("name", staff.getName(), "date", df.format(staff.getDate()), "disp", ff.format(staff.getDate()), "designation", staff.getDesignation().getId(), "desc", staff.getDesignation().getName(), "location", staff.getLocation().getId(), "loc",staff.getLocation().getName(), "amount", staff.getAmount(), "notes", staff.getDescription());
     }
 
     public SimpleObject updateStaffList(@RequestParam(value = "id") Integer id,
@@ -57,8 +57,7 @@ public class HumanResourcesFragmentController {
                                         @RequestParam(value = "chart") Integer chart_id,
                                         @RequestParam(value = "location") Location location,
                                         @RequestParam(value = "amount") Double amount,
-                                        @RequestParam(value = "note", required = false) String note,
-                                        UiSessionContext session){
+                                        @RequestParam(value = "note", required = false) String note){
         HumanResources staff = service.getStaff(id);
         if (staff == null || id == 0){
             staff = new HumanResources();
@@ -73,6 +72,21 @@ public class HumanResourcesFragmentController {
 
         this.service.saveStaff(staff);
 
-        return SimpleObject.create("status", "success", "message", "Staff successfully created");
+        return SimpleObject.create("status", "success", "message", "Staff successfully updated");
+    }
+
+    public SimpleObject transferStaffList(@RequestParam(value = "id") Integer id,
+                                          @RequestParam(value = "date") Date date,
+                                          @RequestParam(value = "note", required = false) String note){
+        HumanResources staff = service.getStaff(id);
+        if (staff == null || id == 0){
+            return SimpleObject.create("status", "failed", "message", "Failed to retrieve Staff details");
+        }
+
+        staff.setTransferredOn(date);
+        staff.setTransferReason(note);
+        this.service.saveStaff(staff);
+
+        return SimpleObject.create("status", "success", "message", "Staff successfully transfered");
     }
 }

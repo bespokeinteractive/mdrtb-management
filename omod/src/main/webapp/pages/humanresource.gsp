@@ -30,7 +30,7 @@
         staffResultsData = results || [];
         var dataRows = [];
         _.each(staffResultsData, function(result){
-			var icons = "<a data-idnt='" + result.id + "' class='edit-staff'>Edit</a> |<a data-idnt='" + result.id + "' class='remove-staff'><i class='icon-remove small'></i></a>"
+			var icons = "<a data-idnt='" + result.id + "' class='edit-staff'>Edit</a> |<a data-idnt='" + result.id + "' class='transfer-staff'><i class='icon-remove small'></i></a>"
 			
 			
             dataRows.push([0, result.designation.code, result.name.toUpperCase(), result.designation.name.toUpperCase(), result.location.name.toUpperCase(), result.date, result.amount.toString().formatToAccounting(), icons]);
@@ -155,7 +155,7 @@
                         success: function (data) {
                             if (data.status == "success") {
                                 jq().toastmessage('showSuccessToast', data.message);
-                                window.location.href = "cashdisbursement.page?tab=approved";
+                                window.location.href = "humanresource.page";
                             }
                             else {
                                 jq().toastmessage('showErrorToast', 'Post failed. ' + data.message);
@@ -165,11 +165,47 @@
                             jq().toastmessage('showErrorToast', "Post failed. " + data.statusText);
                         }
                     });
-                    confirmDialog.close();
-					
 				},
 				cancel: function() {
 					staffAddEditDialog.close();
+				}
+			}
+		});
+		
+		var transferDialog = emr.setupConfirmationDialog({
+			dialogOpts: {
+				 overlayClose: false,
+				 close: true
+			},
+			selector: '#transfer-dialog',
+			actions: {
+				confirm: function() {
+					var dataString = {
+						id: 		jq('#tidnt').val(),
+						note:		jq('#tnotes').val(),
+						date:		jq('#tdate-field').val(),
+					}
+                    jq.ajax({
+                        type: "POST",
+                        url: '${ui.actionLink("mdrtbmanagement", "HumanResources", "transferStaffList")}',
+                        data: dataString,
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.status == "success") {
+                                jq().toastmessage('showSuccessToast', data.message);
+                                window.location.href = "humanresource.page";
+                            }
+                            else {
+                                jq().toastmessage('showErrorToast', 'Post failed. ' + data.message);
+                            }
+                        },
+                        error: function (data) {
+                            jq().toastmessage('showErrorToast', "Post failed. " + data.statusText);
+                        }
+                    });					
+				},
+				cancel: function() {
+					transferDialog.close();
 				}
 			}
 		});
@@ -199,15 +235,31 @@
                 id: idnt
             }).success(function (data) {
                 jq('#idnt').val(idnt);
-                jq('#name').val(data.name);
+                jq('#name').val(data.name.toUpperCase());
                 jq('#date-field').val(data.date);
                 jq('#date-display').val(data.disp).change();
-				jq('#designation').val(data.designation);
+				jq('#designation').val(data.designation.id);
 				jq('#facility').val(data.location);
 				jq('#amount').val(data.amount.toString().formatToAccounting());
 				jq('#description').val(data.notes);
                
 				staffAddEditDialog.show();
+            });
+		});
+		
+		jq('table').on('click','.transfer-staff', function(){
+			var idnt = jq(this).data('idnt');
+			
+			jq.getJSON('${ ui.actionLink("mdrtbmanagement", "HumanResources", "getStaffDetails") }', {
+                id: idnt
+            }).success(function (data) {
+                jq('#tidnt').val(idnt);
+                jq('#tname').val(data.name.toUpperCase());
+				jq('#tdesignation').val(data.desc.toUpperCase());
+				jq('#tfacility').val(data.loc.toUpperCase());
+				jq('#tnotes').val('');
+               
+				transferDialog.show();
             });
 		});
 
@@ -497,7 +549,7 @@
             </li>
 
 			<li>
-				${ui.includeFragment("uicommons", "field/datetimepicker", [formFieldName: 'update.date', id: 'date', label: 'DATE:', useTime: false, defaultToday: true])}
+				${ui.includeFragment("uicommons", "field/datetimepicker", [formFieldName: 'update.date', id: 'date', label: 'DATE:', useTime: false, defaultToday: true, endDate: new Date()])}
 			</li>
 			
             <li>
@@ -508,6 +560,48 @@
 			<li>
                 <label for="description">DESCRIPTION:</label>
                 <textarea id="description" style="height:100px"></textarea>
+            </li>			
+		</ul>
+		
+        <label class="button confirm right">Confirm</label>
+        <label class="button cancel">Cancel</label>
+    </div>
+</div>
+
+<div id="transfer-dialog" class="dialog" style="display:none;">
+    <div class="dialog-header">
+        <i class="icon-folder-open"></i>
+        <h3>TRANSFER OUT</h3>
+    </div>
+    <div class="dialog-content">
+        <ul>
+            <li>
+                <label for="tname">NAME:</label>
+                <input type="text" id="tname" readonly=""/>
+                <input type="hidden" id="tidnt"/>
+            </li>
+			
+            <li>
+                <label for="designation">
+                    DESIGNATION :
+                </label>
+                <input type="text" id="tdesignation" readonly=""/>
+            </li>
+			
+            <li>
+                <label for="facility">
+                    FACILITY :
+                </label>				
+                <input type="text" id="tfacility" readonly=""/>
+            </li>
+
+			<li>
+				${ui.includeFragment("uicommons", "field/datetimepicker", [formFieldName: 'update.date', id: 'tdate', label: 'TRANSFER DATE:', useTime: false, defaultToday: true, endDate: new Date()])}
+			</li>
+			
+			<li>
+                <label for="tnotes">DESCRIPTION:</label>
+                <textarea id="tnotes" style="height:100px"></textarea>
             </li>			
 		</ul>
 		

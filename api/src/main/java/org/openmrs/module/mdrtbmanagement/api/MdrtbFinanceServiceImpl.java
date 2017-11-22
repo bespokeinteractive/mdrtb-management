@@ -146,8 +146,8 @@ public class MdrtbFinanceServiceImpl
     }
 
     @Override
-    public List<HumanResources> getStaffList(List<Location> locations) {
-        return dao.getStaffList(locations);
+    public List<HumanResources> getStaffList(List<Location> locations, Boolean includeTransferred) {
+        return dao.getStaffList(locations, includeTransferred);
     }
 
     @Override

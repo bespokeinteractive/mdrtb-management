@@ -53,7 +53,7 @@ public interface MdrtbFinanceService
     Expenditure saveExpenditure(Expenditure expenditure);
 
     //HR
-    List<HumanResources> getStaffList(List<Location> locations);
+    List<HumanResources> getStaffList(List<Location> locations, Boolean includeTransferred);
     HumanResources getStaff(Integer id);
     HumanResources saveStaff(HumanResources staff);
 }
