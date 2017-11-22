@@ -159,4 +159,19 @@ public class MdrtbFinanceServiceImpl
     public HumanResources saveStaff(HumanResources staff) {
         return dao.saveStaff(staff);
     }
+
+    @Override
+    public List<Assets> getAssets(List<Location> locations) {
+        return dao.getAssets(locations);
+    }
+
+    @Override
+    public Assets getAssets(Integer id) {
+        return dao.getAssets(id);
+    }
+
+    @Override
+    public Assets saveAssets(Assets asset) {
+        return dao.saveAssets(asset);
+    }
 }

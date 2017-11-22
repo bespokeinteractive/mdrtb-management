@@ -281,4 +281,26 @@ public class HibernateMdrtbFinanceServiceDAO
     public HumanResources saveStaff(HumanResources staff) {
         return (HumanResources)getSession().merge(staff);
     }
+
+    @Override
+    public List<Assets> getAssets(List<Location> locations) {
+        Criteria criteria = getSession().createCriteria(Assets.class);
+        criteria.add(Restrictions.eq("voided", false));
+        criteria.add(Restrictions.in("location", locations));
+
+        return criteria.list();
+    }
+
+    @Override
+    public Assets getAssets(Integer id) {
+        Criteria criteria = getSession().createCriteria(Assets.class);
+        criteria.add(Restrictions.eq("id", id));
+
+        return  (Assets) criteria.uniqueResult();
+    }
+
+    @Override
+    public Assets saveAssets(Assets asset) {
+        return (Assets)getSession().merge(asset);
+    }
 }

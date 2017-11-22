@@ -52,4 +52,9 @@ public interface MdrtbFinanceServiceDAO {
     HumanResources getStaff(Integer id);
     HumanResources saveStaff(HumanResources staff);
 
+    //Assets
+    List<Assets> getAssets(List<Location> locations);
+    Assets getAssets(Integer id);
+    Assets saveAssets(Assets asset);
+
 }
