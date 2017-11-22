@@ -13,6 +13,7 @@
         <many-to-one name="centre" class="org.openmrs.module.mdrtb.model.LocationCentres" column="centre" cascade="none" lazy="false" />
 
         <property name="amount" column="amount"  type="java.lang.Double" />
+        <property name="approved" column="approved"  type="java.lang.Double" />
         <property name="narration" column="narration" type="java.lang.String" />
 	</class>
 </hibernate-mapping>

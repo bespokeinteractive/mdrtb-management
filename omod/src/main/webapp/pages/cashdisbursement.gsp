@@ -81,7 +81,8 @@
 	}
 	#requestList td:nth-child(5),
 	#requestList td:nth-child(6),
-	#approvedList td:nth-child(6) {
+	#approvedList td:nth-child(6),
+	#approvedList td:nth-child(7) {
 		text-align: right;
 	}
 	#requestList td:last-child,

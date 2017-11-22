@@ -81,7 +81,7 @@
 		padding: 10px;
 		text-align: center;
 		text-decoration: none;
-		width: 75px;
+		width: 74px;
 		font-size: 0.7em;
 	}
 	a.icons:hover{	

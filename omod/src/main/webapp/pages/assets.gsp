@@ -561,7 +561,7 @@
                 <label for="assigned">
                     ASSIGNED TO:
                 </label>
-				<input type="text" id="assigned" placeholder="Model, Mfg, Serial No. etc"/>
+				<input type="text" id="assigned" placeholder="Person, Location, etc"/>
             </li>		
 		</ul>
 		

@@ -16,6 +16,7 @@ public class DisbursementsDetails {
     private Disbursements disbursement;
     private LocationCentres centre;
     private Double amount;
+    private Double approved;
     private String narration;
 
     public DisbursementsDetails(){}
@@ -54,6 +55,14 @@ public class DisbursementsDetails {
 
     public void setAmount(Double amount) {
         this.amount = amount;
+    }
+
+    public Double getApproved() {
+        return approved;
+    }
+
+    public void setApproved(Double approved) {
+        this.approved = approved;
     }
 
     public String getNarration() {

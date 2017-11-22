@@ -275,7 +275,14 @@
 					<td>${index+1}</td>
 					<td>${dtl.centre.location.name.toUpperCase()}</td>
 					<td>${dtl.centre.region.name.toUpperCase()}</td>
-					<td style="text-align:right;">${String.format("%1\$,.2f", dtl.amount)}</td>					
+					
+					<% if (disbursement.approvedOn) { %>
+						<td style="text-align:right;">${String.format("%1\$,.2f", dtl.approved)}</td>		
+					<% } else { %>
+						<td style="text-align:right;">${String.format("%1\$,.2f", dtl.amount)}</td>		
+					<% } %>
+					
+					
 					<td>${dtl.narration==''?'N/A':dtl.narration.toUpperCase()}</td>
 				</tr>
 			<% } %>
@@ -283,7 +290,13 @@
 			<tr>
 				<td>&nbsp;</td>
 				<td colspan='2'><b>TOTALS</b></td>
-				<td style="text-align:right;"><b>${String.format("%1\$,.2f", disbursement.amount)}</b></td>
+				
+				<% if (disbursement.approvedOn) { %>
+					<td style="text-align:right;"><b>${String.format("%1\$,.2f", disbursement.approved)}</b></td>
+				<% } else { %>	
+					<td style="text-align:right;"><b>${String.format("%1\$,.2f", disbursement.amount)}</b></td>
+				<% } %>
+				
 				<td><b>N/A</b></td>
 			</tr>
 			

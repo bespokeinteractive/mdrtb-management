@@ -35,7 +35,7 @@
 				icons = '<a href="cashrequestview.page?id=' + result.id + '"><i class="icon-file-alt small icon"> </i> View Transc</a>';
 			}
 			
-			dataRows.push([0, result.date, result.period, agency, status, result.amount.toString().formatToAccounting(), result.estimate.toString().formatToAccounting(), icons]);
+			dataRows.push([0, result.date, result.period, agency, status, result.approved.toString().formatToAccounting(), result.estimate.toString().formatToAccounting(), icons]);
 		});
 
         approvedTable.api().clear();
