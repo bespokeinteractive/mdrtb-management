@@ -159,6 +159,11 @@
 		<span>REQUEST FUNDS</span>
 	</a>
 	
+	<a class="icons" href="ledgers.page">
+		<img src="${ui.resourceLink('mdrtbmanagement', 'images/00-profits.png')}"><br/>
+		<span>FINANCIAL LEDGER</span>
+	</a>
+	
 	<a class="icons ledger-summary">
 		<img src="${ui.resourceLink('mdrtbmanagement', 'images/00-stopwatch.png')}"><br/>
 		<span>SUBRECIPIENT SUMMARY</span>
@@ -169,10 +174,10 @@
 		<span>INCOME STATEMENT</span>
 	</a>
 	
-	<a class="icons" href="ledgers.page">
-		<img src="${ui.resourceLink('mdrtbmanagement', 'images/00-profits.png')}"><br/>
-		<span>FINANCIAL LEDGER</span>
-	</a>
+    <a class="icons  ledgercashflow">
+        <img src="${ui.resourceLink('mdrtbmanagement', 'images/00-exchange.png')}"><br/>
+        <span>VIEW<br/>CASH FLOW</span>
+    </a>
 	
 	<a class="icons" href="humanresource.page">
 		<img src="${ui.resourceLink('mdrtbmanagement', 'images/00-meeting.png')}"><br/>
@@ -188,11 +193,6 @@
 		<img src="${ui.resourceLink('mdrtbmanagement', 'images/00-bars.png')}"><br/>
 		<span>VIEW<br/>REPORTS</span>
 	</a>
-    <a class="icons  ledgercashflow">
-        <img src="${ui.resourceLink('mdrtbmanagement', 'images/00-exchange.png')}"><br/>
-        <span>VIEW<br/>CASH FLOW</span>
-    </a>
-
 </div>
 
 <div id="report-dialog" class="dialog" style="display:none;">

@@ -101,7 +101,7 @@
     <tr>
         <th rowspan=2></th>
         <th rowspan=2><small>A<br/>BAL<br/>B/F</small></th>
-        <th colspan="4" style="alignment: center"> <small>FUND RECEIVED </small></th>
+        <th colspan="4" style="alignment: center"> <small>FUND BUDGETED </small></th>
         <th rowspan=2><small>B<br/>TOTAL<br/>INCOME</small></th>
         <th colspan=4> <small>EXPENDITURES</small></th>
         <th rowspan=2><small>C<br/>TOTAL<br/>EXPENSES</small></th>

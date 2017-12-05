@@ -80,7 +80,7 @@
             } );
         }).api().draw();
 
-        jq('#drugName').on('keyup', function () {
+        jq('#finalBudgetTextbox').on('keyup', function () {
             finalTable.api().search( this.value ).draw();
         });
 
@@ -93,7 +93,7 @@
         <div class="info-header">
             <i class="icon-filter"></i>
             <h3 class="name">FINAL BUDGET</h3>
-            <input id="drugName" type="text" value="" name="drugName" placeholder="Filter Budget" style="width:78%; margin:-40px 5px 0px 10px; padding:0px 15px;">
+            <input id="finalBudgetTextbox" type="text" placeholder="Filter Budget" style="width:78%; margin:-40px 5px 0px 10px; padding:0px 15px;">
         </div>
     </div>
 </div>
