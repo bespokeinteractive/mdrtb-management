@@ -37,6 +37,7 @@ public class LedgerscashflowPageController {
         cal.setTime(new Date());
         cal.set(Calendar.MONTH, (qtr-1)*3);
         cal.set(Calendar.DAY_OF_MONTH, 1);
+        cal.set(Calendar.YEAR, year);
         start = formatter.format(cal.getTime());
 
         cal.set(Calendar.MONTH, ((qtr-1)*3)+2);
@@ -51,21 +52,16 @@ public class LedgerscashflowPageController {
             Charts chart = summary.getItem();
 
             if (qtr == 1){
-
                 chart.setExpenditure(summary.getExpenseQ1());
-
             }
             else if (qtr == 2){
-
                 chart.setExpenditure(summary.getExpenseQ2());
-
             }
             else if (qtr == 3){
                 chart.setExpenditure(summary.getExpenseQ3());
             }
             else if (qtr == 4){
                 chart.setExpenditure(summary.getExpenseQ4());
-
             }
 
             chart.setBudgetTT(summary.getBudgetTotal());

@@ -549,7 +549,7 @@
             </li>
 
 			<li>
-				${ui.includeFragment("uicommons", "field/datetimepicker", [formFieldName: 'update.date', id: 'date', label: 'DATE:', useTime: false, defaultToday: true, endDate: new Date()])}
+				${ui.includeFragment("uicommons", "field/datetimepicker", [formFieldName: 'update.date', id: 'date', label: 'ENROLLED:', useTime: false, defaultToday: true, endDate: new Date()])}
 			</li>
 			
             <li>

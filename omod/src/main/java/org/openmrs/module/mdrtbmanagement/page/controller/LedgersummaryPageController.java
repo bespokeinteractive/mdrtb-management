@@ -37,6 +37,7 @@ public class LedgersummaryPageController {
         cal.setTime(new Date());
         cal.set(Calendar.MONTH, (qtr-1)*3);
         cal.set(Calendar.DAY_OF_MONTH, 1);
+        cal.set(Calendar.YEAR, year);
         start = formatter.format(cal.getTime());
 
         cal.set(Calendar.MONTH, ((qtr-1)*3)+2);
