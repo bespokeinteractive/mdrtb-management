@@ -144,7 +144,7 @@
 						name:		jq('#name').val(),
 						chart:		jq('#designation').val(),
 						location:	jq('#facility').val(),
-						amount:		jq('#amount').val(),
+						amount:		value,
 						note:		jq('#description').val(),
 					}
                     jq.ajax({
