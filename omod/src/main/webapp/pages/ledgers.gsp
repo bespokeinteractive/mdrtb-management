@@ -32,7 +32,8 @@
         var dataRows = [];
         _.each(ledgerResultsData, function(result){
 			var amount = result.order==1?result.amount.toString().formatToAccounting():('('+result.amount.toString().formatToAccounting()+')');
-            dataRows.push([0, result.date, result.period, result.location.name.toUpperCase(), result.item.name.toUpperCase(), result.description==''?'N/A':result.description.toUpperCase(), amount]);
+            var icons = '<a href="#?id=' + result.id + '">Edit</a> | <a href="#?id=' + result.id + '">Delete</a>';
+			dataRows.push([0, result.date, result.period, result.location.name.toUpperCase(), result.item.name.toUpperCase(), result.description==''?'N/A':result.description.toUpperCase(), amount,icons]);
         });
 
         ledgerTable.api().clear();
@@ -359,6 +360,8 @@
 			<th style="width:180px;">JOURNAL</th>
 			<th>NARRATION</th>
 			<th style="width:100px">AMOUNT</th>
+		    <th style="width:100px">ACTIONS</th>
+
 		</thead>
 
 		<tbody>

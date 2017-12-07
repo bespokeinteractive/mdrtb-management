@@ -14,6 +14,7 @@ public class BudgetResultWrapper {
     Integer year;
     String amount;
     String description;
+    Date approvedOn;
 
     public Integer getId() {
         return id;
@@ -69,5 +70,10 @@ public class BudgetResultWrapper {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Date getApprovedOn() {return approvedOn;}
+
+    public void setApprovedOn(Date approvedOn) {this.approvedOn = approvedOn;
     }
 }

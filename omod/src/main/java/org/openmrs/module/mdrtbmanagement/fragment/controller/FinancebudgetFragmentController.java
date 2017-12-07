@@ -59,7 +59,6 @@ public class FinancebudgetFragmentController {
         budget.setPeriod(period);
         budget.setAmount(new Double(wrapper.getAmount().replace(",", "")));
         budget.setDescription(wrapper.getDescription());
-
         budget = financeService.saveBudgets(budget);
 
         for (Map.Entry<String, String[]> params : ((Map<String, String[]>) request.getParameterMap()).entrySet()) {
@@ -121,4 +120,24 @@ public class FinancebudgetFragmentController {
         this.financeService.saveBudgets(budget);
         return SimpleObject.create("status", "success", "message", "Facility Budget has been updated successfully");
     }
+    public SimpleObject approveBudget(@BindParams("budget") BudgetResultWrapper wrapper,
+                                     HttpServletRequest request){
+        Location location = Context.getLocationService().getLocation(wrapper.getFacility());
+        Budgets budget = financeService.getBudget(wrapper.getId());
+        if (budget.getApprovedOn() != null){
+            return SimpleObject.create("status", "failed", "message", "Facility Budget already approved");
+        }
+        budget.setDated(wrapper.getDate());
+        budget.setLocation(location);
+        budget.setPeriod("0"+wrapper.getQuarter() + "-" + wrapper.getYear());
+        budget.setAmount(new Double(wrapper.getAmount().replace(",", "")));
+        budget.setDescription(wrapper.getDescription());
+        budget.setApprovedOn(wrapper.getApprovedOn());
+
+        this.financeService.saveBudgets(budget);
+        return SimpleObject.create("status", "success", "message", "Budget approved successfully");
+    }
+
+
+
 }
