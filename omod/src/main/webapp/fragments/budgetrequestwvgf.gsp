@@ -119,9 +119,10 @@ input.child{
 		var dataRows = [];
 		_.each(draftResultsData, function(result){
 			var facility = '<a href="budgetview.page?id=' + result.id + '">' + result.location.name + '</a>';
-			var icons = '<a href="budgetedit.page?id=' + result.id + '">Edit</a> | <a href = "addBudget" id=' + result.id + '">Approve</a>|<a href="budgetview.page?id=' + result.id + '">View</a>';
+			  var icons = "<a data-idnt='" + result.id + "' class='approve'>Approve</a>| ";
 
-			dataRows.push([0, result.dated, result.period, facility, result.amount.toString().formatToAccounting(), icons]);
+
+            dataRows.push([0, result.dated, result.period, facility, result.amount.toString().formatToAccounting(), icons]);
 		});
 
 		draftTable.api().clear();
@@ -218,8 +219,8 @@ input.child{
             }
         });
 
-        jq('#addBudget').click(function(){
-			jq('.dialog-content .confirmation').html("Confirm posting new Budget for <b>" + jq('#').text() + " Facility</b> worth <b>&dollar;" + jq('0').val()+"</b> ?");
+        jq('table').on('click','.approve', function(){
+			jq('.dialog-content .confirmation').html("Confirm approving budget for <b>" + jq('#').text() + " Facility</b> worth <b>&dollar;" + jq('0').val()+"</b> ?");
             confirmDialog.show();
         });
     });

@@ -149,7 +149,7 @@ a.icons img {
 		<span>VIEW BUDGETS</span>
 	</a>
 
-	<a class="icons" href="cashdisbursement.page">
+	<a class="icons" href="cashdisbursementwvgf.page">
 		<img src="${ui.resourceLink('mdrtbmanagement', 'images/00-wallet-1.png')}"><br/>
 		<span>VIEW DISBURSEMENT</span>
 	</a>
