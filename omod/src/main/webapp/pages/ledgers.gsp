@@ -32,7 +32,8 @@
         var dataRows = [];
         _.each(ledgerResultsData, function(result){
 			var amount = result.order==1?result.amount.toString().formatToAccounting():('('+result.amount.toString().formatToAccounting()+')');
-            var icons = '<a href="#?id=' + result.id + '">Edit</a> | <a href="#?id=' + result.id + '">Delete</a>';
+            var icons = '<a class="edit-items" data-uuid="'+result.id+'">Edit</a> | <a class="icon-remove small" data-uuid="'+result.id+'"></a>';
+			
 			dataRows.push([0, result.date, result.period, result.location.name.toUpperCase(), result.item.name.toUpperCase(), result.description==''?'N/A':result.description.toUpperCase(), amount,icons]);
         });
 
@@ -251,12 +252,16 @@
 		font-size: 12px;
 		margin-top: 5px;
 	}
-	#ledgerTable th:last-child,
-	#ledgerTable td:last-child{
+	#ledgerTable th:nth-child(7),
+	#ledgerTable td:nth-child(7){
 		text-align: right;
 	}
-	#ledgerTable td:first-child{
+	#ledgerTable td:first-child,
+	#ledgerTable td:last-child{
 		text-align: center;
+	}
+	#ledgerTable td{
+		vertical-align: top;
 	}
 	#filter {
 		margin-right:3px;
@@ -265,6 +270,12 @@
 		padding: 13px 7px;
 		margin-right: 5px;
 		margin-left: 3px;
+	}
+	td a{
+		cursor: pointer;
+	}
+	a.icon-remove{
+		color:#f00;
 	}
 	.icon-filter.small.right{
 		font-size: 1.6em;
@@ -360,7 +371,7 @@
 			<th style="width:180px;">JOURNAL</th>
 			<th>NARRATION</th>
 			<th style="width:100px">AMOUNT</th>
-		    <th style="width:100px">ACTIONS</th>
+		    <th style="width:55px">ACTIONS</th>
 
 		</thead>
 
