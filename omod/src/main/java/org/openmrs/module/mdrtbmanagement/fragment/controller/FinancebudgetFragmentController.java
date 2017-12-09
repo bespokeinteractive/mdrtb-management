@@ -3,6 +3,7 @@ package org.openmrs.module.mdrtbmanagement.fragment.controller;
 import org.apache.commons.lang.StringUtils;
 import org.openmrs.Location;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.mdrtb.service.MdrtbService;
 import org.openmrs.module.mdrtbmanagement.BudgetsItems;
 import org.openmrs.module.mdrtbmanagement.Charts;
 import org.openmrs.module.mdrtbmanagement.api.MdrtbFinanceService;
@@ -26,11 +27,7 @@ public class FinancebudgetFragmentController {
 
     public List<SimpleObject> listCurrentBudgets(@RequestParam(value = "draft") Boolean draft,
                                                  UiUtils ui){
-        List<Location> locations = new ArrayList<Location>();
-        for (Location location: Context.getLocationService().getAllLocations()){
-            locations.add(location);
-        }
-
+        List<Location> locations = Context.getService(MdrtbService.class).getLocationsByUser();
         List<Budgets> budgets = Context.getService(MdrtbFinanceService.class).getBudgets(locations, draft);
         if (budgets!=null){
             return SimpleObject.fromCollection(budgets, ui, "id", "location.name", "dated", "period", "amount", "approved", "approvedOn");

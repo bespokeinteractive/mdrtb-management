@@ -64,6 +64,9 @@ public class HibernateMdrtbFinanceServiceDAO
         criteria.add(Restrictions.eq("chartsGroup", chart));
         criteria.add(Restrictions.isNotNull("chartsGroup"));
 
+        criteria.addOrder(Order.asc("code"));
+        criteria.addOrder(Order.asc("name"));
+
         return criteria.list();
     }
 
