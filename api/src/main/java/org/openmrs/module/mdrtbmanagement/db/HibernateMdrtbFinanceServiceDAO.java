@@ -257,6 +257,13 @@ public class HibernateMdrtbFinanceServiceDAO
     }
 
     @Override
+    public Ledgers getLedgers(Integer id){
+        Criteria criteria = getSession().createCriteria(Ledgers.class);
+        criteria.add(Restrictions.eq("id", id));
+        return (Ledgers) criteria.uniqueResult();
+    }
+
+    @Override
     public List<HumanResources> getStaffList(List<Location> locations, Boolean includeTransferred) {
         Criteria criteria = getSession().createCriteria(HumanResources.class);
         criteria.add(Restrictions.eq("voided", false));

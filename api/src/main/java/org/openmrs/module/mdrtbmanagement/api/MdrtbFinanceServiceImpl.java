@@ -139,6 +139,9 @@ public class MdrtbFinanceServiceImpl
     public List<LedgersSummary> getLedgersSummary(Location location, Integer year){
         return dao.getLedgersSummary(location, year);
     }
+    public Ledgers getLedgers(Integer id){
+        return dao.getLedgers(id);
+    }
 
     //Expenditure
     public Expenditure saveExpenditure(Expenditure expenditure){

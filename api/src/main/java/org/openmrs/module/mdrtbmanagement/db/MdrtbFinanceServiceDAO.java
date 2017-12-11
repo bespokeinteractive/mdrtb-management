@@ -43,7 +43,7 @@ public interface MdrtbFinanceServiceDAO {
     //Ledgers
     List<Ledgers> getLedgers(List<Location> locations, String period, Date startdate, Date endDate, Charts item);
     List<LedgersSummary> getLedgersSummary(Location location, Integer year);
-
+    Ledgers getLedgers(Integer id);
     //Expenditure
     Expenditure saveExpenditure(Expenditure expenditure);
 

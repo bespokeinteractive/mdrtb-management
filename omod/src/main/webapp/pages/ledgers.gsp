@@ -35,6 +35,7 @@
             var icons = '<a class="edit-items" data-uuid="'+result.id+'">Edit</a> | <a class="icon-remove small" data-uuid="'+result.id+'"></a>';
 			
 			dataRows.push([0, result.date, result.period, result.location.name.toUpperCase(), result.item.name.toUpperCase(), result.description==''?'N/A':result.description.toUpperCase(), amount,icons]);
+
         });
 
         ledgerTable.api().clear();
@@ -45,7 +46,7 @@
 
         refreshInTable(ledgerResultsData, ledgerTable);
     };
-	
+
 	jq(function () {
         ledgerTableObject = jq("#ledgerTable");
 
@@ -93,6 +94,43 @@
         });
 		
 		//End of Datatables
+        var confirmDialog = emr.setupConfirmationDialog({
+            dialogOpts: {
+                overlayClose: false,
+                close: true
+            },
+            selector: '#confirm-dialog',
+            actions: {
+                confirm: function () {
+                    var dataString = jq('form').serialize();
+
+                    jq.ajax({
+                        type: "POST",
+                        url: '${ui.actionLink("mdrtbmanagement", "financebudget", "addNewBudget")}',
+                        data: dataString,
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.status == "success") {
+                                jq().toastmessage('showSuccessToast', data.message);
+                                window.location.href = "financebudget.page";
+                            }
+                            else {
+                                jq().toastmessage('showErrorToast', 'Post failed. ' + data.message);
+                            }
+                        },
+                        error: function (data) {
+                            jq().toastmessage('showErrorToast', "Post failed. " + data.statusText);
+                        }
+                    });
+
+
+                    confirmDialog.close();
+                },
+                cancel: function () {
+                    confirmDialog.close();
+                }
+            }
+        });
 		
 		var expenseDialog = emr.setupConfirmationDialog({
             dialogOpts: {
@@ -148,7 +186,93 @@
                 }
             }
         });
-		
+
+        var editexpenseDialog = emr.setupConfirmationDialog({
+            dialogOpts: {
+                overlayClose: false,
+                close: true
+            },
+            selector: '#editexpense-dialog',
+            actions: {
+                confirm: function () {
+
+
+                    var dataString = {
+                        id: 		jq('#idnt').val(),
+                        period: 	jq('#period').val(),
+
+                    }
+
+                    jq.ajax({
+                        type: "POST",
+                        url: '${ui.actionLink("mdrtbmanagement", "Ledgers", "postExpenditure")}',
+                        data: dataString,
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.status == "success") {
+                                jq().toastmessage('showSuccessToast', data.message);
+                                window.location.href = "ledgers.page?index=" + jq('#locations').val();
+                            }
+                            else {
+                                jq().toastmessage('showErrorToast', 'Post failed. ' + data.message);
+                            }
+                        },
+                        error: function (data) {
+                            jq().toastmessage('showErrorToast', "Post failed. " + data.statusText);
+                        }
+                    });
+
+                    expenseDialog.close();
+                },
+                cancel: function () {
+                    expenseDialog.close();
+                }
+            }
+        });
+
+        var voidExpenseDialog = emr.setupConfirmationDialog({
+            dialogOpts: {
+                overlayClose: false,
+                close: true
+            },
+            selector: '#voidExpense-dialog',
+            actions: {
+                confirm: function () {
+
+
+                    var dataString = {
+                        id: 		jq('#idnt').val(),
+                        period: 	jq('#period').val(),
+
+                    }
+
+                    jq.ajax({
+                        type: "POST",
+                        url: '${ui.actionLink("mdrtbmanagement", "Ledgers", "voidExpense")}',
+                        data: dataString,
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.status == "success") {
+                                jq().toastmessage('showSuccessToast', data.message);
+                                window.location.href = "ledgers.page?index=" + jq('#locations').val();
+                            }
+                            else {
+                                jq().toastmessage('showErrorToast', 'Post failed. ' + data.message);
+                            }
+                        },
+                        error: function (data) {
+                            jq().toastmessage('showErrorToast', "Post failed. " + data.statusText);
+                        }
+                    });
+
+                    expenseDialog.close();
+                },
+                cancel: function () {
+                    expenseDialog.close();
+                }
+            }
+        });
+
 		jq('#amount').change(function() {
 			var val = jq(this).val().replace(',','').replace(' ','');
 			jq(this).val(val.toString().formatToAccounting()!='NaN'?val.toString().formatToAccounting():'');
@@ -168,6 +292,32 @@
 		jq('#locations').change(function(){
 			getLedgerEntries();
 		});
+
+        jq('table').on('click','.edit-items', function(){
+            var idnt = jq(this).data('idnt');
+
+            jq.getJSON('${ ui.actionLink("mdrtbmanagement", "Ledgers", "getLedgers") }', {
+                id: idnt,
+            }).success(function (data) {
+                jq('#idnt').val(idnt);
+                jq('#editperiod').val(data.period);
+                editexpenseDialog.show();
+            });
+
+        });
+
+        jq('table').on('click','.icon-remove', function(){
+            var idnt = jq(this).data('idnt');
+
+            jq.getJSON('${ ui.actionLink("mdrtbmanagement", "Ledgers", "getLedgers") }', {
+                id: idnt,
+            }).success(function (data) {
+                jq('#idnt').val(idnt);
+                jq('#editperiod').val(data.period);
+                voidExpenseDialog.show();
+            });
+
+        });
 		
 		jq('#locations').val(${index});
 
@@ -440,4 +590,70 @@
         <label class="button confirm right">Confirm</label>
         <label class="button cancel">Cancel</label>
     </div>
+</div>
+
+<div id="editexpense-dialog" class="dialog" style="display:none; width:600px">
+	<div class="dialog-header">
+		<i class="icon-bar-chart"></i>
+		<h3>EDIT EXPENDITURE</h3>
+	</div>
+
+	<div class="dialog-content">
+		<ul>
+			<li>
+				<label for="amount">PERIOD:</label>
+				<input type="text" id="ePeriod"/>
+
+			</li>
+			<li>
+				<label for="amount">Facilty:</label>
+				<input type="text" id="eFacility"/>
+
+			<li>
+				<label for="amount">Journal:</label>
+				<input type="text" id="eJournal"/>
+			</li>
+			<li>
+				<label for="amount">AMOUNT:</label>
+				<input type="text" id="eAmount"/>
+
+			</li>
+		</ul>
+
+		<label class="button confirm right">Confirm</label>
+		<label class="button cancel">Cancel</label>
+	</div>
+</div>
+
+<div id="voidExpense-dialog" class="dialog" style="display:none; width:600px">
+	<div class="dialog-header">
+		<i class="icon-bar-chart"></i>
+		<h3>VOID EXPENDITURE</h3>
+	</div>
+
+	<div class="dialog-content">
+		<ul>
+			<li>
+				<label for="amount">PERIOD:</label>
+				<input type="text" id="vPeriod"/>
+
+			</li>
+			<li>
+				<label for="amount">Facilty:</label>
+				<input type="text" id="vFacility"/>
+
+			<li>
+				<label for="amount">Journal:</label>
+				<input type="text" id="vJournal"/>
+			</li>
+			<li>
+				<label for="amount">AMOUNT:</label>
+				<input type="text" id="vAmount"/>
+
+			</li>
+		</ul>
+
+		<label class="button confirm right">Confirm</label>
+		<label class="button cancel">Cancel</label>
+	</div>
 </div>
