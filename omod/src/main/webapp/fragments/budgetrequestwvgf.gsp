@@ -119,7 +119,7 @@ input.child{
 		var dataRows = [];
 		_.each(draftResultsData, function(result){
 			var facility = '<a href="budgetview.page?id=' + result.id + '">' + result.location.name + '</a>';
-			  var icons = "<a data-idnt='" + result.id + "' class='approve'>Approve</a>| ";
+			var icons = '<a href="budgeteditwvgf.page?id=' + result.id + '">Edit</a> | <a href="budgetview.page?id=' + result.id + '">View</a>';
 
 
             dataRows.push([0, result.dated, result.period, facility, result.amount.toString().formatToAccounting(), icons]);
